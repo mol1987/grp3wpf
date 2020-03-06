@@ -1,0 +1,52 @@
+﻿<Window x:Class="Project_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project_WPF"
+        mc:Ignorable="d"
+         WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <!-- Inside border-->
+        <Border Margin="5" Background="White" BorderThickness="0">
+            <Grid>
+
+                <!-- Main grid rows-->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Border Background="#00ADF1" MouseDown="Border_MouseDown" >
+                    <Grid>
+                        <!-- Contains window buttons-->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button x:Name="BtnMinimize"    Width="50" Height="35" Style="{StaticResource WindowButton}"      Background="#00ADF1" Content="__"  FontFamily="Arial Black" Click="BtnMinimize_Click"/>
+                            <Button x:Name="BtnMaximize"    Width="50" Height="35" Style="{StaticResource WindowButton}"      Background="#00ADF1" Content="[ ]" FontFamily="Arial Black" Click="BtnMaximize_Click"/>
+                            <Button x:Name="BtnWindowClose" Width="50" Height="35" Style="{StaticResource WindowButtonClose}" Background="#00ADF1" Content="X"   FontFamily="Arial Black"   Click="BtnWindowClose_Click"/>
+                        </StackPanel>
+
+
+                        <!-- Window title-->
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" TextWrapping="Wrap" 
+                                   FontFamily="Franklin Gothic Medium" 
+                                   FontWeight="Normal"
+                                   Text="Welcom To Tony Pizza Plates"
+                                   Foreground="White">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#FF0044FF"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                    </Grid>
+                </Border>
+
+                <Frame x:Name="ContentFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
