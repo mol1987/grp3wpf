@@ -22,7 +22,7 @@
 
                 <Border Background="#00ADF1" MouseDown="Border_MouseDown" >
                     <Grid>
-                        <!-- Contains window buttons-->
+                        <!-- Contains  only window buttons-->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button x:Name="BtnMinimize"    Width="50" Height="35" Style="{StaticResource WindowButton}"      Background="#00ADF1" Content="__"  FontFamily="Arial Black" Click="BtnMinimize_Click"/>
                             <Button x:Name="BtnMaximize"    Width="50" Height="35" Style="{StaticResource WindowButton}"      Background="#00ADF1" Content="[ ]" FontFamily="Arial Black" Click="BtnMaximize_Click"/>
