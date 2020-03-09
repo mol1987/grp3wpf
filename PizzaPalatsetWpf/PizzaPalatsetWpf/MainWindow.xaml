@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Pizza"/>
+            <Image Source="Images\Pizza.jpg" MaxHeight="80" MaxWidth="90" Grid.Column="0" />
             <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Pasta" Grid.Column="1"/>
             <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Sallad" Grid.Column="2"/>
             <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Dricka" Grid.Column="3"/>
@@ -27,8 +27,8 @@
             <TextBlock Background="LightGray" Text="Din Order" Grid.Column="6"  TextAlignment="Center" FontSize="60" FontWeight="Bold"/>
             <Grid Margin="10 110" Height="800" Width="1400">
                 <StackPanel Orientation="Vertical">
-                    <Image Source="D:\OOP2\Projektet\Pizza.jpg" MaxHeight="80" MaxWidth="90"/>
-                    <Image Source="D:\OOP2\Projektet\sallad.jpg"/>
+                    <Image Source="Images\Pizza.jpg" MaxHeight="80" MaxWidth="90"/>
+                    <Image Source="Images\sallad.jpg"/>
                 </StackPanel>
             </Grid>
             <Grid.RowDefinitions>
