@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PizzaPalatsetWpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="PiazzaPlataset" Height="1080" Width="1920">
+    <Border Padding="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Pizza"/>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Pasta" Grid.Column="1"/>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Sallad" Grid.Column="2"/>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Dricka" Grid.Column="3"/>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Tillbehör" Grid.Column="4"/>
+            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Rekomenderad" Grid.Column="5"/>
+            
+            <TextBlock Background="LightGray" Text="Din Order" Grid.Column="6"  TextAlignment="Center" FontSize="60" FontWeight="Bold"/>
+            <Grid Margin="10 110" Height="800" Width="1400">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="D:\OOP2\Projektet\Pizza.jpg" MaxHeight="80" MaxWidth="90"/>
+                    <Image Source="D:\OOP2\Projektet\sallad.jpg"/>
+                </StackPanel>
+            </Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </Border>
+    
 </Window>
+    
+    
