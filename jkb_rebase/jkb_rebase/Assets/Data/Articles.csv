@@ -1,0 +1,2 @@
+﻿Id,Name,Price,Description,Active,Ingredients
+1,InsertNameForProduct,99.0,"DEscription for the product",true,["ingr.A","ingr.B","ingr.C"]

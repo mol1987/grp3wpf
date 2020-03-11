@@ -1,0 +1,12 @@
+﻿<!-- 
+    Startup-window 'index' is used for swapping inbetween views   
+ -->
+<Application x:Class="jkb_rebase.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:jkb_rebase"
+             StartupUri="View/Index.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
