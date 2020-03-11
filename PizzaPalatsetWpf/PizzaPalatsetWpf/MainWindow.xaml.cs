@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace PizzaPalatsetWpf
 {
     /// <summary>
@@ -22,7 +23,33 @@ namespace PizzaPalatsetWpf
     {
         public MainWindow()
         {
+            Helper.Environment.LoadEnvFile();
             InitializeComponent();
+        }
+
+        private void TopViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PizzaPalatsetWpf.ViewModel.TopViewModel topViewModelObject =
+               new PizzaPalatsetWpf.ViewModel.TopViewModel();
+            topViewModelObject.LoadStudents();
+
+            TopViewControl.DataContext = topViewModelObject;
+        }
+        private void ArticleViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PizzaPalatsetWpf.ViewModel.ArticleViewModel articleViewModelObject =
+               new PizzaPalatsetWpf.ViewModel.ArticleViewModel();
+            articleViewModelObject.LoadPizzas();
+
+            ArticleViewControl.DataContext = articleViewModelObject;
+        }
+        private void SideViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PizzaPalatsetWpf.ViewModel.SideViewModel sideViewModelObject =
+               new PizzaPalatsetWpf.ViewModel.SideViewModel();
+            //articleViewModelObject.LoadPizzas();
+
+            SideViewControl.DataContext = sideViewModelObject;
         }
     }
 }

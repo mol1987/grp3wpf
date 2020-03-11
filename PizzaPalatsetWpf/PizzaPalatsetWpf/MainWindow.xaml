@@ -1,43 +1,27 @@
-﻿<Window x:Class="PizzaPalatsetWpf.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PizzaPalatsetWpf"
-        mc:Ignorable="d"
-        Title="PiazzaPlataset" Height="1080" Width="1920">
-    <Border Padding="10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Image Source="Images\Pizza.jpg" MaxHeight="80" MaxWidth="90" Grid.Column="0" />
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Pasta" Grid.Column="1"/>
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Sallad" Grid.Column="2"/>
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Dricka" Grid.Column="3"/>
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Tillbehör" Grid.Column="4"/>
-            <Button Margin="10" FontSize="30" FontWeight="Bold" Content="Rekomenderad" Grid.Column="5"/>
-            
-            <TextBlock Background="LightGray" Text="Din Order" Grid.Column="6"  TextAlignment="Center" FontSize="60" FontWeight="Bold"/>
-            <Grid Margin="10 110" Height="800" Width="1400">
-                <StackPanel Orientation="Vertical">
-                    <Image Source="Images\Pizza.jpg" MaxHeight="80" MaxWidth="90"/>
-                    <Image Source="Images\sallad.jpg"/>
-                </StackPanel>
-            </Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="9*"/>
-            </Grid.RowDefinitions>
-        </Grid>
-    </Border>
-    
+﻿<Window x:Class = "PizzaPalatsetWpf.MainWindow"
+   xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+   xmlns:local = "clr-namespace:PizzaPalatsetWpf"
+   xmlns:views = "clr-namespace:PizzaPalatsetWpf.Views"
+   mc:Ignorable = "d"
+   Title = "MainWindow" Height = "350" Width = "525">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <views:TopView x:Name = "TopViewControl" Loaded = "TopViewControl_Loaded" Grid.Row="0"/>
+        <views:SideView x:Name = "SideViewControl" Loaded = "SideViewControl_Loaded" Grid.Column="1" Grid.RowSpan="2"/>
+        <views:ArticleView x:Name = "ArticleViewControl" Loaded = "ArticleViewControl_Loaded" Grid.Column="0" Grid.Row="1"/>
+
+    </Grid>
+
+
 </Window>
-    
-    

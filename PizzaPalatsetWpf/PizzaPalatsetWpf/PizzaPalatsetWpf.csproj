@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+    <Page Remove="lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\Pasta.png" />
     <None Remove="Images\Pizza.jpg" />
     <None Remove="Images\sallad.jpg" />
@@ -16,6 +23,17 @@
     <Resource Include="Images\Pasta.png" />
     <Resource Include="Images\Pizza.jpg" />
     <Resource Include="Images\sallad.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helper\" />
+    <Folder Include="VML\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="lib\Helper\Helper.csproj" />
+    <ProjectReference Include="lib\MsSqlRepo\MsSqlRepo.csproj" />
+    <ProjectReference Include="lib\TypeLib\TypeLib.csproj" />
   </ItemGroup>
 
 </Project>
