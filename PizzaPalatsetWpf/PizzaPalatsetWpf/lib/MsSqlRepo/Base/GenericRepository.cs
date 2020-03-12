@@ -51,8 +51,8 @@ namespace MsSqlRepo
             string password = Helper.Globals.Get("pwd");
             string port = Helper.Globals.Get("port");
 
-            string connectionString =  $"Host={host};Username={username};Password={password};Database={database};Pooling=true; Port={port}";
-            
+            string connectionString = $"Host={host};Username={username};Password={password};Database={database};Pooling=true; Port={port}";
+
             //Console.WriteLine(connectionString);
             return new NpgsqlConnection(connectionString);
         }
@@ -64,9 +64,13 @@ namespace MsSqlRepo
         {
             string backend = Helper.Globals.Get("backend");
             IDbConnection conn = null;
-            if (backend == "postgresql")
+
+            if (backend == null)
+                throw new Exception("Backend-type is not assigned");
+
+            if (new string[] { "postgresql", "postgres", "postgre", "psql" }.Contains(backend.ToLower()))
                 conn = SqlConnectionPost();
-            else if (backend == "sql-server")
+            else if (new string[] { "sql-server", "mssql", "sqlserver" }.Contains(backend.ToLower()))
                 conn = SqlConnection();
             conn.Open();
             return conn;
@@ -172,7 +176,8 @@ namespace MsSqlRepo
                     properties.Add(prop.Name);
 
             }
-            properties.ForEach(prop => {
+            properties.ForEach(prop =>
+            {
                 insertQuery.Append($"[{prop}],");
             });
 
@@ -198,8 +203,10 @@ namespace MsSqlRepo
             insertQuery.Append("(");
 
             var properties = GenerateListOfProperties(GetProperties);
-            properties.ForEach(prop => {
-                insertQuery.Append($"[{prop}],"); });
+            properties.ForEach(prop =>
+            {
+                insertQuery.Append($"[{prop}],");
+            });
 
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
@@ -210,7 +217,7 @@ namespace MsSqlRepo
             insertQuery
                 .Remove(insertQuery.Length - 1, 1)
                 .Append(")");
-            
+
             return insertQuery.ToString();
         }
 
@@ -289,7 +296,7 @@ namespace MsSqlRepo
         public async Task<int> InsertWithReturnAsync(T t)
         {
             var insertQuery = GenerateInsertQuery(t);
-            
+
             using (var connection = CreateConnection())
             {
                 var res = await connection.ExecuteAsync(insertQuery, t);
