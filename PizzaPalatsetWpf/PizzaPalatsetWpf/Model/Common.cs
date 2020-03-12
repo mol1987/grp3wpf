@@ -26,30 +26,22 @@ namespace PizzaPalatsetWpf.Model
 
         public NotifyTaskCompletion<IEnumerable<Articles>> Articles { get; set; }
 
-        public void LoadArticles(Globals.ArticleTypes articleType)
+        public void LoadArticles(String articleType)
         {
             OnPropertyChanged("Articles");
-            switch (articleType)
+            Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync(articleType));
+  
+        }
+
+        private Articles p_SelectedItem;
+        public Articles SelectedItem
+        {
+            get { return p_SelectedItem; }
+
+            set
             {
-                case Globals.ArticleTypes.Pizza:
-                    Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync("Pizza"));
-                    break;
-                case Globals.ArticleTypes.Pasta:
-                    break;
-                case Globals.ArticleTypes.Sallad:
-                    Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync("Sallad"));
-                    break;
-                case Globals.ArticleTypes.Dricka:
-                    Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync("Drynk"));
-                    break;
-                case Globals.ArticleTypes.Tillbehor:
-                    break;
-                case Globals.ArticleTypes.Rekommenderat:
-                    break;
-                case Globals.ArticleTypes.Alla:
-                    break;
-                default:
-                    break;
+                p_SelectedItem = value;
+                OnPropertyChanged("SelectedItem");
             }
         }
 

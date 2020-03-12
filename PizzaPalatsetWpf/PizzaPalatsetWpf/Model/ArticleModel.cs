@@ -10,7 +10,7 @@ using TypeLib;
 namespace PizzaPalatsetWpf.Model
 {
     public class ArticleModel { }
-    public class Pizza : INotifyPropertyChanged
+    public class Article : INotifyPropertyChanged
     {
 
         private string _name;
@@ -40,6 +40,8 @@ namespace PizzaPalatsetWpf.Model
                 _name = value;
             }
         }
+
+       
         public override string ToString()
         {
             return Name;
@@ -52,7 +54,7 @@ namespace PizzaPalatsetWpf.Model
             
             if (PropertyChanged != null)
             {
-                Trace.WriteLine("efef");
+                
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }

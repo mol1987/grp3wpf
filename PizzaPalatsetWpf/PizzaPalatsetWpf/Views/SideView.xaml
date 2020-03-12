@@ -7,6 +7,7 @@
              xmlns:viewModel = "clr-namespace:PizzaPalatsetWpf.ViewModel" 
              xmlns:data = "clr-namespace:PizzaPalatsetWpf.Model" 
              xmlns:vml = "clr-namespace:PizzaPalatsetWpf.VML" 
+             vml:ViewModelLocator.AutoHookedUpViewModel = "True" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>

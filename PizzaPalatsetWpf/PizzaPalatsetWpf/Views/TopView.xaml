@@ -15,15 +15,22 @@
    
 
     <Grid>
-        <StackPanel Orientation = "Horizontal">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
 
 
-            <Button Content = "Pizza" Command="{Binding ButtonCommand}"/>
-            <Button Content = "Pasta"/>
-            <Button Content = "Sallad"/>
-            <Button Content = "Dricka"/>
-            <Button Content = "Rekommenderad"/>
-        </StackPanel>
+        <Button Content = "Pizza" Command="{Binding PizzaButton}" Grid.Column="0"/>
+        <Button Content = "Pasta" Command="{Binding PastaButton}" Grid.Column="1"/>
+        <Button Content = "Sallad" Command="{Binding SalladButton}" Grid.Column="2"/>
+        <Button Content = "Dricka" Command="{Binding DrickaButton}" Grid.Column="3"/>
+        <Button Content = "Rekommenderad" Grid.Column="4"/>
+ 
     </Grid>
 
 </UserControl>

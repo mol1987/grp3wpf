@@ -12,21 +12,31 @@ using System.Diagnostics;
 
 namespace PizzaPalatsetWpf.ViewModel
 {
-    class ArticleViewModel
+    class ArticleViewModel : BindableBase
     {
-        private Pizza _pizzas = new Pizza();
+        Article article = new Article();
+ 
         public Common CommonData { get; private set; }
         public ArticleViewModel()
         {
             CommonData = Common.GetInstance();
-            LoadPizzas();
+            Load();
         }
-       
-        public async void LoadPizzas()
+
+        public Articles SelectedItem {
+            get { return CommonData.SelectedItem; }
+            set
+            {
+                
+                CommonData.SelectedItem = value; 
+            }
+        }
+
+        public async void Load()
         {
             CommonData.Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync());
             //CommonData.LoadArticles(Globals.ArticleTypes.Pizza);
-
+ 
         }
     }
 }

@@ -13,19 +13,25 @@ namespace PizzaPalatsetWpf.ViewModel
     public class TopViewModel 
     {
 
-        public ICommand ButtonCommand { get; set; }
+        public ICommand PizzaButton { get; set; }
+        public ICommand PastaButton { get; set; }
+        public ICommand SalladButton { get; set; }
+        public ICommand DrickaButton { get; set; }
         public Common CommonData { get; private set; }
 
         public TopViewModel()
         {
             CommonData = Common.GetInstance();
-            ButtonCommand = new RelayCommand(o => MainButtonClick("MainButton"));
+            PizzaButton = new RelayCommand(o => MainButtonClick("Pizza"));
+            PastaButton = new RelayCommand(o => MainButtonClick("Pasta"));
+            SalladButton = new RelayCommand(o => MainButtonClick("Sallad"));
+            DrickaButton = new RelayCommand(o => MainButtonClick("Drynk"));
             LoadStudents();
         }
 
         private void MainButtonClick(object sender)
         {
-            CommonData.LoadArticles(Globals.ArticleTypes.Pizza);
+            CommonData.LoadArticles(sender.ToString());
             Trace.WriteLine(sender.ToString());
         }
 

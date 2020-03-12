@@ -5,22 +5,41 @@
    xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
    xmlns:local = "clr-namespace:PizzaPalatsetWpf"
    xmlns:views = "clr-namespace:PizzaPalatsetWpf.Views"
+   xmlns:viewModels = "clr-namespace:PizzaPalatsetWpf.ViewModel" 
    mc:Ignorable = "d"
    Title = "MainWindow" Height = "350" Width = "525">
 
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType = "{x:Type viewModels:IngredientsViewModel}">
+            <views:IngredientsView/>
+        </DataTemplate>
+        <DataTemplate DataType = "{x:Type viewModels:ArticleViewModel}">
+            <views:ArticleView/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
+        
         <views:TopView x:Name = "TopViewControl" Loaded = "TopViewControl_Loaded" Grid.Row="0"/>
         <views:SideView x:Name = "SideViewControl" Loaded = "SideViewControl_Loaded" Grid.Column="1" Grid.RowSpan="2"/>
-        <views:ArticleView x:Name = "ArticleViewControl" Loaded = "ArticleViewControl_Loaded" Grid.Column="0" Grid.Row="1"/>
+        <!--<views:ArticleView x:Name = "ArticleViewControl" Loaded = "ArticleViewControl_Loaded" Grid.Column="0" Grid.Row="1"/>-->
 
+
+        <Grid x:Name = "MainContent" Grid.Column="0" Grid.Row = "1">
+            <ContentControl Content = "{Binding CurrentViewModel}" />
+        </Grid>
     </Grid>
 
 
