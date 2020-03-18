@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text;
 using TypeLib;
 using System.Linq;
+using System.Diagnostics;
 
 namespace PizzaPalatsetWpf.Model
 {
@@ -28,9 +29,8 @@ namespace PizzaPalatsetWpf.Model
 
         public void LoadArticles(String articleType)
         {
-            OnPropertyChanged("Articles");
             Articles = new NotifyTaskCompletion<IEnumerable<Articles>>(General.articlesRepo.GetAllAsync(articleType));
-  
+            OnPropertyChanged("Articles");
         }
 
         private Articles p_SelectedItem;
@@ -39,7 +39,7 @@ namespace PizzaPalatsetWpf.Model
             get { return p_SelectedItem; }
 
             set
-            {
+            { 
                 p_SelectedItem = value;
                 OnPropertyChanged("SelectedItem");
             }

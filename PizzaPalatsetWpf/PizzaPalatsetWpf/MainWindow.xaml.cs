@@ -35,14 +35,14 @@ namespace PizzaPalatsetWpf
 
             TopViewControl.DataContext = topViewModelObject;
         }
-        //private void ArticleViewControl_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    PizzaPalatsetWpf.ViewModel.ArticleViewModel articleViewModelObject =
-        //       new PizzaPalatsetWpf.ViewModel.ArticleViewModel();
-        //    articleViewModelObject.LoadPizzas();
+        private void ArticleViewControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            PizzaPalatsetWpf.ViewModel.ArticleViewModel articleViewModelObject =
+               new PizzaPalatsetWpf.ViewModel.ArticleViewModel();
+            //articleViewModelObject.LoadPizzas();
 
-        //    ArticleViewControl.DataContext = articleViewModelObject;
-        //}
+            ArticleViewControl.DataContext = articleViewModelObject;
+        }
         private void SideViewControl_Loaded(object sender, RoutedEventArgs e)
         {
             PizzaPalatsetWpf.ViewModel.SideViewModel sideViewModelObject =

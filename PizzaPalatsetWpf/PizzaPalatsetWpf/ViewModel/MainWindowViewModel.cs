@@ -35,7 +35,7 @@ namespace PizzaPalatsetWpf
 
             switch (destination)
             {
-     
+   
                 case "articles":
                 default:
                     CurrentViewModel = articleListViewModel;

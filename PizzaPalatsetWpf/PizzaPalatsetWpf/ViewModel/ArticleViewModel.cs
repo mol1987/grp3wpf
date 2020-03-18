@@ -27,7 +27,8 @@ namespace PizzaPalatsetWpf.ViewModel
             get { return CommonData.SelectedItem; }
             set
             {
-                
+
+                Trace.WriteLine("selected");
                 CommonData.SelectedItem = value; 
             }
         }
