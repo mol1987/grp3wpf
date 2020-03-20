@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:alpha">
+    <!--<FontFamily x:Key="LatoRegular">pack://application:,,,/Assets/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoThin">pack://application:,,,/Assets/Fonts/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoBlack">pack://application:,,,/Assets/Fonts/#Lato Black</FontFamily>-->
+</ResourceDictionary>
