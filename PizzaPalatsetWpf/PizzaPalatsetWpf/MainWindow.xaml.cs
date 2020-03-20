@@ -25,6 +25,7 @@ namespace PizzaPalatsetWpf
         {
             Helper.Environment.LoadEnvFile();
             InitializeComponent();
+            this.DataContext = new PizzaPalatsetWpf.ViewModel.MainWindowViewModel();
         }
 
         private void TopViewControl_Loaded(object sender, RoutedEventArgs e)
@@ -35,14 +36,14 @@ namespace PizzaPalatsetWpf
 
             TopViewControl.DataContext = topViewModelObject;
         }
-        private void ArticleViewControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            PizzaPalatsetWpf.ViewModel.ArticleViewModel articleViewModelObject =
-               new PizzaPalatsetWpf.ViewModel.ArticleViewModel();
-            //articleViewModelObject.LoadPizzas();
+        //private void ArticleViewControl_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    PizzaPalatsetWpf.ViewModel.ArticleViewModel articleViewModelObject =
+        //       new PizzaPalatsetWpf.ViewModel.ArticleViewModel();
+        //    //articleViewModelObject.LoadPizzas();
 
-            ArticleViewControl.DataContext = articleViewModelObject;
-        }
+        //    ArticleViewControl.DataContext = articleViewModelObject;
+        //}
         private void SideViewControl_Loaded(object sender, RoutedEventArgs e)
         {
             PizzaPalatsetWpf.ViewModel.SideViewModel sideViewModelObject =

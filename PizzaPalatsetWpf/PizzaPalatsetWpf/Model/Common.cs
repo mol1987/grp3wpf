@@ -36,13 +36,20 @@ namespace PizzaPalatsetWpf.Model
         private Articles p_SelectedItem;
         public Articles SelectedItem
         {
-            get { return p_SelectedItem; }
+            get 
+            {
+                return p_SelectedItem; 
+            }
 
             set
             { 
                 p_SelectedItem = value;
                 OnPropertyChanged("SelectedItem");
             }
+        }
+        public void GoBack()
+        {
+            OnPropertyChanged("BackButton");
         }
 
         public void Load()

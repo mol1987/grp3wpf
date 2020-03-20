@@ -12,5 +12,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBlock>Ingredients</TextBlock>
+        <ListBox  ItemsSource="{Binding CommonData.SelectedItem.Ingredients, Mode=OneWay}"/>
+        <Button Content = "Back" Command="{Binding BackButton}" Width="60" Height="20"/>
     </Grid>
 </UserControl>

@@ -25,5 +25,9 @@ namespace TypeLib
         {
             Console.Write("{0}{1}{2}\n", ID.ToString().PadRight(n), Name.PadRight(n), Price.ToString().PadRight(n));
         }
+        override public string ToString()
+        {
+            return Name;
+        }
     }
 }

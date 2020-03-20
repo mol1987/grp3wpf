@@ -9,9 +9,9 @@
    mc:Ignorable = "d"
    Title = "MainWindow" Height = "350" Width = "525">
 
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <local:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Window.Resources>
         <DataTemplate DataType = "{x:Type viewModels:IngredientsViewModel}">
@@ -34,7 +34,7 @@
         
         <views:TopView x:Name = "TopViewControl" Loaded = "TopViewControl_Loaded" Grid.Row="0"/>
         <views:SideView x:Name = "SideViewControl" Loaded = "SideViewControl_Loaded" Grid.Column="1" Grid.RowSpan="2"/>
-        <views:ArticleView x:Name = "ArticleViewControl" Loaded = "ArticleViewControl_Loaded" Grid.Column="0" Grid.Row="1"/>
+        <!--<views:ArticleView x:Name = "ArticleViewControl" Loaded = "ArticleViewControl_Loaded" Grid.Column="0" Grid.Row="1"/>-->
 
 
         <Grid x:Name = "MainContent" Grid.Column="0" Grid.Row = "1">
