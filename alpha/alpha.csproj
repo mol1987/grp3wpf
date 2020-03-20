@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Assets\Images\" />
     <Folder Include="Assets\Icons\" />
-    <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>

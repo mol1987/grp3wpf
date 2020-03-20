@@ -7,10 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SplashView">
+    
     <!--#region Animations -->
-    <Page.DataContext>
-        <local:SplashViewModel/>
-    </Page.DataContext>
+
     <Page.Resources>
         <Color x:Key="FilledColor" A="255" B="155" R="155" G="155"/>
         <Color x:Key="UnfilledColor" A="0" B="155" R="155" G="155"/>
@@ -136,6 +135,13 @@
     </Page.Resources>
     
     <!--#endregion-->
+
+    <!--#region DataContext etc -->
+    <Page.DataContext>
+        <local:SplashViewModel/>
+    </Page.DataContext>
+    <!--#endregion-->
+
     <Grid Style="{StaticResource SplashRoot}">
         <!--#region Grid-/ColumnDefinitios -->
         <Grid.ColumnDefinitions>
