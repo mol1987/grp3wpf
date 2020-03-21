@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Library.TypeLib;
 
 namespace alpha
 {
-    public class ArticleItemViewModel
+    public class ArticleItemViewModel : BaseViewModel
     {
         public Article Article { get; set; }
 
@@ -14,8 +15,8 @@ namespace alpha
         }
 
         public void ChangeName(string n) => Article.Name = n;
-        public void ChangePrice(double n) => Article.Price = n;
-        public void ChangePrice(float f) => Article.Price = (double)f;
+        public void ChangePrice(double n) => Article.Price = (float)n;
+        public void ChangePrice(float f) => Article.Price = f;
 
     }
 }

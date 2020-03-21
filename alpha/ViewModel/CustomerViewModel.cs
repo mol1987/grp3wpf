@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using System.Diagnostics;
+using Library.TypeLib;
 
 namespace alpha
 {
@@ -14,19 +15,20 @@ namespace alpha
 
         public ArticleItemViewModel SelectedArticle { get; set; }
 
-        public ICommand ChangeArticle
-        {
-            get
-            {
-                return new RelayCommand(param => this.ChangeArticleAction(), null);
-            }
-        }
+        public ICommand ChangeArticle { get { return new RelayCommand(param => this.ChangeArticleAction(), null); } }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CustomerViewModel()
         {
-            articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_A", Price = 99.0 }));
-            articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_B", Price = 109.0 }));
+            articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_A", Price = 99.0f }));
+            articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_B", Price = 109.0f }));
         }
+
+        /// <summary>
+        /// Swapping View Action
+        /// </summary>
         public void ChangeArticleAction()
         {
             Trace.WriteLine("HELLO");
@@ -38,7 +40,7 @@ namespace alpha
             }
             else
             {
-                articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_C", Price = 129.0 }));
+                articles.Add(new ArticleItemViewModel(new Article { Name = "Pizza_C", Price = 129.0f }));
             }
         }
     }
