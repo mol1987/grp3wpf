@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace alpha
@@ -55,7 +56,16 @@ namespace alpha
         }
         private void ChangeViewAction()
         {
-            CurrentPage = ApplicationPage.Customer;
+            //
+            //
+            foreach (ApplicationPage page in Enum.GetValues(typeof(ApplicationPage)))
+            {
+                if (!page.Equals(CurrentPage))
+                {
+                    CurrentPage = page;
+                    break;
+                }
+            }
         }
         private void OnKeyDownAction()
         {

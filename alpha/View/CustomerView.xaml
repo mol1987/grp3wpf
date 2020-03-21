@@ -7,23 +7,47 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CustomerView">
-    
+
     <!--#region DataContext etc -->
     <Page.DataContext>
         <local:CustomerViewModel/>
     </Page.DataContext>
-    
+
     <!--#endregion-->
     <StackPanel Background="#f9f9f9">
         <ListView Height="100" Width="184" 
-                  ItemsSource="{Binding articles ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <ListView.View>
+                  ItemsSource="{Binding articles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
+                  >
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+
+
+                        <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding Article.Name}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2"  Text="{Binding Article.Price}"/>
+
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name"  DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Price"  DisplayMemberBinding="{Binding Price}"/>
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
         <Button Command="{Binding ChangeArticle}" Width="80" Height="40"  Content="Uppdatera Collection"/>
+        <TextBlock Text="{Binding SelectedArticle.Article.Name}" Background="#FFE4E4E4" MaxWidth="200"/>
     </StackPanel>
 </Page>
