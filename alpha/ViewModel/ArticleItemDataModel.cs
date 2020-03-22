@@ -5,11 +5,11 @@ using Library.TypeLib;
 
 namespace alpha
 {
-    public class ArticleItemViewModel : BaseViewModel
+    public class ArticleItemDataModel
     {
         public Article Article { get; set; }
 
-        public ArticleItemViewModel(Article article)
+        public ArticleItemDataModel(Article article)
         {
             this.Article = article;
         }
@@ -17,6 +17,5 @@ namespace alpha
         public void ChangeName(string n) => Article.Name = n;
         public void ChangePrice(double n) => Article.Price = (float)n;
         public void ChangePrice(float f) => Article.Price = f;
-
     }
 }
