@@ -21,7 +21,7 @@ namespace LogainWPF_Project
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary>jjnjkjkkklklkllkklkl
     public partial class MainWindow : Window
     {
         ArticleViewModel articles;
