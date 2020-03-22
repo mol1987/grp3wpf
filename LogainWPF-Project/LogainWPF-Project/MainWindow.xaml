@@ -1,0 +1,110 @@
+﻿<Window x:Class="LogainWPF_Project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LogainWPF_Project"
+     
+      
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="700" Background= "#04c582">
+   
+    <Border Background="Black" CornerRadius="20" Margin="20">
+        <Grid>
+            <StackPanel>
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Button Name="btnAnställda" Content="Anställda"  
+                     Grid.Column="0" VerticalAlignment="Top" 
+                     Width="100" Height=" 100" Margin="0 20"
+                     Background="LightBlue" FontWeight="Bold"/>
+                    <Button Name="btnArtiklar" Content="Artiklar" Click="btnArtiklar_Click"  
+                    Grid.Column="1" VerticalAlignment="Top" FontWeight="Bold"
+                    Width="100" Height=" 100" Margin="0 20" Background="LightBlue"/>
+                    <Button Name="btnIngredienser" 
+                    Content="Ingredienser"  
+                    Grid.Column="2" VerticalAlignment="Top"  FontWeight="Bold"
+                    Width="100" Height=" 100" Margin="0 20" Background="LightBlue"/>
+                    <Separator Grid.ColumnSpan="6" VerticalAlignment="Bottom">
+
+                    </Separator>
+
+
+
+                </Grid>
+                <ComboBox Name="ComboBox1" Height="50" Width="348" HorizontalAlignment="Left" SelectionChanged="ComboBox1_SelectionChanged"
+                  ItemsSource="{Binding SelectedArticle}" DisplayMemberPath="Name"/>
+                
+                <Button Content="selectItem" Height="40" Width ="90" HorizontalAlignment="Left" Margin="100" Click="Button_Click"/>
+
+
+            </StackPanel>
+          
+            <TextBlock Text=" Items to be Changed" Grid.ColumnSpan="7" FontSize="30" FontWeight="Bold" TextAlignment="Center" Foreground="White" HorizontalAlignment="Right" Margin=" 0 40 7 0" />
+            <Border BorderThickness="2" BorderBrush="Aqua" Width="300" Height="728" HorizontalAlignment="Right" >
+                <Grid  HorizontalAlignment="Right" Width="300" Height="600">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="*"/>
+                       
+                    </Grid.ColumnDefinitions>
+                   
+                    <StackPanel Orientation="Vertical" Width="300" Height="800"  Grid.Row="1" Grid.Column="0" >
+                        <TextBlock Text="Name:" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" Foreground="White" Margin="0 0 120 0" />
+                        <TextBox Name="Nametxt" Width="130"  Height="40" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2">
+                        <TextBlock Text="Pris:" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="40" Foreground="White" Margin="0  20 160 0" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="3" Orientation="Horizontal" Margin=" 0 20 0 0">
+
+                        <Button Content="Ändra" Margin="40 0" Width="60" Height="60"
+                        FontWeight="Bold" Background="LightBlue"/>
+                        <Button Content="TaBort" Width="60" Height="60" FontWeight="Bold"
+                                Background="LightBlue"/>
+                    </StackPanel>
+
+
+                   
+
+                </Grid>
+            </Border>
+           
+              
+                
+           
+
+            <Label Content="dahbord" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="10" />
+        </Grid>
+        <!--<local:LoginScreen x:Name ="LoginScreen" Loaded="LoginScreen_Loaded">
+
+        </local:LoginScreen>-->
+
+
+    </Border>
+</Window>
+
+ 
