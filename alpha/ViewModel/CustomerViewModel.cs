@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Windows.Input;
 using System.Diagnostics;
 using Library.TypeLib;
@@ -24,6 +22,9 @@ namespace alpha
         /// </summary>
         public ObservableCollection<ArticleItemDataModel> Articles { get; set; } = new ObservableCollection<ArticleItemDataModel>();
 
+        /// <summary>
+        /// Customer added items
+        /// </summary>
         public ObservableCollection<ArticleItemDataModel> Checkout { get; set; } = new ObservableCollection<ArticleItemDataModel>();
 
         /// <summary>
@@ -31,14 +32,25 @@ namespace alpha
         /// </summary>
         public ObservableCollection<string> Buttons { get; set; } = new ObservableCollection<string>();
 
+        /// <summary>
+        /// todo; probably going to remove this
+        /// </summary>
         public ArticleItemDataModel SelectedArticle { get; set; }
 
+        /// <summary>
+        /// Articles are filtered by this
+        /// </summary>
         public string CurrentlyDisplayedType { get; set; } = null;
 
+        /// <summary>
+        /// Testing out, todo; remove this
+        /// </summary>
         public ICommand ChangeArticle { get { return new RelayCommand(param => this.ChangeArticleAction(), null); } }
 
+        /// <summary>
+        /// When "<see cref="FilterButton"/>" is clicked
+        /// </summary>
         public ICommand FilterArticles { get { return new RelayCommand(param => this.FilterArticleAction(param), null); } }
-
 
         /// <summary>
         /// Constructor
@@ -57,8 +69,6 @@ namespace alpha
                 // Create buttons for each type
                 Buttons.Add(item.Type);
             }
-            //articles.Add(new ArticleItemDataModel(new Article { Name = "Pizza_A", Price = 99.0f }));
-            //articles.Add(new ArticleItemDataModel(new Article { Name = "Pizza_B", Price = 109.0f }));
         }
 
         /// <summary>
@@ -81,7 +91,7 @@ namespace alpha
 
         public void FilterArticleAction()
         {
-            Trace.WriteLine("yyyy");
+            Trace.WriteLine("Error[], not supplying argument");
         }
 
         /// <summary>
@@ -102,22 +112,7 @@ namespace alpha
                 {
                     Articles.Add(item);
                 }
-                #region .....
-                //storedArticles.ForEach(a =>
-                //{
-                //    int id = (int)a.Article.ID;
 
-                //    foreach(var item in Articles)
-                //    {
-                //        // Check if already contains
-                //        if (item.Article.ID == id)
-                //            break;
-
-                //        // !? else add back to it 
-                //        Articles.Add(item);
-                //    }
-                //}); 
-                #endregion
                 // Return point here
                 return;
             }

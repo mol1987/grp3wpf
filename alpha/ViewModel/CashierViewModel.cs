@@ -4,7 +4,10 @@ using System.Text;
 
 namespace alpha
 {
-    public class CashierViewModel
+    /// <summary>
+    /// Public terminal that is used by the paying Customer
+    /// </summary>
+    public class CashierViewModel : BaseViewModel
     {
         public string Title { get; set; } = "Cashier View";
     }

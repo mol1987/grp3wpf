@@ -6,6 +6,9 @@ using System.Windows.Media.Animation;
 
 namespace alpha
 {
+    /// <summary>
+    /// Currently not in use
+    /// </summary>
     public class BaseView : Page
     {
         #region Public properties

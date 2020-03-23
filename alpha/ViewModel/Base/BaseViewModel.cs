@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace alpha
 {
     /// <summary>
-    /// used for firing PropertyChanged events
+    /// Base class to be used in all ViewModels', used for firing PropertyChanged events with less code
     /// </summary>
     [AddINotifyPropertyChangedInterface]
     public class BaseViewModel : INotifyPropertyChanged

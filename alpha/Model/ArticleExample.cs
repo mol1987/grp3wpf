@@ -5,6 +5,9 @@ using System.Text;
 
 namespace alpha
 {
+    /// <summary>
+    /// Test Example, using Fodey package
+    /// </summary>
     [AddINotifyPropertyChangedInterface]
     public class ArticleExample
     {

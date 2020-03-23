@@ -8,8 +8,16 @@ using Newtonsoft.Json;
 
 namespace Library
 {
+    /// <summary>
+    /// Contains Methods to load data from the web
+    ///     todo; turn into a repository
+    /// </summary>
     public class ArticleProcessor
     {
+        /// <summary>
+        /// Load articles from "http://api.jkb.zone/articles"
+        /// </summary>
+        /// <returns><see cref="List<TypeLib.Article>"/></returns>
         public async Task<List<TypeLib.Article>> LoadArticle()
         {
             string url = "";

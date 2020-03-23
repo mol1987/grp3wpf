@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace alpha
 {
+    /// <summary>
+    /// Changing of the current page from <see cref="IndexViewModel"/>
+    /// </summary>
     public class ChangeViewCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;

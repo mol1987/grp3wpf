@@ -4,6 +4,9 @@ using System.Text;
 
 namespace alpha
 {
+    /// <summary>
+    /// List of available Pages inside <see cref="Window.Frame"/>
+    /// </summary>
     public enum ApplicationPage
     {
         /// <summary>
