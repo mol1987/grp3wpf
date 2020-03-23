@@ -9,7 +9,7 @@
       Title="CashierView">
 
     <Page.DataContext>
-        <local:OrderViewModel/>
+        <local:CashierViewModel/>
     </Page.DataContext>
     <Grid Background="{StaticResource SecondaryBrush}">
         <!--#region DataContext etc -->

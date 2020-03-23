@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace alpha
 {
+    /// <summary>
+    /// View/ViewModel used as a global Indexer for the other Views and ViewModels
+    /// </summary>
     public class IndexViewModel : BaseViewModel
     {
         #region Public Properties
@@ -12,6 +16,14 @@ namespace alpha
         /// </summary>
         public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Splash;
 
+        /// <summary>
+        /// Helper for swapping index, probably överblivet
+        /// </summary>
+        public int CurrentPageIndex { get; set; } = 0;
+        
+        /// <summary>
+        /// Text for button that swaps <see cref="CurrentPage"/>, hide this in final version
+        /// </summary>
         public string SwapViewButton { get; set; } = "Change View";
 
         #endregion
@@ -26,17 +38,20 @@ namespace alpha
 
         #region Constructor
         /// <summary>
-        /// 
+        /// Main Constructor for the Indexer
         /// </summary>
-        /// <param name="window"></param>
+        /// <param name="window"><see cref="Window"/> The actual window itself, passed as an argument</param>
         public IndexViewModel(Window window)
         {
             _window = window;
             LoadArticles();
         }
         #endregion
+
         private ICommand _swapView;
+
         private ICommand _onKeyDown;
+
         public ICommand SwapView
         {
             get
@@ -46,6 +61,7 @@ namespace alpha
                 return _swapView;
             }
         }
+
         public ICommand OnKeyDown
         {
             get
@@ -55,25 +71,48 @@ namespace alpha
                 return _onKeyDown;
             }
         }
+
         private void ChangeViewAction()
         {
-            //
-            //
+            int i = 0;
+            // Loop to change view
             foreach (ApplicationPage page in Enum.GetValues(typeof(ApplicationPage)))
             {
-                if (!page.Equals(CurrentPage))
+                // If CurrentPage is the last Page, (currently set to Cashierview), reset to Index page and quit the loop
+                if (CurrentPage.Equals(ApplicationPage.Cashier))
                 {
-                    var x = page;
-                    CurrentPage = page;
+                    CurrentPageIndex = 0;
+                    CurrentPage = ApplicationPage.Splash;
                     break;
                 }
+                // If Page is itself, skip to next
+                if (page.Equals(CurrentPage))
+                {
+                    i++;
+                    continue;
+                }
+                // If page is less than current index, skip
+                if (i < CurrentPageIndex)
+                {
+                    i++;
+                    continue;
+                }
+
+                // Page switch and quit the loop, since we have what we came for
+                CurrentPageIndex = i;
+                CurrentPage = page;
+                break;
             }
         }
+
         private void OnKeyDownAction()
         {
             var x = 0;
         }
 
+        /// <summary>
+        /// Loads from the set up WebApi
+        /// </summary>
         private async void LoadArticles()
         {
             Global.Articles = await (new Library.ArticleProcessor().LoadArticle());
