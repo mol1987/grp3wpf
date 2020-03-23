@@ -20,6 +20,12 @@ namespace alpha
                     return new SplashView();
                 case ApplicationPage.Customer:
                     return new CustomerView();
+                case ApplicationPage.Chief:
+                    return new ChiefView();
+                case ApplicationPage.Order:
+                    return new OrderView();
+                case ApplicationPage.Cashier:
+                    return new CashierView();
                 default:
                     Debugger.Break();
                     return null;

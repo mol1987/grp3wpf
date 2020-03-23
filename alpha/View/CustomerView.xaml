@@ -14,40 +14,96 @@
     </Page.DataContext>
 
     <!--#endregion-->
-    <StackPanel Background="#f9f9f9">
-        <ListView Height="100" Width="184" 
-                  ItemsSource="{Binding articles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+    <Grid Background="#f9f9f9">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <WrapPanel x:Name="FilterButtonList">
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="All" Content="Hem"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Pizza" Content="Pizza"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Sallad" Content="Sallad"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Dryck" Content="Dryck"/>
+            </WrapPanel>
+            <!--
+            
+            Todo; Makes this below work?
+            
+            
+            <Button x:Name="FilterButton" Command="{Binding FilterArticles}" Content="TEST__TRIGGER" />
+            <Border BorderBrush="#FF196861" BorderThickness="2,2,2,2">
+                <ListView x:Name="FilterButtonList" 
+                          ItemsSource="{Binding Buttons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          SelectionMode="Single"
+                          >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="FilterButton"  Command="{Binding FilterArticles}" Content="{Binding }" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Border>-->
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1" Grid.Column="0">
+
+
+            <ListView 
+                  ItemsSource="{Binding Articles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
                   >
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                        </Grid.RowDefinitions>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
 
 
-                        <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding Article.Name}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2"  Text="{Binding Article.Price}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding Article.Name}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2"  Text="{Binding Article.Price}"/>
 
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <!--<ListView.View>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name"  DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Price"  DisplayMemberBinding="{Binding Price}"/>
                 </GridView>
             </ListView.View>-->
-        </ListView>
-        <Button Command="{Binding ChangeArticle}" Width="80" Height="40"  Content="Uppdatera Collection"/>
-        <TextBlock Text="{Binding SelectedArticle.Article.Name}" Background="#FFE4E4E4" MaxWidth="200"/>
-    </StackPanel>
+            </ListView>
+            <Button Command="{Binding ChangeArticle}" Width="80" Height="40"  Content="Uppdatera Collection"/>
+            <TextBlock Text="{Binding SelectedArticle.Article.Name}" Background="#FFE4E4E4" MaxWidth="200"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="1" Grid.RowSpan="2" Background="#afafaf">
+            
+        </StackPanel>
+        
+    </Grid>
 </Page>

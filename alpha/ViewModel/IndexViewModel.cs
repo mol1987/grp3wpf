@@ -32,6 +32,7 @@ namespace alpha
         public IndexViewModel(Window window)
         {
             _window = window;
+            LoadArticles();
         }
         #endregion
         private ICommand _swapView;
@@ -62,6 +63,7 @@ namespace alpha
             {
                 if (!page.Equals(CurrentPage))
                 {
+                    var x = page;
                     CurrentPage = page;
                     break;
                 }
@@ -70,6 +72,11 @@ namespace alpha
         private void OnKeyDownAction()
         {
             var x = 0;
+        }
+
+        private async void LoadArticles()
+        {
+            Global.Articles = await (new Library.ArticleProcessor().LoadArticle());
         }
     }
 }

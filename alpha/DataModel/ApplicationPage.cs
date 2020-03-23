@@ -7,9 +7,12 @@ namespace alpha
     public enum ApplicationPage
     {
         /// <summary>
-        /// First View displayed
+        /// Current View Displayed
         /// </summary>
         Splash = 0,
         Customer = 1,
+        Chief = 2,
+        Order = 3,
+        Cashier = 4
     }
 }
