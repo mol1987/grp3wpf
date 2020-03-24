@@ -5,10 +5,34 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:alpha">
-    <Style TargetType="{x:Type WrapPanel}" x:Key="FilterButtonList">
 
-    </Style>
+    <!--#region All Views -->
+
     <Style TargetType="{x:Type Grid}" x:Key="SplashRoot">
         <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
     </Style>
+    <!--#endregion-->
+
+    <!--#region CustomerView -->
+    
+    <Style TargetType="{x:Type WrapPanel}" x:Key="FilterButtonList">
+
+    </Style>
+    <!--#endregion-->
+
+    <!--#region OrderView -->
+
+    <Style TargetType="{x:Type ItemsControl}" x:Key="Orders">
+        <Setter Property="Foreground" Value="#f9f9f9"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type StackPanel}" x:Key="OrderItem">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="36"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>
