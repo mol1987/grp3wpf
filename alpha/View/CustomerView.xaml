@@ -20,7 +20,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="6*"/>
@@ -34,76 +33,57 @@
                 <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Sallad" Content="Sallad"/>
                 <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Dryck" Content="Dryck"/>
             </WrapPanel>
-            <!--
-            
-            Todo; Makes this below work?
-            
-            
-            <Button x:Name="FilterButton" Command="{Binding FilterArticles}" Content="TEST__TRIGGER" />
-            <Border BorderBrush="#FF196861" BorderThickness="2,2,2,2">
-                <ListView x:Name="FilterButtonList" 
-                          ItemsSource="{Binding Buttons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          SelectionMode="Single"
-                          >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn>
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Button x:Name="FilterButton"  Command="{Binding FilterArticles}" Content="{Binding }" />
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Border>-->
         </StackPanel>
 
 
         <StackPanel Grid.Row="1" Grid.Column="0">
-
-
-            <ListView 
-                  ItemsSource="{Binding Articles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedArticle, Mode=TwoWay}"
-                  >
-
-                <ListBox.ItemTemplate>
+            <ItemsControl x:Name="Articles" ItemsSource="{Binding Articles, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-
-
-                            <TextBlock Grid.Row="1" Grid.Column="1"  Text="{Binding Article.Name}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="2"  Text="{Binding Article.Price}"/>
-
-                        </Grid>
+                        <Border Margin="10" Padding="10" BorderThickness="1" BorderBrush="DarkGray" MaxWidth="120">
+                            <!--todo; turn stackpanel into grid layout-->
+                            <StackPanel MaxWidth="200" Orientation="Vertical">
+                                <Image Source="{Binding Article.Image, FallbackValue='[Image here]'}"/>
+                                <TextBlock Text="{Binding Article.Name}"/>
+                                <TextBlock Text="{Binding Article.Price}"/>
+                                <Button Style="{StaticResource AddToCheckoutButton}" 
+                                        Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                        Padding="6,12" HorizontalContentAlignment="Center" 
+                                        VerticalContentAlignment="Center" 
+                                        Command="{Binding ElementName=Articles, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-                <!--<ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name"  DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="Price"  DisplayMemberBinding="{Binding Price}"/>
-                </GridView>
-            </ListView.View>-->
-            </ListView>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <Button Command="{Binding ChangeArticle}" Width="80" Height="40"  Content="Uppdatera Collection"/>
             <TextBlock Text="{Binding SelectedArticle.Article.Name}" Background="#FFE4E4E4" MaxWidth="200"/>
         </StackPanel>
 
 
         <StackPanel Grid.Column="1" Grid.RowSpan="2" Background="#afafaf">
-            
+
+            <StackPanel Margin="5,50,5,0">
+                <TextBlock Text="Varukorg" FontWeight="Bold"/>
+                <StackPanel>
+                    <TextBlock Text="varor:"/>
+                    <TextBlock Text="{Binding NumberOfItemsInCheckout, Mode=TwoWay, FallbackValue='?'}"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="pris:"/>
+                    <TextBlock Text="{Binding TotalPrice, Mode=TwoWay, FallbackValue='?'}"/>
+                </StackPanel>
+            </StackPanel>
+
+
+            <ItemsControl x:Name="Checkout" ItemsSource="{Binding Checkout, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Article.Name}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
-        
+
     </Grid>
 </Page>

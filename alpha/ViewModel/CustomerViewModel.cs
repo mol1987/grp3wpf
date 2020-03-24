@@ -43,6 +43,15 @@ namespace alpha
         public string CurrentlyDisplayedType { get; set; } = null;
 
         /// <summary>
+        /// Current number of items added to checkout
+        /// </summary>
+        public int NumberOfItemsInCheckout
+        {
+            get { return Checkout.Count; }
+            set { NumberOfItemsInCheckout = value; }
+        }
+
+        /// <summary>
         /// Testing out, todo; remove this
         /// </summary>
         public ICommand ChangeArticle { get { return new RelayCommand(param => this.ChangeArticleAction(), null); } }
@@ -51,6 +60,12 @@ namespace alpha
         /// When "<see cref="FilterButton"/>" is clicked
         /// </summary>
         public ICommand FilterArticles { get { return new RelayCommand(param => this.FilterArticleAction(param), null); } }
+
+        /// <summary>
+        /// Add ParentArticle to checkout
+        /// When "<see cref="AddToCheckoutButton"/>" is clicked
+        /// </summary>
+        public ICommand AddToCheckout { get { return new RelayCommand(param => this.AddToCheckoutAction(param), null); } }
 
         /// <summary>
         /// Constructor
@@ -104,7 +119,7 @@ namespace alpha
             string selectedType = (string)arg;
 
             // When 'home' is hit. Reset displayed articles to show all
-            if(selectedType == "All")
+            if (selectedType == "All")
             {
                 Articles.Clear();
 
@@ -122,10 +137,23 @@ namespace alpha
 
             Articles.Clear();
 
-            foreach(var item in _)
+            foreach (var item in _)
             {
                 Articles.Add(item);
             }
         }
+
+        /// <summary>
+        /// Add <see cref="ArticleItemDataModel"/> to checkout list
+        /// </summary>
+        /// <param name="arg"></param>
+        public void AddToCheckoutAction(object arg)
+        {
+            var data = (ArticleItemDataModel)arg;
+            //todo; make typecheck
+            Checkout.Add(data);
+            NumberOfItemsInCheckout = Checkout.Count();
+        }
+        public void RemoveFromCheckout(object arg) { }
     }
 }
