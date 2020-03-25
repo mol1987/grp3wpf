@@ -13,7 +13,7 @@ namespace Library.TypeLib
         public float? Price { get; set; }
         public string? Type { get; set; }
         /// <summary>
-        /// URL to image location
+        /// URL to image location .
         /// </summary>
         public string? ImageSource { get; set; }
         public ArticleOrder? ArticleOrder { get; set; }
