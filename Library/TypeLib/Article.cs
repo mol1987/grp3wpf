@@ -12,6 +12,8 @@ namespace Library.TypeLib
         public string? Name { get; set; }
         public float? Price { get; set; }
         public string? Type { get; set; }
+        public string? ImageSource { get; set; }
+        //asdasd
         public ArticleOrder? ArticleOrder { get; set; }
         public List<Ingredient> Ingredients { get; set; }
 
