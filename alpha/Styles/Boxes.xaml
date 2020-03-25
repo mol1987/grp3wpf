@@ -18,6 +18,13 @@
     <Style TargetType="{x:Type WrapPanel}" x:Key="FilterButtonList">
 
     </Style>
+
+    <Style TargetType="{x:Type Rectangle}" x:Key="ImageRectangle">
+        <Setter Property="Fill" Value="Gray"/>
+        <Setter Property="Width" Value="128"/>
+        <Setter Property="Height" Value="128"/>
+    </Style>
+    
     <!--#endregion-->
 
     <!--#region OrderView -->

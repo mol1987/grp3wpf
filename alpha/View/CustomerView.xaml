@@ -35,13 +35,42 @@
             </WrapPanel>
         </StackPanel>
 
+        <Border Grid.Column="0" Grid.Row="1" >
+            <ListView ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" Rows="3"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Vertical">
+                            <Image Width="256" Height="256" Stretch="Fill" Source="https://picsum.photos/256/256"/>
+                            <!--<Rectangle Stretch="Fill" Style="{StaticResource ImageRectangle}"></Rectangle>-->
+                            <WrapPanel >
+                                <TextBlock Text="{Binding Article.Name}"/>
+                                <TextBlock Text="{Binding Article.Price}"/>
+                                <Button Style="{StaticResource AddToCheckoutButton}" 
+                                        Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                        Padding="6,12" HorizontalContentAlignment="Center" 
+                                        VerticalContentAlignment="Center" 
+                                        Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
 
-        <StackPanel Grid.Row="1" Grid.Column="0">
+            </ListView>
+        </Border>
+        <!--#region .....  -->
+        <!--<StackPanel Grid.Row="1" Grid.Column="0">
             <ItemsControl x:Name="Articles" ItemsSource="{Binding Articles, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" Padding="10" BorderThickness="1" BorderBrush="DarkGray" MaxWidth="120">
-                            <!--todo; turn stackpanel into grid layout-->
+                            -->
+        <!--todo; turn stackpanel into grid layout-->
+        <!--
                             <StackPanel MaxWidth="200" Orientation="Vertical">
                                 <Image Source="{Binding Article.Image, FallbackValue='[Image here]'}"/>
                                 <TextBlock Text="{Binding Article.Name}"/>
@@ -58,7 +87,8 @@
             </ItemsControl>
             <Button Command="{Binding ChangeArticle}" Width="80" Height="40"  Content="Uppdatera Collection"/>
             <TextBlock Text="{Binding SelectedArticle.Article.Name}" Background="#FFE4E4E4" MaxWidth="200"/>
-        </StackPanel>
+        </StackPanel>-->
+        <!--#endregion-->
 
 
         <StackPanel Grid.Column="1" Grid.RowSpan="2" Background="#afafaf">
