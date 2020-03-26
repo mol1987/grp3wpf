@@ -19,6 +19,11 @@
         </Grid.RowDefinitions>
         <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
         <!--<Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" Background="Transparent" />-->
-        <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Grid.Row="1" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">
+            <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
+            <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
+            <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
+        </StackPanel>
+
     </Grid>
 </Window>

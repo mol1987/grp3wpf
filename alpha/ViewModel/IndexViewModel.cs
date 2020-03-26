@@ -20,20 +20,25 @@ namespace alpha
         /// Helper for swapping index, probably överblivet
         /// </summary>
         public int CurrentPageIndex { get; set; } = 0;
-        
+
         /// <summary>
         /// Text for button that swaps <see cref="CurrentPage"/>, hide this in final version
         /// </summary>
         public string SwapViewButton { get; set; } = "Change View";
 
-        #endregion
+        /// <summary>
+        /// 
+        /// </summary>
+        public string TestItemVisibility { get; set; } = "Visible";
 
+        #endregion
+         
         #region Private Properties
         /// <summary>
         /// The actual xaml-window
         /// Probably use for messageBoxes etc
         /// </summary>
-        private Window _window; 
+        private Window _window;
         #endregion
 
         #region Constructor
@@ -69,6 +74,17 @@ namespace alpha
                 if (_onKeyDown == null)
                     _onKeyDown = new RelayCommand(param => this.OnKeyDownAction(), null);
                 return _onKeyDown;
+            }
+        }
+
+        private ICommand _toggleVisibility;
+        public ICommand ToggleVisibility
+        {
+            get
+            {
+                if (_toggleVisibility == null)
+                    _toggleVisibility = new RelayCommand(param => this.ToggleItemVisibility(), null);
+                return _toggleVisibility;
             }
         }
 
@@ -109,7 +125,11 @@ namespace alpha
         {
             var x = 0;
         }
-
+        private void ToggleItemVisibility()
+        {
+            // ? if visible hide it, else if hidden; show it
+            TestItemVisibility = TestItemVisibility == "Visible" ? "Hidden" : "Visible";
+        }
         /// <summary>
         /// Loads from the set up WebApi
         /// </summary>

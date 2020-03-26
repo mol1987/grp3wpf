@@ -67,6 +67,10 @@ namespace alpha
         /// </summary>
         public ICommand AddToCheckout { get { return new RelayCommand(param => this.AddToCheckoutAction(param), null); } }
 
+        public ICommand PurchaseCheckoutItems { get { return new RelayCommand(param => this.PurchaseCheckoutItemsAction(param), null); } }
+
+        public ICommand RemoveFromCheckout { get { return new RelayCommand(param => this.RemoveFromCheckoutAction(param), null); } }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -154,6 +158,8 @@ namespace alpha
             Checkout.Add(data);
             NumberOfItemsInCheckout = Checkout.Count();
         }
-        public void RemoveFromCheckout(object arg) { }
+        public void RemoveFromCheckoutAction(object arg) { }
+        public void PurchaseCheckoutItemsAction(object args) { }
+
     }
 }
