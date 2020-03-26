@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace alpha
 {
@@ -14,5 +15,6 @@ namespace alpha
     public static class Global
     {
         public static List<Article> Articles { get; set; } = new List<Article>();
+        public static Window ActualWindow;
     }
 }

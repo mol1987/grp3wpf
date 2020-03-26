@@ -51,11 +51,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Orientation="Vertical">
-                            <!--<Image Width="256" Height="256" Margin="3" Source="{Binding     
-                                    Path=Article.ImageSource,
-                                    Converter={StaticResource ImageConverter}}"/>-->
                             <Image Width="256" Height="256" Stretch="Fill" Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
-                            <!--<Rectangle Stretch="Fill" Style="{StaticResource ImageRectangle}"></Rectangle>https://picsum.photos/256/256-->
                             <WrapPanel >
                                 <TextBlock Text="{Binding Article.Name}"/>
                                 <TextBlock Text="{Binding Article.Price}"/>
@@ -83,16 +79,26 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="pris:"/>
-                        <TextBlock Text="{Binding TotalPrice, Mode=TwoWay, FallbackValue='?'}"/>
+                        <TextBlock Text="{Binding TotalCheckoutPrice, Mode=TwoWay, FallbackValue='?'}"/>
                     </StackPanel>
                 </StackPanel>
-                <ItemsControl x:Name="Checkout" ItemsSource="{Binding Checkout, Mode=TwoWay}">
+                <!--Checkout-->
+                <ItemsControl x:Name="checkout_list" ItemsSource="{Binding Checkout, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Article.Name}"/>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Article.Name}"/>
+                               
+                                <Button Command="{Binding ElementName=checkout_list, Path=DataContext.RemoveFromCheckout}" 
+                                        CommandParameter="{Binding}" Content="-" Background="Red"/>
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                <!--Purchase-->
+                <StackPanel>
+                    <Button Content="Köp" IsEnabled="{Binding }" Command="{Binding PurchaseCheckoutItems}" />
+                </StackPanel>
             </StackPanel>
         </Border>
 

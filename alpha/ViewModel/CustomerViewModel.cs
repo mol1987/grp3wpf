@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Diagnostics;
 using Library.TypeLib;
+using System.Windows;
 
 namespace alpha
 {
@@ -42,13 +43,37 @@ namespace alpha
         /// </summary>
         public string CurrentlyDisplayedType { get; set; } = null;
 
+        // Private
+        private float _totalCheckoutPrice;
+        /// <summary>
+        /// Total price of articles in checkout
+        /// </summary>
+        public float TotalCheckoutPrice
+        {
+            get { return _totalCheckoutPrice; }
+            set { _totalCheckoutPrice += value; }
+        }
+
+        // Private
+        private int _numberOfItemsInCheckout = 0;
         /// <summary>
         /// Current number of items added to checkout
         /// </summary>
         public int NumberOfItemsInCheckout
         {
-            get { return Checkout.Count; }
-            set { NumberOfItemsInCheckout = value; }
+            get { return _numberOfItemsInCheckout; }
+            set { _numberOfItemsInCheckout = value; }
+        }
+
+        // Private
+        private string _buyButtonEnabledMode = "False";
+        /// <summary>
+        /// Grays out the buy button in checkout depending on if there are any items in Checkout-list
+        /// </summary>
+        public string BuyButtonEnabledMode
+        {
+            get { return _buyButtonEnabledMode; }
+            set { _buyButtonEnabledMode = value; }
         }
 
         /// <summary>
@@ -95,7 +120,6 @@ namespace alpha
         /// </summary>
         public void ChangeArticleAction()
         {
-            Trace.WriteLine("HELLO");
             var item = Articles.FirstOrDefault(i => i.Article.Name == "Pizza_A");
             if (item != null)
             {
@@ -157,9 +181,46 @@ namespace alpha
             //todo; make typecheck
             Checkout.Add(data);
             NumberOfItemsInCheckout = Checkout.Count();
+            TotalCheckoutPrice = (float)data.Article.Price;
+            BuyButtonEnabledMode = "True";
         }
-        public void RemoveFromCheckoutAction(object arg) { }
-        public void PurchaseCheckoutItemsAction(object args) { }
 
+        public void RemoveFromCheckoutAction(object arg)
+        {
+            ArticleItemDataModel item = (ArticleItemDataModel)arg;
+
+            var articleToRemove = Checkout.First(a => a.Article.ID == item.Article.ID);
+            if (articleToRemove != null)
+                Checkout.Remove(articleToRemove);
+
+            // Minus twice the price to get negative
+            TotalCheckoutPrice = (float)articleToRemove.Article.Price - ((float)articleToRemove.Article.Price * 2);
+
+            //Safety check for negatives, maybe not needed
+            if (NumberOfItemsInCheckout < 0)
+                NumberOfItemsInCheckout = 0;
+
+            if (NumberOfItemsInCheckout < 1)
+                // Disable the buy button
+                BuyButtonEnabledMode = "False";
+        }
+
+        public void PurchaseCheckoutItemsAction(object args)
+        {
+
+            //todo;
+            // Gör datauppkoppling och spara data i Checkout
+            var dataToSave = Checkout;
+            MessageBox.Show("Purchased");
+
+            // Cleara ut
+            Checkout.Clear();
+
+            // Reset Counter
+            NumberOfItemsInCheckout = Checkout.Count();
+
+            // Reset price
+            TotalCheckoutPrice = TotalCheckoutPrice * -1;
+        }
     }
 }
