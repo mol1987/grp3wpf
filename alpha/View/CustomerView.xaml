@@ -13,6 +13,10 @@
         <local:CustomerViewModel/>
     </Page.DataContext>
 
+    <Page.Resources>
+        <local:PathToImageConverter x:Key="ImageConverter"/>
+    </Page.Resources>
+
     <!--#endregion-->
     <Grid Background="#f9f9f9">
 
@@ -45,8 +49,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Orientation="Vertical">
-                            <Image Width="256" Height="256" Stretch="Fill" Source="https://picsum.photos/256/256"/>
-                            <!--<Rectangle Stretch="Fill" Style="{StaticResource ImageRectangle}"></Rectangle>-->
+                            <!--<Image Width="256" Height="256" Margin="3" Source="{Binding     
+                                    Path=Article.ImageSource,
+                                    Converter={StaticResource ImageConverter}}"/>-->
+                            <Image Width="256" Height="256" Stretch="Fill" Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
+                            <!--<Rectangle Stretch="Fill" Style="{StaticResource ImageRectangle}"></Rectangle>https://picsum.photos/256/256-->
                             <WrapPanel >
                                 <TextBlock Text="{Binding Article.Name}"/>
                                 <TextBlock Text="{Binding Article.Price}"/>

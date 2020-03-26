@@ -18,7 +18,7 @@ namespace Library.Helper
             string env_name = ".env";
             string env_path = "";
             string workingDirectory = System.Environment.CurrentDirectory;
-            string searchDirectory = Directory.GetParent(workingDirectory).Parent.FullName; ;
+            string searchDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
 
             // Iterates backwards through folders to find the ".env"-file
             for (int i = 0; i < 5; i++)
