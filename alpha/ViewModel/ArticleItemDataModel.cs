@@ -29,7 +29,7 @@ namespace alpha
         }
 
         public void ChangeName(string n) => Article.Name = n;
-        public void ChangePrice(double n) => Article.Price = (float)n;
-        public void ChangePrice(float f) => Article.Price = f;
+        public void ChangePrice(double n) => Article.BasePrice = (float)n;
+        public void ChangePrice(float f) => Article.BasePrice = f;
     }
 }

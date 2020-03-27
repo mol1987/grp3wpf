@@ -42,7 +42,7 @@ namespace Library.Repository
                 using (var transaction = connection.BeginTransaction())
                 {
                     string sql = @"INSERT INTO Articles (Name, BasePrice, Type) VALUES (@Name, @BasePrice, @Type) SELECT CAST(SCOPE_IDENTITY() as int)";
-                    var id = (await connection.QueryAsync<int>(sql, new { Name = article.Name, BasePrice = article.Price, Type = article.Type }, transaction: transaction)).Single();
+                    var id = (await connection.QueryAsync<int>(sql, new { Name = article.Name, BasePrice = article.BasePrice, Type = article.Type }, transaction: transaction)).Single();
                     article.ID = id;
                     foreach (var ingredient in article.Ingredients)
                     {
