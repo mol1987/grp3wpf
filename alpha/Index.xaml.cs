@@ -15,6 +15,13 @@ namespace alpha
             // Store window in global to be accesible, todo; this is probably bad practice but meh
             Global.ActualWindow = this;
 
+            // Load environment with error check
+            if (!Library.Helper.Environment.LoadEnvFile())
+            {
+                MessageBox.Show("Missing environment file, shutting down", "Error");
+                this.Close();
+            }
+
             // Load up MVVM
             this.DataContext = new IndexViewModel(this);
         }

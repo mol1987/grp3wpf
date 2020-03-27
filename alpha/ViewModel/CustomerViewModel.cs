@@ -46,14 +46,25 @@ namespace alpha
         public string CurrentlyDisplayedType { get; set; } = null;
 
         // Private
-        private float _totalCheckoutPrice;
+        private float _checkoutSum = 0;
+        private void AddToCheckoutSum(float n) => CheckOutSum += n;
+        private void RemoveFromCheckoutSum(float n)
+        {
+            // Negative sum check
+            if (CheckOutSum - n <= 0)
+            {
+                CheckOutSum = 0;
+                return;
+            }
+            CheckOutSum -= n;
+        }
         /// <summary>
         /// Total price of articles in checkout
         /// </summary>
-        public float TotalCheckoutPrice
+        public float CheckOutSum
         {
-            get { return _totalCheckoutPrice; }
-            set { _totalCheckoutPrice += value; }
+            get { return _checkoutSum; }
+            set { _checkoutSum = value; }
         }
 
         // Private
@@ -94,12 +105,18 @@ namespace alpha
         /// </summary>
         public ICommand AddToCheckout { get { return new RelayCommand(param => this.AddToCheckoutAction(param), null); } }
 
+        /// <summary>
+        /// Finalize purchase with articles currently in checkout
+        /// </summary>
         public ICommand PurchaseCheckoutItems { get { return new RelayCommand(param => this.PurchaseCheckoutItemsAction(param), null); } }
 
+        /// <summary>
+        /// Remove item from checkout
+        /// </summary>
         public ICommand RemoveFromCheckout { get { return new RelayCommand(param => this.RemoveFromCheckoutAction(param), null); } }
 
         /// <summary>
-        /// Constructor
+        /// Constructor, activates on page/frame load
         /// </summary>
         public CustomerViewModel()
         {
@@ -133,7 +150,7 @@ namespace alpha
             }
             else
             {
-                Articles.Add(new ArticleItemDataModel(new Article { Name = "Pizza_C", Price = 129.0f }));
+                Articles.Add(new ArticleItemDataModel(new Article { Name = "Pizza_C", BasePrice = 129.0f }));
             }
         }
 
@@ -186,10 +203,15 @@ namespace alpha
             //todo; make typecheck
             Checkout.Add(data);
             NumberOfItemsInCheckout = Checkout.Count();
-            TotalCheckoutPrice = (float)data.Article.Price;
+            //TotalCheckoutPrice = (float)data.Article.BasePrice;
+            AddToCheckoutSum((float)data.Article.BasePrice);
             BuyButtonEnabledMode = "True";
         }
 
+        /// <summary>
+        /// Remove <see cref="ArticleItemDataModel"/> from checkout
+        /// </summary>
+        /// <param name="arg"></param>
         public void RemoveFromCheckoutAction(object arg)
         {
             ArticleItemDataModel item = (ArticleItemDataModel)arg;
@@ -198,18 +220,25 @@ namespace alpha
             if (articleToRemove != null)
                 Checkout.Remove(articleToRemove);
 
-            // Minus twice the price to get negative
-            TotalCheckoutPrice = (float)articleToRemove.Article.Price - ((float)articleToRemove.Article.Price * 2);
+            //
+            RemoveFromCheckoutSum((float)articleToRemove.Article.BasePrice);
+
+            // Recount the checkout item
+            NumberOfItemsInCheckout = Checkout.Count();
 
             //Safety check for negatives, maybe not needed
             if (NumberOfItemsInCheckout < 0)
                 NumberOfItemsInCheckout = 0;
 
+            // Disable the buy button
             if (NumberOfItemsInCheckout < 1)
-                // Disable the buy button
                 BuyButtonEnabledMode = "False";
         }
 
+        /// <summary>
+        /// Run all <see cref="ArticleItemDataModel"/> in <see cref="Checkout"/> as purchase and add to database
+        /// </summary>
+        /// <param name="args"></param>
         public void PurchaseCheckoutItemsAction(object args)
         {
 
@@ -225,7 +254,7 @@ namespace alpha
             NumberOfItemsInCheckout = Checkout.Count();
 
             // Reset price
-            TotalCheckoutPrice = TotalCheckoutPrice * -1;
+            CheckOutSum = CheckOutSum * 0;
         }
     }
 }

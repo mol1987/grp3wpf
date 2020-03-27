@@ -10,7 +10,6 @@ namespace alpha
     /// </summary>
     public class IndexViewModel : BaseViewModel
     {
-        #region Public Properties
         /// <summary>
         /// The current view displayed
         /// </summary>
@@ -27,19 +26,15 @@ namespace alpha
         public string SwapViewButton { get; set; } = "Change View";
 
         /// <summary>
-        /// 
+        /// Testning, todo; remove
         /// </summary>
         public string TestItemVisibility { get; set; } = "Visible";
-
-        #endregion
          
-        #region Private Properties
         /// <summary>
         /// The actual xaml-window
         /// Probably use for messageBoxes etc
         /// </summary>
         private Window _window;
-        #endregion
 
         #region Constructor
         /// <summary>
@@ -49,14 +44,16 @@ namespace alpha
         public IndexViewModel(Window window)
         {
             _window = window;
+            // Loads remote data
             LoadArticles();
         }
         #endregion
 
+        // Private holder
         private ICommand _swapView;
-
-        private ICommand _onKeyDown;
-
+        /// <summary>
+        /// Command for swapping view
+        /// </summary>
         public ICommand SwapView
         {
             get
@@ -67,6 +64,12 @@ namespace alpha
             }
         }
 
+        // Private Holder
+        private ICommand _onKeyDown;
+        /// <summary>
+        /// (Currently not working)
+        /// Command for catching onkey onkey action
+        /// </summary>
         public ICommand OnKeyDown
         {
             get
@@ -77,7 +80,11 @@ namespace alpha
             }
         }
 
+        // Private Holder
         private ICommand _toggleVisibility;
+        /// <summary>
+        /// Command for element "Visiblity" toggling between "Hidden" and "Visible"
+        /// </summary>
         public ICommand ToggleVisibility
         {
             get
@@ -88,6 +95,9 @@ namespace alpha
             }
         }
 
+        /// <summary>
+        /// Swaps the current view/page in main_frame 
+        /// </summary>
         private void ChangeViewAction()
         {
             int i = 0;
@@ -121,21 +131,33 @@ namespace alpha
             }
         }
 
+        /// <summary>
+        /// Just testing for now, todo; add onkey triggersr
+        /// </summary>
         private void OnKeyDownAction()
         {
             var x = 0;
         }
+
+        /// <summary>
+        /// Just testing, todo; remove
+        /// </summary>
         private void ToggleItemVisibility()
         {
             // ? if visible hide it, else if hidden; show it
             TestItemVisibility = TestItemVisibility == "Visible" ? "Hidden" : "Visible";
         }
+
         /// <summary>
         /// Loads from the set up WebApi
         /// </summary>
         private async void LoadArticles()
         {
-            Global.Articles = await (new Library.ArticleProcessor().LoadArticle());
+            //WebApi
+            //Global.Articles = await (new Library.ArticleProcessor().LoadArticle());
+
+            //Sql Connection
+            Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
         }
     }
 }

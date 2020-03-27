@@ -54,7 +54,7 @@
                             <Image Width="256" Height="256" Stretch="Fill" Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
                             <WrapPanel >
                                 <TextBlock Text="{Binding Article.Name}"/>
-                                <TextBlock Text="{Binding Article.Price}"/>
+                                <TextBlock Text="{Binding Article.BasePrice}"/>
                                 <Button Style="{StaticResource AddToCheckoutButton}" 
                                         Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
                                         Padding="6,12" HorizontalContentAlignment="Center" 
@@ -70,6 +70,7 @@
 
         <!--SidePanel-->
         <Border Grid.Column="1" Grid.RowSpan="2" BorderThickness="0" Padding="25" Background="#afafaf">
+            <!--Checkout-->
             <StackPanel>
                 <StackPanel Margin="5,50,5,0">
                     <TextBlock Text="Varukorg" FontWeight="Bold"/>
@@ -79,10 +80,10 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="pris:"/>
-                        <TextBlock Text="{Binding TotalCheckoutPrice, Mode=TwoWay, FallbackValue='?'}"/>
+                        <TextBlock Text="{Binding CheckOutSum, Mode=TwoWay, FallbackValue='?'}"/>
                     </StackPanel>
                 </StackPanel>
-                <!--Checkout-->
+                <!--Checkout list-->
                 <ItemsControl x:Name="checkout_list" ItemsSource="{Binding Checkout, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -97,7 +98,7 @@
                 </ItemsControl>
                 <!--Purchase-->
                 <StackPanel>
-                    <Button Content="Köp" IsEnabled="{Binding }" Command="{Binding PurchaseCheckoutItems}" />
+                    <Button Content="Köp" IsEnabled="{Binding BuyButtonEnabledMode}" Command="{Binding PurchaseCheckoutItems}" />
                 </StackPanel>
             </StackPanel>
         </Border>

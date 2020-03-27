@@ -10,7 +10,7 @@ namespace Library.TypeLib
     {
         public int? ID { get; set; }
         public string? Name { get; set; }
-        public float? Price { get; set; }
+        public float? BasePrice { get; set; }
         public string? Type { get; set; }
         /// <summary>
         /// URL to image location .
