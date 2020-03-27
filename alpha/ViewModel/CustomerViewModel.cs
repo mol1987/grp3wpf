@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Diagnostics;
 using Library.TypeLib;
+using Library.Repository;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace alpha
 {
@@ -101,8 +103,11 @@ namespace alpha
         /// </summary>
         public CustomerViewModel()
         {
+            bool res = Library.Helper.Environment.LoadEnvFile() ? true : false;
             // Loaded Data from WebApi
-            foreach (var item in Global.Articles)
+            var items = Global.Articles;
+            //var items = Task.Run(() => General.articlesRepo.GetAllAsync()).Result;
+            foreach (var item in items)
             {
                 // Storage
                 storedArticles.Add(new ArticleItemDataModel(item));
