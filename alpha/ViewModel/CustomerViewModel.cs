@@ -120,10 +120,8 @@ namespace alpha
         /// </summary>
         public CustomerViewModel()
         {
-            bool res = Library.Helper.Environment.LoadEnvFile() ? true : false;
             // Loaded Data from WebApi
-            //var items = Global.Articles;
-            var items = Task.Run(() => General.articlesRepo.GetAllAsync()).Result;
+            var items = Global.Articles;
             foreach (var item in items)
             {
                 // Storage
