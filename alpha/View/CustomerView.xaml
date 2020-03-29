@@ -1,0 +1,107 @@
+﻿<Page x:Class="alpha.CustomerView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:alpha"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CustomerView">
+
+    <!--#region DataContext etc -->
+    <Page.DataContext>
+        <local:CustomerViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <local:PathToImageConverter x:Key="ImageConverter"/>
+    </Page.Resources>
+
+    <!--#endregion-->
+    <Grid Background="#f9f9f9">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--TopPanel-->
+        <StackPanel Grid.Column="0" Grid.Row="0">
+            <WrapPanel x:Name="FilterButtonList">
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="All" Content="Hem"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Pizza" Content="Pizza"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Sallad" Content="Sallad"/>
+                <Button Style="{StaticResource FilterButton}" Command="{Binding FilterArticles}" CommandParameter="Dryck" Content="Dryck"/>
+            </WrapPanel>
+        </StackPanel>
+
+        <!--BigPanel-->
+        <Border Grid.Column="0" Grid.Row="1" >
+            <ListView ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" Rows="3"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Orientation="Vertical">
+                            <Image Width="256" Height="256" Stretch="Fill" Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
+                            <WrapPanel >
+                                <TextBlock Text="{Binding Article.Name}"/>
+                                <TextBlock Text="{Binding Article.BasePrice}"/>
+                                <Button Style="{StaticResource AddToCheckoutButton}" 
+                                        Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
+                                        Padding="6,12" HorizontalContentAlignment="Center" 
+                                        VerticalContentAlignment="Center" 
+                                        Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
+                            </WrapPanel>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </Border>
+
+        <!--SidePanel-->
+        <Border Grid.Column="1" Grid.RowSpan="2" BorderThickness="0" Padding="25" Background="#afafaf">
+            <!--Checkout-->
+            <StackPanel>
+                <StackPanel Margin="5,50,5,0">
+                    <TextBlock Text="Varukorg" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="varor:"/>
+                        <TextBlock Text="{Binding NumberOfItemsInCheckout, Mode=TwoWay, FallbackValue='?'}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="pris:"/>
+                        <TextBlock Text="{Binding CheckOutSum, Mode=TwoWay, FallbackValue='?'}"/>
+                    </StackPanel>
+                </StackPanel>
+                <!--Checkout list-->
+                <ItemsControl x:Name="checkout_list" ItemsSource="{Binding Checkout, Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Article.Name}"/>
+                               
+                                <Button Command="{Binding ElementName=checkout_list, Path=DataContext.RemoveFromCheckout}" 
+                                        CommandParameter="{Binding}" Content="-" Background="Red"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--Purchase-->
+                <StackPanel>
+                    <Button Content="Köp" IsEnabled="{Binding BuyButtonEnabledMode}" Command="{Binding PurchaseCheckoutItems}" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Page>

@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Images\Bussola.png" />
+    <None Remove="Assets\Images\default.png" />
+    <None Remove="Assets\Images\fogel.png" />
+    <None Remove="Assets\Images\Hawaii.png" />
+    <None Remove="Assets\Images\Margherita.png" />
+    <None Remove="Assets\Images\Napoli.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Fonts\" />
+    <Folder Include="Assets\Icons\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\Hawaii.png" />
+    <Resource Include="Assets\Images\Bussola.png" />
+    <Resource Include="Assets\Images\default.png" />
+    <Resource Include="Assets\Images\fogel.png" />
+    <Resource Include="Assets\Images\Margherita.png" />
+    <Resource Include="Assets\Images\Napoli.png" />
+  </ItemGroup>
+
+</Project>
