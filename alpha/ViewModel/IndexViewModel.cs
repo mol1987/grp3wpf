@@ -10,6 +10,9 @@ namespace alpha
     /// </summary>
     public class IndexViewModel : BaseViewModel
     {
+        public static double WindowWidth { get; set; } = 800;
+        public static double WindowHeight { get; set; } = 600;
+
         /// <summary>
         /// The current view displayed
         /// </summary>
@@ -44,10 +47,20 @@ namespace alpha
         public IndexViewModel(Window window)
         {
             _window = window;
+
+            // Set window to fit users screen
+            WindowWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            WindowHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            
             // Loads remote data
             LoadArticles();
         }
         #endregion
+
+        // Private holder
+        public ICommand _quitApplication;
+
+        public ICommand QuitApplication { get { return _quitApplication  ?? new RelayCommand(param => this.QuitApplicationAction(), null); } }
 
         // Private holder
         private ICommand _swapView;
@@ -158,6 +171,14 @@ namespace alpha
 
             //Sql Connection
             Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
+        }
+
+        /// <summary>
+        /// Quits the application
+        /// </summary>
+        private void QuitApplicationAction()
+        {
+            App.Current.MainWindow.Close();
         }
     }
 }
