@@ -33,7 +33,7 @@ namespace alpha
         /// <summary>
         /// Buttons in the top for filtering the view
         /// </summary>
-        public ObservableCollection<string> Buttons { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<FilterButton> FilterButtons { get; set; } = new ObservableCollection<FilterButton>();
 
         /// <summary>
         /// todo; probably going to remove this
@@ -122,16 +122,21 @@ namespace alpha
         {
             // Loaded Data from WebApi
             var items = Global.Articles;
+
+            // One nav Button for The "Hem"-knapp
+            FilterButtons.Add(new FilterButton { Type = "Hem" });
+
             foreach (var item in items)
             {
-                // Storage
+                // Storage, used for filtering later on
                 storedArticles.Add(new ArticleItemDataModel(item));
 
                 // Displayed Articles
                 Articles.Add(new ArticleItemDataModel(item));
 
-                // Create buttons for each type
-                Buttons.Add(item.Type);
+                // Create nav buttons for each type once
+                if(FilterButtons.Where(fb => fb.Type == item.Type).Count() < 1)
+                    FilterButtons.Add(new FilterButton { Type = item.Type });
             }
         }
 
@@ -167,7 +172,7 @@ namespace alpha
             string selectedType = (string)arg;
 
             // When 'home' is hit. Reset displayed articles to show all
-            if (selectedType == "All")
+            if (selectedType == "All" || selectedType == "Hem")
             {
                 Articles.Clear();
 
