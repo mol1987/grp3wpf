@@ -10,12 +10,10 @@ namespace alpha
     /// </summary>
     public class IndexViewModel : BaseViewModel
     {
-<<<<<<< HEAD
-=======
+
         public static double WindowWidth { get; set; } = 800;
         public static double WindowHeight { get; set; } = 600;
 
->>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
         /// <summary>
         /// The current view displayed
         /// </summary>
@@ -50,28 +48,24 @@ namespace alpha
         public IndexViewModel(Window window)
         {
             _window = window;
-<<<<<<< HEAD
-=======
 
             // Set window to fit users screen
             WindowWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
             WindowHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
-            
->>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
+
             // Loads remote data
             LoadArticles();
         }
         #endregion
 
         // Private holder
-<<<<<<< HEAD
-=======
         public ICommand _quitApplication;
-
+        /// <summary>
+        /// Quit the application, button command
+        /// </summary>
         public ICommand QuitApplication { get { return _quitApplication  ?? new RelayCommand(param => this.QuitApplicationAction(), null); } }
 
         // Private holder
->>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
         private ICommand _swapView;
         /// <summary>
         /// Command for swapping view
@@ -181,8 +175,6 @@ namespace alpha
             //Sql Connection
             Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
         }
-<<<<<<< HEAD
-=======
 
         /// <summary>
         /// Quits the application
@@ -191,6 +183,5 @@ namespace alpha
         {
             App.Current.MainWindow.Close();
         }
->>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
     }
 }
