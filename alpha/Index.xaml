@@ -5,17 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:alpha"
         mc:Ignorable="d"
+<<<<<<< HEAD
         WindowStartupLocation="CenterScreen"
         Title="Index" Height="960" Width="1280"
  
         >
+=======
+        
+        WindowState="Maximized"
+        AllowsTransparency="True" 
+        WindowStyle="None"
+        Title="tp" 
+        Width="{Binding WindowWidth}" 
+        Height="{Binding WindowHeight}"
+        >
+
+>>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+<<<<<<< HEAD
             <RowDefinition Height="20"/>
+=======
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6"/>
+>>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
         </Grid.RowDefinitions>
         <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
         <!--<Frame x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" Background="Transparent" />-->
@@ -23,6 +40,10 @@
             <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
             <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
             <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
+<<<<<<< HEAD
+=======
+            <Button x:Name="quit_program" Content="Exit Program" Command="{Binding QuitApplication}"/>
+>>>>>>> 73240c4b5a535d9a7723f86e2b8bc2f6eff81b4d
         </StackPanel>
 
     </Grid>
