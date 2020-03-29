@@ -12,6 +12,15 @@
         Width="{Binding WindowWidth}" 
         Height="{Binding WindowHeight}"
         >
+
+    <!--#region InputBinding -->
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding QuitApplication}"/>
+        <KeyBinding Key="F1" Command="{Binding SwapView}"/>
+        <KeyBinding Key="F2" Command="{Binding OnKeyDown}"/>
+    </Window.InputBindings>
+    <!--#endregion-->
+
     <Grid>
         
         <!--#region  Grid-/Row Definitions-->

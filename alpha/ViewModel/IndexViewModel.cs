@@ -33,7 +33,7 @@ namespace alpha
         /// Testning, todo; remove
         /// </summary>
         public string TestItemVisibility { get; set; } = "Visible";
-         
+
         /// <summary>
         /// The actual xaml-window
         /// Probably use for messageBoxes etc
@@ -63,53 +63,29 @@ namespace alpha
         /// <summary>
         /// Quit the application, button command
         /// </summary>
-        public ICommand QuitApplication { get { return _quitApplication  ?? new RelayCommand(param => this.QuitApplicationAction(), null); } }
+        public ICommand QuitApplication { get { return _quitApplication ?? new RelayCommand(param => this.QuitApplicationAction(param), null); } }
 
         // Private holder
         private ICommand _swapView;
         /// <summary>
         /// Command for swapping view
         /// </summary>
-        public ICommand SwapView
-        {
-            get
-            {
-                if (_swapView == null)
-                    _swapView = new RelayCommand(param => this.ChangeViewAction(), null);
-                return _swapView;
-            }
-        }
+        public ICommand SwapView { get { return _swapView ?? new RelayCommand(param => this.ChangeViewAction(), null); } }
 
         // Private Holder
         private ICommand _onKeyDown;
         /// <summary>
-        /// (Currently not working)
-        /// Command for catching onkey onkey action
+        /// Command for catching onkey action
+        /// <see cref="Button"/> key={keyname} modifier={control/shift etc}
         /// </summary>
-        public ICommand OnKeyDown
-        {
-            get
-            {
-                if (_onKeyDown == null)
-                    _onKeyDown = new RelayCommand(param => this.OnKeyDownAction(), null);
-                return _onKeyDown;
-            }
-        }
+        public ICommand OnKeyDown { get { return _onKeyDown ?? new RelayCommand(param => this.OnKeyDownAction(param), null); } }
 
         // Private Holder
         private ICommand _toggleVisibility;
         /// <summary>
         /// Command for element "Visiblity" toggling between "Hidden" and "Visible"
         /// </summary>
-        public ICommand ToggleVisibility
-        {
-            get
-            {
-                if (_toggleVisibility == null)
-                    _toggleVisibility = new RelayCommand(param => this.ToggleItemVisibility(), null);
-                return _toggleVisibility;
-            }
-        }
+        public ICommand ToggleVisibility { get { return _toggleVisibility ?? new RelayCommand(param => this.ToggleItemVisibility(), null); } }
 
         /// <summary>
         /// Swaps the current view/page in main_frame 
@@ -150,7 +126,7 @@ namespace alpha
         /// <summary>
         /// Just testing for now, todo; add onkey triggersr
         /// </summary>
-        private void OnKeyDownAction()
+        private void OnKeyDownAction(object args)
         {
             var x = 0;
         }
@@ -179,7 +155,7 @@ namespace alpha
         /// <summary>
         /// Quits the application
         /// </summary>
-        private void QuitApplicationAction()
+        private void QuitApplicationAction(object args)
         {
             App.Current.MainWindow.Close();
         }
