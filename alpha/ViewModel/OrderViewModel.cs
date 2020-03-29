@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Text;
 using Library.TypeLib;
+using Library.WebApiFunctionality;
 
 namespace alpha
 {
@@ -22,10 +24,26 @@ namespace alpha
 
         public OrderViewModel()
         {
-            Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 1, Price = 99, TimeCreated = GetRandomTime() });
+            // start up the webAPI server
+            // and adding the method to the event
+            WebApiServer.returnOrderEvent += ManageOrders;
+            WebApiServer.StartServer();
+            
+            Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 40, CustomerID = 99, Orderstatus = 1, Price = 199, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 39, CustomerID = 100, Orderstatus = 1, Price = 299, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 49, CustomerID = 101, Orderstatus = 1, Price = 399, TimeCreated = GetRandomTime() });
+        }
+
+        /// <summary>
+        /// Method for managing orders coming in from the other terminals
+        /// over web API
+        /// </summary>
+        /// <param name="orderNo">The order's Number</param>
+        /// <param name="typeOrder">Type of order command: PlaceOrder, DoneOrder, RemoveOrder</param>
+        private void ManageOrders(int orderNo, TypeOrder typeOrder)
+        {
+            Trace.WriteLine(typeOrder.ToString() + " " + orderNo);
         }
 
         private DateTime GetRandomTime()
