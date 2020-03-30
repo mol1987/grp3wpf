@@ -39,13 +39,14 @@ namespace alpha
         /// </summary>
         private void SeverInit()
         {
-            if (!Global.IsServerStarted)
+            if (Global.IsServerStarted)
                 return;
 
             // start up the webAPI server
             // and adding the method to the event
             WebApiServer.returnOrderEvent += ManageOrders;
             WebApiServer.StartServer();
+            Global.IsServerStarted = true;
 
         }
 
