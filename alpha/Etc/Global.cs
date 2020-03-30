@@ -17,24 +17,8 @@ namespace alpha
     /// </summary>
     public static class Global
     {
-        /// <summary>
-        /// List of <see cref="Article"/>
-        /// Global usage as a quick fix for access in terminals
-        /// </summary>
         public static List<Article> Articles { get; set; } = new List<Article>();
-
-        /// <summary>
-        /// wpf-window. Probably not needed like this at the moment
-        /// </summary>
         public static Window ActualWindow;
-
-        /// <summary>
-        /// Check to avoid having multiple servers for WebApi
-        /// Apparently enum is always static(?) as itäs a type and not a variable
-        /// nevermind, just using bool instead
-        /// </summary>
-        public static bool IsServerStarted = false;
-  
 
         #region Repositories & Connections
         public static ArticlesRepository ArticleRepo = new ArticlesRepository("Articles");

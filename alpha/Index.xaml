@@ -25,9 +25,7 @@
         
         <!--#region  Grid-/Row Definitions-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -37,14 +35,14 @@
         <!--#endregion-->
 
         <!--All views are here-->
-        <Frame Grid.Column="1" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+        <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
 
-        <!-- Debug panel -->
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">
+        <!-- Debug menu to be removed in production -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">
             <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
             <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
             <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
-            <Button x:Name="quit_program" Content="Exit Program(Esc)" Command="{Binding QuitApplication}"/>
+            <Button x:Name="quit_program" Content="Exit Program" Command="{Binding QuitApplication}"/>
         </StackPanel>
     </Grid>
 </Window>

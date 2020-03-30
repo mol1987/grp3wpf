@@ -27,7 +27,7 @@ namespace alpha
         /// <summary>
         /// Text for button that swaps <see cref="CurrentPage"/>, hide this in final version
         /// </summary>
-        public string SwapViewButton { get; set; } = "Change View(F1)";
+        public string SwapViewButton { get; set; } = "Change View";
 
         /// <summary>
         /// Testning, todo; remove
@@ -132,7 +132,7 @@ namespace alpha
         }
 
         /// <summary>
-        /// todo; used for visually sliding away the debugpanel
+        /// Just testing, todo; remove
         /// </summary>
         private void ToggleItemVisibility()
         {
