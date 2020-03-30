@@ -10,5 +10,12 @@ namespace alpha
     public class CashierViewModel : BaseViewModel
     {
         public string Title { get; set; } = "Cashier View";
+
+        #region Constructor
+        public CashierViewModel()
+        {
+
+        } 
+        #endregion
     }
 }

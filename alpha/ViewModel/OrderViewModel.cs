@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Library.TypeLib;
 using Library.WebApiFunctionality;
 
@@ -13,26 +15,41 @@ namespace alpha
     /// </summary>
     public class OrderViewModel : BaseViewModel
     {
-        public string Title { get; set; } = "OrderView";
-        public string LeftTitle { get; set; } = "Pågående";
-        public string RightTitle { get; set; } = "Färdiga";
-
         /// <summary>
         /// Active order to be watched
         /// </summary>
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
+        public string Title { get; set; } = "OrderView";
+        public string LeftTitle { get; set; } = "Pågående";
+        public string RightTitle { get; set; } = "Färdiga";
 
         public OrderViewModel()
         {
             //
             SeverInit();
 
-            Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 40, CustomerID = 99, Orderstatus = 1, Price = 199, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 39, CustomerID = 100, Orderstatus = 1, Price = 299, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 49, CustomerID = 101, Orderstatus = 1, Price = 399, TimeCreated = GetRandomTime() });
+            //
+            LoadData();
+
+
+            //Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
+            //Orders.Add(new Order { ID = 40, CustomerID = 99, Orderstatus = 1, Price = 199, TimeCreated = GetRandomTime() });
+            //Orders.Add(new Order { ID = 39, CustomerID = 100, Orderstatus = 1, Price = 299, TimeCreated = GetRandomTime() });
+            //Orders.Add(new Order { ID = 49, CustomerID = 101, Orderstatus = 1, Price = 399, TimeCreated = GetRandomTime() });
         }
 
+        private async void LoadData()
+        {
+            //var articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
+            var orders = (await Global.OrderRepo.GetAllAsync()).ToList();
+
+            foreach (var order in orders)
+            {
+                Orders.Add(new Order { ID = order.ID, CustomerID = order.CustomerID, Price = order.Price, TimeCreated = order.TimeCreated });
+                // Test
+                Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
+            }
+        }
 
         /// <summary>
         /// 
@@ -47,7 +64,6 @@ namespace alpha
             WebApiServer.returnOrderEvent += ManageOrders;
             WebApiServer.StartServer();
             Global.IsServerStarted = true;
-
         }
 
         /// <summary>
