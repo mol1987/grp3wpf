@@ -43,7 +43,17 @@
                 <DataTemplate>
                     <StackPanel Style="{StaticResource OrderItem}">
                         <TextBlock Text="{Binding ID}"/>
-                        <TextBlock Text="{Binding Orderstatus}"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <ItemsControl x:Name="OrdersIsDone" Style="{StaticResource Orders}" ItemsSource="{Binding OrdersDone}" Grid.Column="2" Grid.Row="1">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Style="{StaticResource OrderItem}">
+                        <TextBlock Text="{Binding ID}"/>
+                        
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

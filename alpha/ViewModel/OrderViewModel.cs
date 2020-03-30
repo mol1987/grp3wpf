@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using Library.TypeLib;
 using Library.WebApiFunctionality;
+using System.Linq;
 
 namespace alpha
 {
@@ -20,7 +21,8 @@ namespace alpha
         /// <summary>
         /// Active order to be watched
         /// </summary>
-        public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
+        public ObservableCollection<Order> Orders { get; set; } = new AsyncObservableCollection<Order>();
+        public ObservableCollection<Order> OrdersDone { get; set; } = new AsyncObservableCollection<Order>();
 
         public OrderViewModel()
         {
@@ -58,7 +60,25 @@ namespace alpha
         /// <param name="typeOrder">Type of order command: PlaceOrder, DoneOrder, RemoveOrder</param>
         private void ManageOrders(int orderNo, TypeOrder typeOrder)
         {
-            Trace.WriteLine(typeOrder.ToString() + " " + orderNo);
+            Trace.WriteLine(typeOrder.ToString() + " " + orderNo + Orders.Last().ID);
+            switch (typeOrder)
+            {
+                case TypeOrder.PlaceOrder:
+                    Orders.Add(new Order { ID = orderNo, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
+                    break;
+                case TypeOrder.DoneOrder:
+                    var tempOrder = Orders.Single(x => x.ID == orderNo);
+                    Orders.Remove(tempOrder);
+                    tempOrder.Orderstatus = 1;
+                    OrdersDone.Add(tempOrder);
+                    break;
+                case TypeOrder.RemoveOrder:
+                    tempOrder = OrdersDone.Single(x => x.ID == orderNo);
+                    OrdersDone.Remove(tempOrder);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private DateTime GetRandomTime()
