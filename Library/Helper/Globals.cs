@@ -20,6 +20,7 @@ namespace Library.Helper
         {
             return items.ContainsKey(key);
         }
+
         /// <summary>
         /// Get stored string value
         /// </summary>
@@ -29,6 +30,21 @@ namespace Library.Helper
         {
             return items[key];
         }
+
+        /// <summary>
+        /// Get stored string value with assigned default value as backup
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="backupValue"></param>
+        /// <returns></returns>
+        public static string Get(string key, ref string backupValue)
+        {
+            if (!Exists(key))
+                return backupValue;
+
+            return items[key];
+        }
+
         /// <summary>
         /// Set value to global
         /// </summary>

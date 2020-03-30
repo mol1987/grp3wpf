@@ -64,10 +64,15 @@ namespace Library.Repository
         {
             string backend = Helper.Globals.Get("backend");
             IDbConnection conn = null;
-            if (backend == "postgresql")
+
+            if (backend == null)
+                throw new Exception("Backend-type is not assigned");
+
+            if (new string[] { "postgresql", "postgres", "postgre", "psql" }.Contains(backend.ToLower()))
                 conn = SqlConnectionPost();
-            else if (backend == "sql-server")
+            else if (new string[] { "sql-server", "mssql", "sqlserver" }.Contains(backend.ToLower()))
                 conn = SqlConnection();
+
             conn.Open();
             return conn;
         }
