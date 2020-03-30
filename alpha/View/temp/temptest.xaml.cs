@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace alpha
 {
     /// <summary>
-    /// Interaction logic for temptest.xaml
+    /// just testing wpf
     /// </summary>
     public partial class temptest : Page
     {
