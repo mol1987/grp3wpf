@@ -102,7 +102,7 @@ namespace alpha
             foreach (ApplicationPage page in Enum.GetValues(typeof(ApplicationPage)))
             {
                 // If CurrentPage is the last Page, (currently set to Cashierview), reset to Index page and quit the loop
-                if (CurrentPage.Equals(ApplicationPage.Cashier))
+                if (CurrentPage.Equals(ApplicationPage.Admin))
                 {
                     CurrentPageIndex = 0;
                     CurrentPage = ApplicationPage.Splash;

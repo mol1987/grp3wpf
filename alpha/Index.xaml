@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:alpha"
         mc:Ignorable="d"
         WindowState="Maximized"
-        AllowsTransparency="True" 
+        AllowsTransparency="True"
         WindowStyle="None"
-        Title="tp" 
+        Title="" 
         Width="{Binding WindowWidth}" 
         Height="{Binding WindowHeight}"
         >
 
-    <!--#region InputBinding -->
+    <!--#region inputbinding -->
     <Window.InputBindings>
         <KeyBinding Key="Esc" Command="{Binding QuitApplication}"/>
         <KeyBinding Key="F1" Command="{Binding SwapView}"/>
@@ -22,7 +22,7 @@
     <!--#endregion-->
 
     <Grid>
-        
+
         <!--#region  Grid-/Row Definitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

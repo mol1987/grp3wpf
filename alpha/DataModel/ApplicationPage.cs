@@ -16,6 +16,7 @@ namespace alpha
         Customer = 1,
         Chief = 2,
         Order = 3,
-        Cashier = 4
+        Cashier = 4,
+        Admin = 5
     }
 }

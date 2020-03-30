@@ -12,6 +12,7 @@ namespace Library.TypeLib
         public string? Name { get; set; }
         public float? BasePrice { get; set; }
         public string? Type { get; set; }
+        public bool? IsActive { get; set; }
         /// <summary>
         /// URL to image location .
         /// </summary>
