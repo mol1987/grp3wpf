@@ -27,7 +27,12 @@ namespace alpha
         /// <summary>
         /// Text for button that swaps <see cref="CurrentPage"/>, hide this in final version
         /// </summary>
-        public string SwapViewButton { get; set; } = "Change View";
+        public string SwapViewButton { get; set; } = "Change View(F1)";
+
+        /// <summary>
+        /// Text for button
+        /// </summary>
+        public string QuitProgramButtonText { get; set; } = "Quit program(Esc)";
 
         /// <summary>
         /// Testning, todo; remove

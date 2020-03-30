@@ -24,15 +24,29 @@ namespace alpha
 
         public OrderViewModel()
         {
-            // start up the webAPI server
-            // and adding the method to the event
-            WebApiServer.returnOrderEvent += ManageOrders;
-            WebApiServer.StartServer();
-            
+            //
+            SeverInit();
+
             Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 40, CustomerID = 99, Orderstatus = 1, Price = 199, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 39, CustomerID = 100, Orderstatus = 1, Price = 299, TimeCreated = GetRandomTime() });
             Orders.Add(new Order { ID = 49, CustomerID = 101, Orderstatus = 1, Price = 399, TimeCreated = GetRandomTime() });
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void SeverInit()
+        {
+            if (!Global.IsServerStarted)
+                return;
+
+            // start up the webAPI server
+            // and adding the method to the event
+            WebApiServer.returnOrderEvent += ManageOrders;
+            WebApiServer.StartServer();
+
         }
 
         /// <summary>
