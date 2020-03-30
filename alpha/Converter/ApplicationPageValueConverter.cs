@@ -26,6 +26,8 @@ namespace alpha
                     return new OrderView();
                 case ApplicationPage.Cashier:
                     return new CashierView();
+                case ApplicationPage.Admin:
+                    return new AdminView();
                 default:
                     Debugger.Break();
                     return null;

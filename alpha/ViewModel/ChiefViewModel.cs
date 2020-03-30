@@ -13,5 +13,12 @@ namespace alpha
         public string Title { get; set; } = "Chief View";
 
         public ICommand SetOrderDone { get; set; }
+
+        #region Constructor
+        public ChiefViewModel()
+        {
+
+        } 
+        #endregion
     }
 }
