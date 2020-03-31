@@ -14,8 +14,8 @@ namespace alpha
         /// </summary>
         Splash = 0,
         Customer = 1,
-        Chief = 2,
-        Order = 3,
+        Order = 2,
+        Chief = 3,
         Cashier = 4,
         Admin = 5
     }

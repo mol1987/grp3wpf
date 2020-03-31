@@ -44,7 +44,10 @@ namespace alpha
         /// 
         /// </summary>
         public dynamic SelectedItem { 
-            get { return _selectedItem; } 
+            get 
+            { 
+                return _selectedItem; 
+            } 
             set {  _selectedItem = value; } }
 
         public int SelectedIndex { get; set; }
