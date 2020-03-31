@@ -12,6 +12,14 @@ namespace alpha
 {
     public class AdminViewModel : BaseViewModel
     {
+        // Private collections for data comparing,
+        // I do these as a fix, since I don't properly understand
+        // how to trigger notifications inside an observable collection
+        // when elements are altered from a datagrid
+        private List<Article> _articles = new List<Article>();
+        private List<Employee> _employees = new List<Employee>();
+        private List<Ingredient> _ingredients = new List<Ingredient>();
+
         public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>() {};
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<Ingredient> Ingredients { get; set; } = new ObservableCollection<Ingredient>();
@@ -21,7 +29,15 @@ namespace alpha
         /// </summary>
         public string ScrollViewerHeight { get; set; } = "800";
 
+        /// <summary>
+        /// 
+        /// </summary>
         public dynamic SelectedItem { get; set; }
+
+        /// <summary>
+        /// Grays out update button
+        /// </summary>
+        public string UpdateButtonEnabled { get; set; } = "Enabled";
 
         // Private holder
         private ICommand _updateData { get; set; }
@@ -66,20 +82,23 @@ namespace alpha
             var employeeRepo = new Library.Repository.EmployeesRepository("Employees");
             var ingredientRepo = new Library.Repository.IngredientsRepository("Ingredients");
 
-
+            // The private lists are clones
             foreach (var item in await articleRepo.GetAllAsync())
             {
                 Articles.Add(item);
+                _articles.Add(item);
             }
 
             foreach (var item in await employeeRepo.GetAllAsync())
             {
                 Employees.Add(item);
+                _employees.Add(item);
             }
 
             foreach (var item in await ingredientRepo.GetAllAsync())
             {
                 Ingredients.Add(item);
+                _ingredients.Add(item);
             }
         }
 
@@ -89,36 +108,42 @@ namespace alpha
         /// <param name="args"></param>
         private void UpdateDataAction(object args)
         {
-            //  Since we have three different types of data
-            //  This very rough logic to differentiate
-            Type type = SelectedItem.GetType();
+            var articleDifferences = Articles.Except(_articles).ToList();
+            var employeeDifferences = Employees.Except(_employees).ToList();
+            var ingredientDifferences = Ingredients.Except(_ingredients).ToList();
 
-            if (SelectedItem == null)
-            {
-                MessageBox.Show("Nothing was selected");
-                return;
-            }
+            var x = 0;
 
-            if (type.Equals(typeof(Article)))
-            {
-                //todo; Add database logic
-                ToBeUpdated.Add("Articles", SelectedItem.ID);
-                MessageBox.Show("Articles thingy to be updated todo; Add database logic");
-            }
-            else if (type.Equals(typeof(Employee)))
-            {
-                //todo; Add database logic
-                ToBeUpdated.Add("Employees", SelectedItem.ID);
-                MessageBox.Show("Employee thingy to be updated todo; Add database logic");
-            }
-            else if (type.Equals(typeof(Ingredient)))
-            {
-                //todo; Add database logic
-                ToBeUpdated.Add("Ingredients", SelectedItem.ID);
-                MessageBox.Show("Ingredient thingy to be updated todo; Add database logic");
-            }
-            // Reset
-            SelectedItem = null;
+            ////  Since we have three different types of data
+            ////  This very rough logic to differentiate
+            //Type type = SelectedItem.GetType();
+
+            //if (SelectedItem == null)
+            //{
+            //    MessageBox.Show("Nothing was selected");
+            //    return;
+            //}
+
+            //if (type.Equals(typeof(Article)))
+            //{
+            //    //todo; Add database logic
+            //    ToBeUpdated.Add("Articles", SelectedItem.ID);
+            //    MessageBox.Show("Articles thingy to be updated todo; Add database logic");
+            //}
+            //else if (type.Equals(typeof(Employee)))
+            //{
+            //    //todo; Add database logic
+            //    ToBeUpdated.Add("Employees", SelectedItem.ID);
+            //    MessageBox.Show("Employee thingy to be updated todo; Add database logic");
+            //}
+            //else if (type.Equals(typeof(Ingredient)))
+            //{
+            //    //todo; Add database logic
+            //    ToBeUpdated.Add("Ingredients", SelectedItem.ID);
+            //    MessageBox.Show("Ingredient thingy to be updated todo; Add database logic");
+            //}
+            //// Reset
+            //SelectedItem = null;
         }
         private void ArticlesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

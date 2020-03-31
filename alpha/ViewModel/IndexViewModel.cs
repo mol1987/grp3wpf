@@ -162,7 +162,11 @@ namespace alpha
         /// </summary>
         private void QuitApplicationAction(object args)
         {
-            App.Current.MainWindow.Close();
+            // Huh, it was actually worth saving the window
+            if (Global.ActualWindow != null)
+            {
+                Global.ActualWindow.Close();
+            }
         }
     }
 }
