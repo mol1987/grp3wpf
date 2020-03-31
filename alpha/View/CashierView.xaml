@@ -17,6 +17,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -26,22 +27,31 @@
         </Grid.RowDefinitions>
         <!--#endregion-->
 
-        <TextBlock Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title}" Foreground="#f9f9f9"/>
-        <Button Name="btn2" Command="{Binding DataContext.AddToCheckout}" 
-                                Content="fef"/>
+        <TextBlock Grid.ColumnSpan="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title, FallbackValue='CashierTerminal'}" Foreground="#f9f9f9"/>
+
         <!--Left-->
-        <ItemsControl x:Name="Orders" Style="{StaticResource Orders}" ItemsSource="{Binding Orders, Mode=TwoWay}" Grid.Column="1" Grid.Row="1">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Style="{StaticResource OrderItem}">
-                        <Button Name="btn2" Command="{Binding DataContext.foo}" 
-                                Content="{Binding ID}"/>
+        <!--Active Orders-->
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <ItemsControl x:Name="active_orders" Style="{StaticResource Orders}" ItemsSource="{Binding Orders, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Style="{StaticResource OrderItem}">
+                            <!--Set Order to finished-->
+                            <Button Name="xxxx" 
+                                    Command="{Binding ElementName=active_orders, Path=DataContext.foo}" 
+                                    Content="{Binding ID}"
+                                    />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
 
-
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <!--Right-->
+        <!--Finished Orders-->
+        <StackPanel Grid.Column="2" Grid.Row="1">
+            
+        </StackPanel>
 
         <TextBlock Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title}" Foreground="#f9f9f9"/>
     </Grid>
