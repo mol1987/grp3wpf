@@ -18,6 +18,7 @@
         <KeyBinding Key="Esc" Command="{Binding QuitApplication}"/>
         <KeyBinding Key="F1" Command="{Binding SwapView}"/>
         <KeyBinding Key="F2" Command="{Binding OnKeyDown}"/>
+        <KeyBinding Key="F3" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
     </Window.InputBindings>
     <!--#endregion-->
 
@@ -29,8 +30,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="6"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
 
@@ -42,6 +42,7 @@
             <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
             <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
             <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
+            <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding ToggleVisibility}"/>
             <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText}" Command="{Binding QuitApplication}"/>
         </StackPanel>
     </Grid>

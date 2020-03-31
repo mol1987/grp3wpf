@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -92,6 +93,11 @@ namespace alpha
         /// </summary>
         public ICommand ToggleVisibility { get { return _toggleVisibility ?? new RelayCommand(param => this.ToggleItemVisibility(), null); } }
 
+        // Private Holder
+        private ICommand _swapToSpecificPage;
+
+        public ICommand SwapToSpecificPage { get { return _swapToSpecificPage ?? new RelayCommand(param => this.SwapToSpecificPageAction(param), null); } }
+
         /// <summary>
         /// Swaps the current view/page in main_frame 
         /// </summary>
@@ -134,6 +140,34 @@ namespace alpha
         private void OnKeyDownAction(object args)
         {
             var x = 0;
+        }
+
+        /// <summary>
+        /// Lazy developer quick button to swap to the last page, which is Admin
+        /// Should probably not add more pages before Webapi server is error secured
+        /// </summary>
+        /// <param name="args"> args from <see cref="Button"/>'s CommandParameter</param>
+        private void SwapToSpecificPageAction(object args)
+        {
+            // Add more if needed
+            var pagecallback = new Dictionary<string, ApplicationPage>()
+            {
+                { "Index", ApplicationPage.Admin },
+                { "", ApplicationPage.Admin },
+                { "Admin", ApplicationPage.Admin },
+                { "Admin", ApplicationPage.Admin },
+                { "Admin", ApplicationPage.Admin },
+                { "Admin", ApplicationPage.Admin }
+            };
+
+            string key = args.ToString();
+
+            // Args from 
+            if (pagecallback.ContainsKey(key))
+            {
+                //todo; finish this
+               //CurrentPageIndex
+            }
         }
 
         /// <summary>
