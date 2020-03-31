@@ -69,49 +69,19 @@ namespace Library.Repository
                 order.Articles = articles;
             }
         }
+        /// <summary>
+        /// Currently used for the Chief terminal and <see cref="DisplayObject"/>
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public async Task<List<DisplayObject>> GetAllAsync(int n)
         {
+            var res = new List<DisplayObject>();
             using (var connection = base.CreateConnection())
             {
-                string testquery =
-                    String.Join(
-                    " ",
-                    "(SELECT ArticleOrders.ID, Articles.Name, OrdersID, Orderstatus, Ingredients.Name as 'Ingredient' FROM ArticleOrders",
-                    "INNER JOIN Orders ON ArticleOrders.OrdersID = Orders.ID",
-                    "INNER JOIN Articles ON Articles.ID = ArticleOrders.ArticlesID",
-                    "INNER JOIN ArticleOrdersIngredients ON ArticleOrders.ID = ArticleOrdersIngredients.ArticleOrdersID",
-                    "INNER JOIN ArticleIngredients ON ArticleOrdersIngredients.IngredientsID = ArticleIngredients.IngredientID",
-                    "JOIN Ingredients ON ArticleIngredients.IngredientID = Ingredients.ID",
-                    "WHERE Orders.Orderstatus = '1') ORDER BY TimeCreated");
-                //.Replace(System.Environment.NewLine, "").Trim(new char[] { });
-                string longquery = @"
-                (SELECT DISTINCT
-                ArticleOrders.ID, Articles.Name, OrdersID, Orderstatus, Ingredients.Name as 'Ingredient'
-                FROM ArticleOrders
-                INNER JOIN Orders ON ArticleOrders.OrdersID = Orders.ID
-                INNER JOIN Articles ON Articles.ID = ArticleOrders.ArticlesID
-                INNER JOIN ArticleOrdersIngredients ON ArticleOrders.ID = ArticleOrdersIngredients.ArticleOrdersID
-                INNER JOIN ArticleIngredients ON ArticleOrdersIngredients.IngredientsID = ArticleIngredients.IngredientID
-                JOIN Ingredients ON ArticleIngredients.IngredientID = Ingredients.ID
-                WHERE Orders.Orderstatus = '1'
-                ) ORDER BY ArticleOrders.ID";
-                var articleOrders = (await connection.QueryAsync<DisplayObject>(longquery, new { Orderstatus = n })).ToList();
+                string longquery = $"SELECT ao.OrdersID as OrderID, ao.ArticlesID as ArticleType, o.TimeCreated as TimeStamp, a.Name as ArticleName, i.Name as IngredientsName, o.Orderstatus as OrderStatus FROM Orders o INNER JOIN ArticleOrders ao ON ao.OrdersID = o.ID INNER JOIN Articles a ON ao.ArticlesID = a.ID INNER JOIN ArticleOrdersIngredients aoi ON aoi.ArticleOrdersID = ao.ID INNER JOIN Ingredients i ON aoi.IngredientsID = i.ID WHERE o.Orderstatus = 1";
+                var articleOrders = (await connection.QueryAsync<DisplayObject>(longquery, new { OrderStatus = n })).ToList();
                 return articleOrders;
-
-                //IEnumerable<ArticleOrders> articleOrders = await connection.QueryAsync<ArticleOrders>($"SELECT * FROM ArticleOrders WHERE OrdersID=@Id", new { Id = order.ID });
-                //List<Articles> articles = new List<Articles>();
-
-                //string sql = $"select Ingredients.* FROM ARTICLES INNER JOIN ArticleOrders ON Articles.ID = ArticleOrders.ArticlesID inner join ArticleOrdersIngredients on ArticleOrdersIngredients.ArticleOrdersID = ArticleOrders.ID inner join Ingredients on Ingredients.ID = ArticleOrdersIngredients.IngredientsID WHERE ArticleOrders.OrdersID = @OrdersID and ArticleOrders.ID = @ArticleOrdersID";
-
-                //Articles article;
-                //foreach (ArticleOrders articleOrdersItem in articleOrders)
-                //{
-                //    article = await connection.QuerySingleOrDefaultAsync<Articles>($"SELECT * FROM {tableName} WHERE Id=@Id LIMIT BY $limit", new { Id = articleOrdersItem.ArticlesID, limit = limit });
-                //    article.Ingredients = new List<Ingredients>();
-                //    article.Ingredients = (await connection.QueryAsync<Ingredients>(sql, new { OrdersID = order.ID, ArticleOrdersID = articleOrdersItem.ID })).ToList();
-                //    articles.Add(article);
-                //}
-                //order.Articles = articles;
             }
         }
     }
