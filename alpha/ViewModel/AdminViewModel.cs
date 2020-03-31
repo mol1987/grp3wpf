@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 
 namespace alpha
 {
@@ -63,7 +64,7 @@ namespace alpha
             //  ScrollViewerHeight = (height - 20.0).ToString();
 
             // Load SQL data
-            LoadData();
+            LoadData().Wait();
 
             // Listeners for changes in Collections
             Articles.CollectionChanged += ArticlesCollectionChanged;
@@ -75,7 +76,7 @@ namespace alpha
         /// <summary>
         /// 
         /// </summary>
-        private async void LoadData()
+        private async Task LoadData()
         {
             // Repo inits
             var articleRepo = new Library.Repository.ArticlesRepository("Articles");

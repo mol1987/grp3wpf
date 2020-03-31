@@ -32,24 +32,30 @@ namespace Library.Repository
         /// <returns></returns>
         private SqlConnection SqlConnection()
         {
+            // Fallbackstring for the UI bug
+            string fb = "";
+
             // Fetching from locally stored secrets
-            string host = Helper.Globals.Get("host");
-            string database = Helper.Globals.Get("db");
-            string username = Helper.Globals.Get("usr");
-            string password = Helper.Globals.Get("pwd");
-            string port = Helper.Globals.Get("port");
+            string host = Helper.Globals.Get("host", ref fb);
+            string database = Helper.Globals.Get("db", ref fb);
+            string username = Helper.Globals.Get("usr", ref fb);
+            string password = Helper.Globals.Get("pwd", ref fb);
+            string port = Helper.Globals.Get("port", ref fb);
 
             string connectionString = $"Data Source={host};Initial Catalog={database};User Id={username};Password={password};";
             return new SqlConnection(connectionString);
         }
         private NpgsqlConnection SqlConnectionPost()
         {
+            // Fallbackstring for the UI bug
+            string fb = "";
+
             // Fetching from locally stored secrets
-            string host = Helper.Globals.Get("host");
-            string database = Helper.Globals.Get("db");
-            string username = Helper.Globals.Get("usr");
-            string password = Helper.Globals.Get("pwd");
-            string port = Helper.Globals.Get("port");
+            string host = Helper.Globals.Get("host", ref fb);
+            string database = Helper.Globals.Get("db", ref fb);
+            string username = Helper.Globals.Get("usr", ref fb);
+            string password = Helper.Globals.Get("pwd", ref fb);
+            string port = Helper.Globals.Get("port", ref fb);
 
             string connectionString =  $"Host={host};Username={username};Password={password};Database={database};Pooling=true; Port={port}";
             

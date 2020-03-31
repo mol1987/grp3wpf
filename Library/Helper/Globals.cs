@@ -28,6 +28,9 @@ namespace Library.Helper
         /// <returns>Returns string</returns>
         public static string Get(string key)
         {
+            if (!Exists(key))
+                return "";
+
             return items[key];
         }
 
