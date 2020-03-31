@@ -6,8 +6,8 @@ namespace Library.WebApiFunctionality
 {
 	public enum TypeOrder
 	{
-		PlaceOrder,
-		DoneOrder,
-		RemoveOrder
+		placeorder,
+		doneorder,
+		removeorder
 	}
 }

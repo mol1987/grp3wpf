@@ -14,7 +14,7 @@ namespace Library.WebApiFunctionality
         public delegate void ReturnOrderNoDelegate(int orderNo, TypeOrder typeOrder);
         static public event ReturnOrderNoDelegate returnOrderEvent;
 
-        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/PlaceOrder")]
+        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/placeorder")]
         public IHttpContext OrderReady(IHttpContext context)
         {
             var orderNoStr = context.Request.QueryString["orderNo"] ?? "Error";
@@ -26,13 +26,13 @@ namespace Library.WebApiFunctionality
             }
             if (returnOrderEvent != null)
             {
-                returnOrderEvent(orderNo, TypeOrder.PlaceOrder);
+                returnOrderEvent(orderNo, TypeOrder.placeorder);
             }
-            context.Response.SendResponse(orderNoStr);
+            context.Response.SendResponse("ok");
             return context;
         }
 
-        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/DoneOrder")]
+        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/doneorder")]
         public IHttpContext OrderDone(IHttpContext context)
         {
             var orderNoStr = context.Request.QueryString["orderNo"] ?? "Error";
@@ -44,13 +44,13 @@ namespace Library.WebApiFunctionality
             }
             if (returnOrderEvent != null)
             {
-                returnOrderEvent(orderNo, TypeOrder.DoneOrder);
+                returnOrderEvent(orderNo, TypeOrder.doneorder);
             }
-            context.Response.SendResponse(orderNoStr);
+            context.Response.SendResponse("ok");
             return context;
         }
 
-        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/RemoveOrder")]
+        [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/removeorder")]
         public IHttpContext OrderRemove(IHttpContext context)
         {
             var orderNoStr = context.Request.QueryString["orderNo"] ?? "Error";
@@ -62,9 +62,9 @@ namespace Library.WebApiFunctionality
             }
             if (returnOrderEvent != null)
             {
-                returnOrderEvent(orderNo, TypeOrder.RemoveOrder);
+                returnOrderEvent(orderNo, TypeOrder.removeorder);
             }
-            context.Response.SendResponse(orderNoStr);
+            context.Response.SendResponse("ok");
             return context;
         }
 
