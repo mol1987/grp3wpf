@@ -162,6 +162,14 @@ namespace alpha
         /// </summary>
         private void QuitApplicationAction(object args)
         {
+            // Loop and shut down
+            foreach (System.Windows.Window window in System.Windows.Application.Current.Windows)
+            {
+                if (window.DataContext == this)
+                {
+                    window.Close();
+                }
+            }
             // Huh, it was actually worth saving the window
             if (Global.ActualWindow != null)
             {

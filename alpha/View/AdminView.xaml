@@ -9,49 +9,174 @@
       Title="AdminView"
       >
 
+    <!--#region DataContext -->
     <Page.DataContext>
         <local:AdminViewModel/>
     </Page.DataContext>
+    <!--#endregion-->
+
+    <!--#region Styles -->
+    <Page.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="update_button">
+            <Setter Property="Content" Value="Update"/>
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="30"/>
 
 
-    <StackPanel Background="{StaticResource BlueBrush}" >
+        </Style>
+        <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel">
+            <Setter Property="Background" Value="#7F040404"/>
+            <Setter Property="Grid.Column" Value="6"/>
+            <Setter Property="Grid.RowSpan" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel_inner">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+    <!--#endregion-->
+
+    <Grid Background="{StaticResource BlueBrush}">
+
+        <!--#region Grid-/Row Definitionss -->
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--#endregion-->
+
+
+        <!--Header text-->
+        <Border Style="{StaticResource ResetBorder}"
+                   Grid.ColumnSpan="2" 
+                   Grid.Row="1"
+                    Padding="6 6 0 6"
+                >
+            <TextBlock Text="{Binding Title, FallbackValue='AdminTerminal'}" 
+
+                   Foreground="#f9f9f9"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   FontFamily="Segoe UI" 
+                   >
+            <!--<TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="270"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>-->
+            </TextBlock>
+        </Border>
+
+
+        <!--Main-->
+        <Border Grid.ColumnSpan="6" Grid.RowSpan="5" Style="{StaticResource ResetBorder}" Padding="12 32 6 6">
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <!--#region ARTICLES -->
+                    <!--Article Grid-->
+                    <DataGrid Name="article_grid" 
+                                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding Articles, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedItem}"
+                                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice}"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                            <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive}"/>
+                            <DataGridComboBoxColumn Header="Ingredients" ItemsSource="{Binding Ingredients}"/>
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="-" Background="red"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!--#endregion-->
+
+
+                    <!--#region EMPLOYEES -->
+
+                    <DataGrid   Name="employee_grid" 
+                        AutoGenerateColumns="False"
+                        ItemsSource="{Binding Employees, Mode=TwoWay}" 
+                        SelectedItem="{Binding SelectedItem}"
+                        >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                            <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--#endregion-->
+
+
+                    <!--#region INGREDIENTS -->
+
+                    <DataGrid Name="ingredient_grid" 
+                      AutoGenerateColumns="False"
+                                      ItemsSource="{Binding Ingredients, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedItem}"
+                                      >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--#endregion-->
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!--SidePanel-->
+        <StackPanel Style="{StaticResource adminview_sidepanel}">
+            <StackPanel Style="{StaticResource adminview_sidepanel_inner}">
+                <Border Style="{StaticResource ResetBorder}" Padding="12 6 12 6">
+                    <Button Style="{StaticResource update_button}" Command="{Binding UpdateData}"/>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+
+    <!--<StackPanel Background="{StaticResource BlueBrush}" >
 
 
         <Border Style="{StaticResource ResetBorder}" Padding="16 16 16 16">
             <ScrollViewer  VerticalScrollBarVisibility="Auto" Height="{Binding ScrollViewerHeight}">
-                <StackPanel CanVerticallyScroll="True">
-                    <TextBlock Text="AdminTerminal" FontSize="18" FontFamily="Segoe UI" FontWeight="Bold" Foreground="#f9f9f9"/>
-
-                    <!--Article Grid-->
-                    <Border Style="{StaticResource ResetBorder}" Padding="6 6 6 6">
-                        <StackPanel MinHeight="100">
-                            <Label Content="Articles" Foreground="#f9f9f9"/>
-                            <DataGrid Name="article_grid" 
-                                      ItemsSource="{Binding Articles, Mode=TwoWay}"
-                                      SelectedItem="{Binding SelectedItem}"
-                                      >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"/>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice}"/>
-                                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                                    <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive}"/>
-                                    <DataGridComboBoxColumn Header="Ingredients" ItemsSource="{Binding Ingredients}"/>
-
-                                    <DataGridTemplateColumn>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="-" Background="red"/>
-
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
+             
                     </Border>
 
-                    <!--Employee Grid-->
+                    -->
+    <!--Employee Grid-->
+    <!--
                     <Border Style="{StaticResource ResetBorder}" Padding="6 6 6 6">
                         <StackPanel  MinHeight="100">
                             <Label Content="Employees" Foreground="#f9f9f9"/>
@@ -69,7 +194,9 @@
                         </StackPanel>
                     </Border>
 
-                    <!--Ingredients Grid-->
+                    -->
+    <!--Ingredients Grid-->
+    <!--
                     <Border Style="{StaticResource ResetBorder}" Padding="6 6 6 6">
                         <StackPanel  MinHeight="100">
                             <Label Content="Ingredients" Foreground="#f9f9f9"/>
@@ -88,10 +215,7 @@
                 </StackPanel>
             </ScrollViewer>
         </Border>
-        <!--Okay Button -->
-        <Border Style="{StaticResource ResetBorder}" Padding="0 6 0 6">
-            <Button Width="110" Height="25" FontFamily="Segoe UI" FontSize="16" Content="Update" Command="{Binding UpdateData}"/>
-        </Border>
 
-    </StackPanel>
+
+    </StackPanel>-->
 </Page>

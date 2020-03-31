@@ -35,7 +35,7 @@
         <!--#endregion-->
 
         <!--All views are here-->
-        <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}"/>
+        <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" NavigationUIVisibility="Hidden"/>
 
         <!-- Debug menu to be removed in production -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">

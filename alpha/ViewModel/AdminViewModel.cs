@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace alpha
 {
@@ -24,6 +25,11 @@ namespace alpha
         public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>() {};
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<Ingredient> Ingredients { get; set; } = new ObservableCollection<Ingredient>();
+
+        /// <summary>
+        /// Header display
+        /// </summary>
+        public string Title { get; set; } = "AdminTerminal";
 
         /// <summary>
         /// Quick fix for making vertical scrolling work
@@ -54,17 +60,33 @@ namespace alpha
         /// </summary>
         private Dictionary<string, int> ToBeUpdated = new Dictionary<string, int>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor
+                    .FromProperty(prop, typeof(FrameworkElement))
+                    .Metadata.DefaultValue;
+            }
+        }
+
 
         #region Constructor
         // Constructor is called each time currentpage is loaded
         public AdminViewModel()
         {
+            if (IsInDesignMode) { return; }
+
             //  // Not being able to scroll is very annoying, todo; do something
             //  double height = Global.ActualWindow.Height;
             //  ScrollViewerHeight = (height - 20.0).ToString();
 
             // Load SQL data
-            LoadData().Wait();
+            RunAsyncActions();
 
             // Listeners for changes in Collections
             Articles.CollectionChanged += ArticlesCollectionChanged;
@@ -72,6 +94,12 @@ namespace alpha
             Ingredients.CollectionChanged += IngredientsCollectionChanged;
         }
         #endregion
+
+
+        private async void RunAsyncActions()
+        {
+            await LoadData();
+        }
 
         /// <summary>
         /// 
