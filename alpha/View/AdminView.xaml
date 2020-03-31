@@ -21,8 +21,6 @@
             <Setter Property="Content" Value="Update"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="Height" Value="30"/>
-
-
         </Style>
         <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel">
             <Setter Property="Background" Value="#7F040404"/>
@@ -33,6 +31,9 @@
         <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel_inner">
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="white_text">
+            <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
         </Style>
     </Page.Resources>
     <!--#endregion-->
@@ -57,6 +58,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="8"/>
         </Grid.RowDefinitions>
 
@@ -95,12 +97,13 @@
                     <!--#region ARTICLES -->
                     <!--Article Grid-->
                     <DataGrid Name="article_grid" 
+                                        AutoGenerateColumns="False"
+                                        ItemsSource="{Binding Articles, Mode=TwoWay, NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedItem="{Binding SelectedItem}"
+                                        SelectedIndex="{Binding SelectedIndex}"
+                                        SelectionUnit="FullRow"
+                                        >
                                       
-                                      AutoGenerateColumns="False"
-                                      ItemsSource="{Binding Articles, Mode=TwoWay, NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}"
-                                      SelectionMode="Single"
-                                       SelectionUnit="FullRow"
-                                      >
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding NotifyOnTargetUpdated=True,  Path=Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
@@ -165,60 +168,19 @@
                 <Border Style="{StaticResource ResetBorder}" Padding="12 6 12 6">
                     <Button Style="{StaticResource update_button}" Command="{Binding UpdateData}"/>
                 </Border>
+                <Border Style="{StaticResource ResetBorder}" Padding="12 6 12 6">
+                    <StackPanel>
+                        <TextBlock Text="Selected Index: " Style="{StaticResource white_text}"/>
+                        <TextBlock Text="{Binding SelectedIndex, FallbackValue='0'}" Style="{StaticResource white_text}"/>
+                    </StackPanel>
+                </Border>
             </StackPanel>
         </StackPanel>
+        
+        <!--BottomPanel-->
+        <!--<StackPanel Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5"  Orientation="Vertical">
+            <TextBlock Text="Row to Edit => "/>
+        </StackPanel>-->
+
     </Grid>
-
-    <!--<StackPanel Background="{StaticResource BlueBrush}" >
-
-
-        <Border Style="{StaticResource ResetBorder}" Padding="16 16 16 16">
-            <ScrollViewer  VerticalScrollBarVisibility="Auto" Height="{Binding ScrollViewerHeight}">
-             
-                    </Border>
-
-                    -->
-    <!--Employee Grid-->
-    <!--
-                    <Border Style="{StaticResource ResetBorder}" Padding="6 6 6 6">
-                        <StackPanel  MinHeight="100">
-                            <Label Content="Employees" Foreground="#f9f9f9"/>
-                            <DataGrid Name="employee_grid" 
-                                      ItemsSource="{Binding Employees, Mode=TwoWay}" 
-                                      SelectedItem="{Binding SelectedItem}"
-                                      >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                                    <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </Border>
-
-                    -->
-    <!--Ingredients Grid-->
-    <!--
-                    <Border Style="{StaticResource ResetBorder}" Padding="6 6 6 6">
-                        <StackPanel  MinHeight="100">
-                            <Label Content="Ingredients" Foreground="#f9f9f9"/>
-                            <DataGrid Name="ingredient_grid" 
-                                      ItemsSource="{Binding Ingredients, Mode=TwoWay}"
-                                      SelectedItem="{Binding SelectedItem}"
-                                      >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
-                                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </ScrollViewer>
-        </Border>
-
-
-    </StackPanel>-->
 </Page>

@@ -10,6 +10,7 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Data;
+using alpha.Model;
 
 namespace alpha
 {
@@ -37,10 +38,18 @@ namespace alpha
         /// </summary>
         public string ScrollViewerHeight { get; set; } = "800";
 
+        // Private Holder
+        private dynamic _selectedItem { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public dynamic SelectedItem { get; set; }
+        public dynamic SelectedItem { 
+            get { return _selectedItem; } 
+            set {  _selectedItem = value; } }
+
+        public int SelectedIndex { get; set; }
+
+
 
         /// <summary>
         /// Grays out update button
@@ -94,9 +103,9 @@ namespace alpha
             RunAsyncActions();
 
             // Listeners for changes in Collections
-            Articles.CollectionChanged += ArticlesCollectionChanged;
-            Employees.CollectionChanged += EmployeesCollectionChanged;
-            Ingredients.CollectionChanged += IngredientsCollectionChanged;
+            //Articles.CollectionChanged += ArticlesCollectionChanged;
+            //Employees.CollectionChanged += EmployeesCollectionChanged;
+            //Ingredients.CollectionChanged += IngredientsCollectionChanged;
         }
         #endregion
 
@@ -104,6 +113,9 @@ namespace alpha
         private async void RunAsyncActions()
         {
             await LoadData();
+
+
+
         }
         private async void RunAsyncUpdate()
         {
@@ -148,19 +160,16 @@ namespace alpha
             foreach (var item in await articleRepo.GetAllAsync())
             {
                 Articles.Add(item);
-                _articles.Add(item);
             }
 
             foreach (var item in await employeeRepo.GetAllAsync())
             {
                 Employees.Add(item);
-                _employees.Add(item);
             }
 
             foreach (var item in await ingredientRepo.GetAllAsync())
             {
                 Ingredients.Add(item);
-                _ingredients.Add(item);
             }
         }
 
@@ -170,9 +179,9 @@ namespace alpha
         /// <param name="args"></param>
         private void UpdateDataAction(object args)
         {
-            var articleDifferences = this._articles.Except(Articles).ToList();
-            var employeeDifferences = this._employees.Except(Employees).ToList();
-            var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
+            //var articleDifferences = this._articles.Except(Articles).ToList();
+            //var employeeDifferences = this._employees.Except(Employees).ToList();
+            //var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
 
             RunAsyncUpdate();
     
@@ -208,19 +217,19 @@ namespace alpha
             //// Reset
             //SelectedItem = null;
         }
-        private void ArticlesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            var x = sender;
-           //ToBeUpdated.Add()
-        }
-        private void EmployeesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
+        //private void ArticlesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    var x = sender;
+        //    //ToBeUpdated.Add()
+        //}
+        //private void EmployeesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
 
-        }
-        private void IngredientsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            
-        }
+        //}
+        //private void IngredientsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+
+        //}
         public void SelectedIndexChangedEvent()
         {
 
