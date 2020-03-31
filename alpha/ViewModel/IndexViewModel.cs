@@ -152,11 +152,11 @@ namespace alpha
             // Add more if needed
             var pagecallback = new Dictionary<string, ApplicationPage>()
             {
-                { "Index", ApplicationPage.Admin },
-                { "", ApplicationPage.Admin },
-                { "Admin", ApplicationPage.Admin },
-                { "Admin", ApplicationPage.Admin },
-                { "Admin", ApplicationPage.Admin },
+                { "Splash", ApplicationPage.Splash },
+                { "Customer", ApplicationPage.Customer },
+                { "Order", ApplicationPage.Order },
+                { "Chief", ApplicationPage.Chief },
+                { "Cashier", ApplicationPage.Cashier },
                 { "Admin", ApplicationPage.Admin }
             };
 
@@ -166,7 +166,11 @@ namespace alpha
             if (pagecallback.ContainsKey(key))
             {
                 //todo; finish this
-               //CurrentPageIndex
+                if(key == "Admin")
+                {
+                    CurrentPage = pagecallback[key];
+                    CurrentPageIndex = 5;
+                }
             }
         }
 

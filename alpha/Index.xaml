@@ -21,8 +21,9 @@
         <KeyBinding Key="F3" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
     </Window.InputBindings>
     <!--#endregion-->
-
-    <Grid>
+    
+    <!--Margin set to avoid screen overlap-->
+    <Grid Margin="6">
 
         <!--#region  Grid-/Row Definitions-->
         <Grid.ColumnDefinitions>
@@ -42,7 +43,7 @@
             <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
             <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
             <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
-            <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding ToggleVisibility}"/>
+            <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
             <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText}" Command="{Binding QuitApplication}"/>
         </StackPanel>
     </Grid>
