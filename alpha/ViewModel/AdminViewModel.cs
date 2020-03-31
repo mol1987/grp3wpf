@@ -9,6 +9,7 @@ using System.Windows;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Data;
 
 namespace alpha
 {
@@ -18,9 +19,9 @@ namespace alpha
         // I do these as a fix, since I don't properly understand
         // how to trigger notifications inside an observable collection
         // when elements are altered from a datagrid
-        private List<Article> _articles = new List<Article>();
-        private List<Employee> _employees = new List<Employee>();
-        private List<Ingredient> _ingredients = new List<Ingredient>();
+        private List<Article> _articles { get; set; } = new List<Article>();
+        private List<Employee> _employees { get; set; } = new List<Employee>();
+        private List<Ingredient> _ingredients { get; set; } = new List<Ingredient>();
 
         public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>() {};
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
@@ -45,6 +46,10 @@ namespace alpha
         /// Grays out update button
         /// </summary>
         public string UpdateButtonEnabled { get; set; } = "Enabled";
+
+
+        private ICommand _gridUpdate { get; set; }
+        public ICommand GridUpdate { get { return new RelayCommand(param => this.TargetUpdated(param), null); } }
 
         // Private holder
         private ICommand _updateData { get; set; }
@@ -100,6 +105,34 @@ namespace alpha
         {
             await LoadData();
         }
+        private async void RunAsyncUpdate()
+        {
+            //var articleRepo = new Library.Repository.ArticlesRepository("Articles");
+            //var employeeRepo = new Library.Repository.EmployeesRepository("Employees");
+            //var ingredientRepo = new Library.Repository.IngredientsRepository("Ingredients");
+
+            //var a = (await articleRepo.GetAllAsync()).ToList();
+            //var e = (await employeeRepo.GetAllAsync()).ToList();
+            //var i = (await ingredientRepo.GetAllAsync()).ToList();
+
+            //int UpdateCount = 0;
+
+            //foreach(var x in Articles)
+            //{
+            //    foreach (var y in a)
+            //    {
+                  
+            //    }
+            //}
+
+
+            //var articleDifferences = Articles.Except(a).ToList();
+            //var employeeDifferences = Employees.Except(e).ToList();
+            //var ingredientDifferences = i.Except(Ingredients).ToList();
+
+
+
+        }
 
         /// <summary>
         /// 
@@ -137,11 +170,12 @@ namespace alpha
         /// <param name="args"></param>
         private void UpdateDataAction(object args)
         {
-            var articleDifferences = Articles.Except(_articles).ToList();
-            var employeeDifferences = Employees.Except(_employees).ToList();
-            var ingredientDifferences = Ingredients.Except(_ingredients).ToList();
+            var articleDifferences = this._articles.Except(Articles).ToList();
+            var employeeDifferences = this._employees.Except(Employees).ToList();
+            var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
 
-            var x = 0;
+            RunAsyncUpdate();
+    
 
             ////  Since we have three different types of data
             ////  This very rough logic to differentiate
@@ -188,6 +222,10 @@ namespace alpha
             
         }
         public void SelectedIndexChangedEvent()
+        {
+
+        }
+        public void TargetUpdated(object args)
         {
 
         }
