@@ -54,7 +54,8 @@ namespace alpha
 
         /// <summary>
         /// Method for managing orders coming in from the other terminals
-        /// over web API
+        /// over web API throws an exception if the ordernumber is incorrect for the call
+        /// that the client can use to know that it was an incorrect call
         /// </summary>
         /// <param name="orderNo">The order's Number</param>
         /// <param name="typeOrder">Type of order command: PlaceOrder, DoneOrder, RemoveOrder</param>
@@ -63,20 +64,34 @@ namespace alpha
             Trace.WriteLine(typeOrder.ToString() + " " + orderNo + Orders.Last().ID);
             switch (typeOrder)
             {
-                case TypeOrder.PlaceOrder:
-                    Orders.Add(new Order { ID = orderNo, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
+                // handle a new order. throws an exception if there is already an order
+                case TypeOrder.placeorder:
+                    if (Orders.Any(x => x.ID == orderNo) != true)
+                    {
+                        Orders.Add(new Order { ID = orderNo, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
+                    }
+                    else throw new Exception();
                     break;
-                case TypeOrder.DoneOrder:
+                // handle an order that is ready to get picked up. throws an exception if there isnt any order with that ordernumber
+                case TypeOrder.doneorder:
                     var tempOrder = Orders.Single(x => x.ID == orderNo);
-                    Orders.Remove(tempOrder);
-                    tempOrder.Orderstatus = 1;
-                    OrdersDone.Add(tempOrder);
+                    if (Orders.Contains(tempOrder) == true)
+                    {
+                        Orders.Remove(tempOrder);
+                        tempOrder.Orderstatus = 1;
+                        OrdersDone.Add(tempOrder);
+                    }
                     break;
-                case TypeOrder.RemoveOrder:
+                // handle removing an order. throws an exception if there isnt any order with that ordernumber
+                case TypeOrder.removeorder:
                     tempOrder = OrdersDone.Single(x => x.ID == orderNo);
-                    OrdersDone.Remove(tempOrder);
+                    if (OrdersDone.Contains(tempOrder) == true)
+                    {                       
+                        OrdersDone.Remove(tempOrder);
+                    }
                     break;
                 default:
+                    throw new Exception();
                     break;
             }
         }
