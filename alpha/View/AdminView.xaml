@@ -35,10 +35,13 @@
         <Style TargetType="{x:Type TextBlock}" x:Key="white_text">
             <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
         </Style>
+        
     </Page.Resources>
     <!--#endregion-->
 
     <Grid Background="{StaticResource BlueBrush}">
+        
+
 
         <!--#region Grid-/Row Definitionss -->
 
@@ -93,7 +96,7 @@
         <!--Main-->
         <Border Grid.ColumnSpan="6" Grid.RowSpan="5" Style="{StaticResource ResetBorder}" Padding="12 36 6 6">
             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
-                <StackPanel>
+                <StackPanel x:Name="myWindow">
                     <!--#region ARTICLES -->
                     <!--Article Grid-->
                     <DataGrid Name="article_grid" 
@@ -110,12 +113,45 @@
                             <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice}"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
                             <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive}"/>
-                            <DataGridComboBoxColumn Header="Ingredients" ItemsSource="{Binding Ingredients}"/>
+                            <DataGridComboBoxColumn Header="Ingredients" SelectedItemBinding="{Binding SelectedRemoveIngredient, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
 
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="-" Background="red"/>
+                                        <Button Content="-" Background="red" Command="{Binding RemoveIngredient}" CommandParameter="{Binding SelectedItemBinding, ElementName=ComboBoxRemoveIngredient}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!--Add ingredients-->
+                            <DataGridComboBoxColumn Header="Add Ingredients" SelectedItemBinding="{Binding SelectedAddIngredient, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridComboBoxColumn.ElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
+                                    </Style>
+                                </DataGridComboBoxColumn.ElementStyle>
+                                <DataGridComboBoxColumn.EditingElementStyle>
+                                    <Style TargetType="{x:Type ComboBox}">
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
+                                    </Style>
+                                </DataGridComboBoxColumn.EditingElementStyle>
+                            </DataGridComboBoxColumn>
+
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="+" Background="Green" Command="{Binding AddIngredient}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

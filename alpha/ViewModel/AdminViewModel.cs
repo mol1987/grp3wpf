@@ -29,6 +29,8 @@ namespace alpha
         public ObservableCollection<ArticleModel> Articles { get { return _pArticles;} set { _pArticles = value;  } }
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<Ingredient> Ingredients { get; set; } = new ObservableCollection<Ingredient>();
+        public Ingredient SelectedRemoveIngredient { get; set; }
+        public Ingredient SelectedAddIngredient { get; set; }
 
         /// <summary>
         /// Header display
@@ -71,6 +73,9 @@ namespace alpha
         /// On updates checks all the differencies
         /// </summary>
         public ICommand UpdateData { get { return new RelayCommand(param => this.UpdateDataAction(param), null); } }
+
+        public ICommand RemoveIngredient { get { return new RelayCommand(param => this.RemoveIngredientAction(param), null); } }
+        public ICommand AddIngredient { get { return new RelayCommand(param => this.AddIngredientAction(param), null); } }
 
         /// <summary>
         /// Dictionary to keep track of changes in what collection
@@ -191,7 +196,14 @@ namespace alpha
             // The private lists are clones
             foreach (var item in await articleRepo.GetAllAsync())
             {
-                Articles.Add(new ArticleModel { ID = item.ID, Name = item.Name, BasePrice = item.BasePrice, Type = item.Type, IsActive = item.IsActive, Ingredients = item.Ingredients });
+                Trace.WriteLine(item.Ingredients.Count());
+                var tempArticle = new ArticleModel { ID = item.ID, Name = item.Name, BasePrice = item.BasePrice, Type = item.Type, IsActive = item.IsActive};
+                tempArticle.Ingredients = new List<Ingredient>();
+                foreach (var itemIngredients in item.Ingredients.ToList())
+                {
+                    tempArticle.Ingredients.Add(new Ingredient { ID = itemIngredients.ID, Name = itemIngredients.Name, Price = itemIngredients.Price });
+                }
+                Articles.Add(tempArticle);
             }
 
             foreach (var item in await employeeRepo.GetAllAsync())
@@ -214,7 +226,11 @@ namespace alpha
             //var articleDifferences = this._articles.Except(Articles).ToList();
             //var employeeDifferences = this._employees.Except(Employees).ToList();
             //var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
-            Trace.WriteLine(Articles.Last().Name);
+            foreach (var item in Articles)
+            {
+                Trace.WriteLine(item.Ingredients.Count());
+            }
+            
             RunAsyncUpdate();
 
             ////  Since we have three different types of data
@@ -261,6 +277,9 @@ namespace alpha
         //{
 
         //}
+
+
+        
         public void SelectedIndexChangedEvent()
         {
 
@@ -268,6 +287,14 @@ namespace alpha
         public void TargetUpdated(object args)
         {
             Trace.WriteLine("hohoh");
+        }
+        private void RemoveIngredientAction(object args)
+        {
+            Trace.WriteLine(SelectedRemoveIngredient.Name);
+        }
+        private void AddIngredientAction(object args)
+        {
+            Trace.WriteLine(args.ToString());
         }
     }
 }
