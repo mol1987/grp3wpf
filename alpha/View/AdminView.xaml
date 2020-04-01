@@ -103,7 +103,7 @@
                                         SelectedIndex="{Binding SelectedIndex}"
                                         SelectionUnit="FullRow"
                                         >
-                                      
+                        
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding NotifyOnTargetUpdated=True,  Path=Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>

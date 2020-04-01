@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Data;
 using alpha.Model;
+using System.Diagnostics;
 
 namespace alpha
 {
@@ -24,7 +25,8 @@ namespace alpha
         private List<Employee> _employees { get; set; } = new List<Employee>();
         private List<Ingredient> _ingredients { get; set; } = new List<Ingredient>();
 
-        public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>() {};
+        private ObservableCollection<ArticleModel> _pArticles = new ObservableCollection<ArticleModel>() {};
+        public ObservableCollection<ArticleModel> Articles { get { return _pArticles;} set { _pArticles = value;  } }
         public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<Ingredient> Ingredients { get; set; } = new ObservableCollection<Ingredient>();
 
@@ -102,6 +104,8 @@ namespace alpha
             //  double height = Global.ActualWindow.Height;
             //  ScrollViewerHeight = (height - 20.0).ToString();
 
+            Articles.CollectionChanged += items_CollectionChanged;
+            
             // Load SQL data
             RunAsyncActions();
 
@@ -110,7 +114,10 @@ namespace alpha
             //Employees.CollectionChanged += EmployeesCollectionChanged;
             //Ingredients.CollectionChanged += IngredientsCollectionChanged;
         }
+
+     
         #endregion
+
 
 
         private async void RunAsyncActions()
@@ -149,6 +156,28 @@ namespace alpha
 
         }
 
+        private void items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Trace.WriteLine("sugfwfw");
+            if (e.OldItems != null)
+            {
+                Trace.WriteLine("s1");
+                foreach (INotifyPropertyChanged item in e.OldItems)
+                    item.PropertyChanged -= item_PropertyChanged;
+            }
+            if (e.NewItems != null)
+            {
+                Trace.WriteLine("s2");
+                foreach (INotifyPropertyChanged item in e.NewItems)
+                    item.PropertyChanged += item_PropertyChanged;
+            }
+        }
+
+        private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Trace.WriteLine("sug");
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -162,7 +191,7 @@ namespace alpha
             // The private lists are clones
             foreach (var item in await articleRepo.GetAllAsync())
             {
-                Articles.Add(item);
+                Articles.Add(new ArticleModel { ID = item.ID, Name = item.Name, BasePrice = item.BasePrice, Type = item.Type, IsActive = item.IsActive, Ingredients = item.Ingredients });
             }
 
             foreach (var item in await employeeRepo.GetAllAsync())
@@ -185,9 +214,8 @@ namespace alpha
             //var articleDifferences = this._articles.Except(Articles).ToList();
             //var employeeDifferences = this._employees.Except(Employees).ToList();
             //var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
-
+            Trace.WriteLine(Articles.Last().Name);
             RunAsyncUpdate();
-    
 
             ////  Since we have three different types of data
             ////  This very rough logic to differentiate
@@ -239,7 +267,7 @@ namespace alpha
         }
         public void TargetUpdated(object args)
         {
-
+            Trace.WriteLine("hohoh");
         }
     }
 }
