@@ -7,6 +7,7 @@ using Library.TypeLib;
 using Library.Repository;
 using System.Windows;
 using System.Threading.Tasks;
+//using Library.Extensions.ObservableCollection;
 
 namespace alpha
 {
@@ -31,6 +32,11 @@ namespace alpha
         public ObservableCollection<ArticleItemDataModel> Checkout { get; set; } = new ObservableCollection<ArticleItemDataModel>();
 
         /// <summary>
+        /// 
+        /// </summary>
+        public ObservableCollection<IngredientModel> Ingredients { get; set; } = new ObservableCollection<IngredientModel>();
+
+        /// <summary>
         /// Buttons in the top for filtering the view
         /// </summary>
         public ObservableCollection<FilterButton> FilterButtons { get; set; } = new ObservableCollection<FilterButton>();
@@ -44,6 +50,11 @@ namespace alpha
         /// Articles are filtered by this
         /// </summary>
         public string CurrentlyDisplayedType { get; set; } = null;
+
+        /// <summary>
+        /// Toggles modal off and on
+        /// </summary>
+        public bool IsModal { get; set; } = false;
 
         // Private
         private float _checkoutSum = 0;
@@ -92,6 +103,11 @@ namespace alpha
         /// <summary>
         /// Testing out, todo; remove this
         /// </summary>
+        public ICommand SetToChecked { get { return new RelayCommand(param => this.EmptyTestAction(param), null); } }
+
+        /// <summary>
+        /// Testing out, todo; remove this
+        /// </summary>
         public ICommand ChangeArticle { get { return new RelayCommand(param => this.ChangeArticleAction(), null); } }
 
         /// <summary>
@@ -116,6 +132,32 @@ namespace alpha
         public ICommand RemoveFromCheckout { get { return new RelayCommand(param => this.RemoveFromCheckoutAction(param), null); } }
 
         /// <summary>
+        /// Close and Show Custom Article menu
+        /// </summary>
+        public ICommand ToggleModal { get { return new RelayCommand(param => this.ToggleModalAction(param), null); } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ICommand ToggleModalAndResetIngredients
+        {
+            get
+            {
+                return new RelayCommand(param =>
+                {
+                    this.ToggleModalAction(param);
+                    this.ResetIngredients();
+                }, null);
+            }
+        }
+
+        /// <summary>
+        /// From Custom article modal menu
+        /// Param = IngredientModel
+        /// </summary>
+        public ICommand CreateNewCustomArticle { get { return new RelayCommand(param => this.CreateNewCustomArticleAction(param), null); } }
+
+        /// <summary>
         /// Constructor, activates on page/frame load
         /// </summary>
         public CustomerViewModel()
@@ -135,9 +177,13 @@ namespace alpha
                 Articles.Add(new ArticleItemDataModel(item));
 
                 // Create nav buttons for each type once
-                if(FilterButtons.Where(fb => fb.Type == item.Type).Count() < 1)
+                if (FilterButtons.Where(fb => fb.Type == item.Type).Count() < 1)
                     FilterButtons.Add(new FilterButton { Type = item.Type });
             }
+
+            // ...
+            RunAsyncActions();
+
         }
 
         /// <summary>
@@ -195,6 +241,12 @@ namespace alpha
                 Articles.Add(item);
             }
         }
+
+        /// <summary>
+        /// Boolean switch
+        /// </summary>
+        /// <returns></returns>
+        public bool ToggleModalAction(object arg) => IsModal = IsModal ? false : true;
 
         /// <summary>
         /// Add <see cref="ArticleItemDataModel"/> to checkout list
@@ -258,6 +310,65 @@ namespace alpha
 
             // Reset price
             CheckOutSum = CheckOutSum * 0;
+        }
+
+        private void CreateNewCustomArticleAction(object args)
+        {
+            // Filter out unchecked ingredients
+            var selectedIngredients = Ingredients.Where(a => a.IsChecked);
+            // Initiate new Article model
+            var newArticle = new Article() { Name = "Custom Pizza", ID = 9999, BasePrice = 40, IsActive = true, Type = "Pizza", Ingredients = new List<Ingredient>() };
+
+            foreach (var item in Ingredients)
+            {
+                newArticle.Ingredients.Add(new Ingredient { ID = item.ID, Name = item.Name, Price = item.Price });
+                newArticle.BasePrice += item.Price;
+            }
+
+            // Inside the wrapper thingy
+            var articleItemDataModel = new ArticleItemDataModel(newArticle);
+
+            // Add to checkout
+            AddToCheckoutAction(articleItemDataModel);
+
+            // Reset for next custom article
+            ResetIngredients();
+        }
+
+        /// <summary>
+        /// Set all ingredientModels to unchecked
+        /// </summary>
+        private void ResetIngredients()
+        {
+            foreach (var _ in Ingredients)
+            {
+                _.IsChecked = false;
+            }
+        }
+        private void EmptyTestAction(object args)
+        {
+            var _ = args;
+        }
+
+        /// <summary>
+        /// Async Actions
+        /// </summary>
+        private async void RunAsyncActions()
+        {
+            await LoadData();
+        }
+
+        /// <summary>
+        /// Load ingredients for custom pizza
+        /// </summary>
+        /// <returns></returns>
+        private async Task LoadData()
+        {
+            var ingredientRepo = new Library.Repository.IngredientsRepository("Ingredients");
+            foreach (var item in await ingredientRepo.GetAllAsync())
+            {
+                Ingredients.Add(new IngredientModel { Name = item.Name, ID = item.ID, Price = item.Price });
+            }
         }
     }
 }
