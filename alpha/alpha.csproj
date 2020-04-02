@@ -11,6 +11,8 @@
     <None Remove="Assets\Images\default.png" />
     <None Remove="Assets\Images\fogel.png" />
     <None Remove="Assets\Images\Hawaii.png" />
+    <None Remove="Assets\Images\logo.png" />
+    <None Remove="Assets\Images\logo_text.png" />
     <None Remove="Assets\Images\Margherita.png" />
     <None Remove="Assets\Images\Napoli.png" />
   </ItemGroup>
@@ -34,6 +36,8 @@
     <Resource Include="Assets\Images\Bussola.png" />
     <Resource Include="Assets\Images\default.png" />
     <Resource Include="Assets\Images\fogel.png" />
+    <Resource Include="Assets\Images\logo.png" />
+    <Resource Include="Assets\Images\logo_text.png" />
     <Resource Include="Assets\Images\Margherita.png" />
     <Resource Include="Assets\Images\Napoli.png" />
   </ItemGroup>

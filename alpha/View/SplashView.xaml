@@ -7,10 +7,27 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SplashView">
-    
-    <!--#region Animations -->
+
+
 
     <Page.Resources>
+
+        <!--Logo-->
+        <!--<BitmapImage x:Key="logo_image" UriSource="pack://application:,,,/Assets/Images/logo.png" />-->
+        <!--Text-->
+        <Style TargetType="TextBlock" x:Key="intro_text">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="Padding" Value="15,10,15,10"/>
+            <Setter Property="Background" Value="#000000"/>
+            <Setter Property="Width" Value="500"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+
+        <!--#region Animations -->
         <Color x:Key="FilledColor" A="255" B="155" R="155" G="155"/>
         <Color x:Key="UnfilledColor" A="0" B="155" R="155" G="155"/>
 
@@ -132,9 +149,11 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--#endregion-->
+
     </Page.Resources>
-    
-    <!--#endregion-->
+
+
 
     <!--#region DataContext etc -->
     <Page.DataContext>
@@ -155,11 +174,19 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
-        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Control Style="{StaticResource BusyAnimationStyle}"/>
-            <TextBlock Text="{Binding Intro}"/>
+        <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image>
+                <Image.Source>
+                    <BitmapImage UriSource="pack://application:,,,/Assets/Images/logo.png"/>
+                </Image.Source>
+            </Image>
+            <!--<Control Style="{StaticResource BusyAnimationStyle}"/>
+            <TextBlock Text="{Binding Intro}"/>-->
             <!--<Border BorderThickness="10" BorderBrush="{StaticResource SecondaryBrush}" Width="50" Height="50" CornerRadius="50"></Border>-->
             <!--<TextBlock x:Name="MyAnimation" Text="Animate me" />-->
-      </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2">
+            <TextBlock Style="{StaticResource intro_text}" Text="{Binding Intro, FallbackValue='Tonys Pizzeria'}" />
+        </StackPanel>
     </Grid>
 </Page>
