@@ -31,9 +31,10 @@
         </Grid.RowDefinitions>
 
         <!--TopPanel-->
-        <StackPanel Grid.Column="0" Grid.Row="0">
+        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
 
-            <ItemsControl ItemsSource="{Binding FilterButtons, Mode=TwoWay}" x:Name="filterbutton_list">
+            <!--FilterButtons-->
+            <ItemsControl ItemsSource="{Binding FilterButtons, Mode=TwoWay}" x:Name="filterbutton_list" HorizontalAlignment="Left">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Style="{StaticResource filter_button}"  
@@ -49,10 +50,19 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
 
+            <!--CustomPizzaButton-->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Style="{StaticResource custom_pizza_button}" x:Name="custom_pizza_button" Content="Skapa egen pizza"
+                        Command="{Binding ToggleModal}" CommandParameter="x"
+                        />
+            </StackPanel>
+
         </StackPanel>
 
         <!--BigPanel-->
         <Border Grid.Column="0" Grid.Row="1" >
+
+            <!--ArticleGrid-->
             <ListView ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -100,8 +110,8 @@
 
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
+
         </Border>
 
         <!--SidePanel-->
@@ -138,6 +148,87 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+
+        <!-- 
+            Overlay
+            Covers everything, invisible by default
+        -->
+        <Grid x:Name="modal" Style="{StaticResource modal}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+        
+              >
+            
+            <!--#region Grid-/Row Definitions -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--#endregion-->
+
+            <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5" Grid.RowSpan="5" Background="#f9f9f9">
+                <Border BorderThickness="4">
+
+                    <ItemsControl ItemsSource="{Binding Ingredients, Mode=TwoWay, NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}" x:Name="custom_articles_listbox" HorizontalAlignment="Left">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Price}"/>
+                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <Button
+                                        Content="  Add  "
+                                Command="{Binding SetToChecked}" 
+                                CommandParameter="{Binding}"/>
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    
+                    <!--<ListBox Name="custom_articles_listbox" ItemsSource="{Binding Ingredients, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding Price}" Grid.Column="1"/>
+                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2"/>
+                                    <Button Content=" + " Command="{Binding ElementName=custom_articles_listbox, Path=DataContext.SetToChecked}" CommandParameter="{Binding}" Grid.Column="3"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>-->
+                </Border>
+                <WrapPanel HorizontalAlignment="Center">
+                    <Button  Content="OK" Command="{Binding CreateNewCustomArticle}" Width="80" Padding="4 4" Margin="20 0 20 0"/>
+                    <Button  Content="Stäng" Command="{Binding ToggleModalAndResetIngredients}" Width="80" Padding="4 4" Margin="20 0 20 0" />
+                </WrapPanel>
+
+            </StackPanel>
+        </Grid>
 
     </Grid>
 </Page>
