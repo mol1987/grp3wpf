@@ -11,9 +11,30 @@ namespace Library.WebApiFunctionality
     [RestResource]
     public class WebApiServer
     {
+        /// <summary>
+        /// ...
+        /// </summary>
+        /// <param name="orderNo"></param>
+        /// <param name="typeOrder"></param>
         public delegate void ReturnOrderNoDelegate(int orderNo, TypeOrder typeOrder);
+
+        /// <summary>
+        /// ...
+        /// </summary>
         static public event ReturnOrderNoDelegate returnOrderEvent;
 
+        /// <summary>
+        /// ...
+        /// </summary>
+        private static RestServer server = new RestServer();
+
+        #region Routes
+
+        /// <summary>
+        /// ...
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/placeorder")]
         public IHttpContext OrderReady(IHttpContext context)
         {
@@ -24,14 +45,16 @@ namespace Library.WebApiFunctionality
                 context.Response.SendResponse("Error");
                 return context;
             }
-            if (returnOrderEvent != null)
-            {
-                returnOrderEvent(orderNo, TypeOrder.placeorder);
-            }
+            returnOrderEvent?.Invoke(orderNo, TypeOrder.placeorder);
             context.Response.SendResponse("ok");
             return context;
         }
 
+        /// <summary>
+        /// ...
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/doneorder")]
         public IHttpContext OrderDone(IHttpContext context)
         {
@@ -42,14 +65,16 @@ namespace Library.WebApiFunctionality
                 context.Response.SendResponse("Error");
                 return context;
             }
-            if (returnOrderEvent != null)
-            {
-                returnOrderEvent(orderNo, TypeOrder.doneorder);
-            }
+            returnOrderEvent?.Invoke(orderNo, TypeOrder.doneorder);
             context.Response.SendResponse("ok");
             return context;
         }
 
+        /// <summary>
+        /// ...
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         [RestRoute(HttpMethod = HttpMethod.GET, PathInfo = "/removeorder")]
         public IHttpContext OrderRemove(IHttpContext context)
         {
@@ -60,18 +85,32 @@ namespace Library.WebApiFunctionality
                 context.Response.SendResponse("Error");
                 return context;
             }
-            if (returnOrderEvent != null)
-            {
-                returnOrderEvent(orderNo, TypeOrder.removeorder);
-            }
+            returnOrderEvent?.Invoke(orderNo, TypeOrder.removeorder);
             context.Response.SendResponse("ok");
             return context;
-        }
+        } 
+        #endregion
 
+        /// <summary>
+        /// Move the server variable to private property, for StopSever() access
+        /// </summary>
         public static void StartServer()
         {
-            var server = new RestServer();
             server.Start();
+        }
+
+        /// <summary>
+        /// todo; requires some more testing
+        /// </summary>
+        public static void StopServer()
+        {
+            if (server.IsListening)
+            {
+                Trace.Write("Attempting to stop the server .... ");
+                server.ThreadSafeStop();
+                server.Stop();
+                Trace.Write(".. Stopped!");
+            }
         }
     }
 }

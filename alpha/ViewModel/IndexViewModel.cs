@@ -200,6 +200,9 @@ namespace alpha
         /// </summary>
         private void QuitApplicationAction(object args)
         {
+            // Stop the running server
+            Library.WebApiFunctionality.WebApiServer.StopServer();
+
             // Loop and shut down
             foreach (System.Windows.Window window in System.Windows.Application.Current.Windows)
             {
