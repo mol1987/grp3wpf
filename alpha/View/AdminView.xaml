@@ -102,17 +102,17 @@
                     <DataGrid Name="article_grid" 
                                         AutoGenerateColumns="False"
                                         ItemsSource="{Binding Articles, Mode=TwoWay, NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedItem="{Binding SelectedItem}"
+                                        SelectedItem="{Binding DynSelectedItem}"
                                         SelectedIndex="{Binding SelectedIndex}"
                                         SelectionUnit="FullRow"
                                         >
                         
                         <DataGrid.Columns>
                             <DataGridTextColumn IsReadOnly="True" Header="ID" Binding="{Binding ID}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding NotifyOnTargetUpdated=True,  Path=Name,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                            <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice}"/>
-                            <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                            <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding NotifyOnTargetUpdated=True,  Path=Name, Mode=TwoWay}"/>
+                            <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridComboBoxColumn Header="Ingredients" SelectedItemBinding="{Binding SelectedRemoveIngredient, UpdateSourceTrigger=PropertyChanged}">
                                 <DataGridComboBoxColumn.ElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
@@ -129,7 +129,7 @@
                             <DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="-" Background="red" Command="{Binding RemoveIngredient}" CommandParameter="{Binding SelectedItemBinding, ElementName=ComboBoxRemoveIngredient}" />
+                                        <Button Content="-" Background="red" Command="{Binding RemoveIngredient}"  />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -165,7 +165,7 @@
                     <DataGrid   Name="employee_grid" 
                         AutoGenerateColumns="False"
                         ItemsSource="{Binding Employees, Mode=TwoWay}" 
-                        SelectedItem="{Binding SelectedItem}"
+                        SelectedItem="{Binding DynSelectedItem}"
                         >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
@@ -183,7 +183,7 @@
                     <DataGrid Name="ingredient_grid" 
                       AutoGenerateColumns="False"
                                       ItemsSource="{Binding Ingredients, Mode=TwoWay}"
-                                      SelectedItem="{Binding SelectedItem}"
+                                      SelectedItem="{Binding DynSelectedItem}"
                                       >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>

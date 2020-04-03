@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Library.Repository;
 using Library.TypeLib;
+using Library.WebApiFunctionality;
 
 namespace alpha
 {
@@ -91,7 +94,7 @@ namespace alpha
         /// ...
         /// </summary>
         /// <param name="args"></param>
-        private void SetOrderDoneAction(object args)
+        private async void SetOrderDoneAction(object args)
         {
             var dobj = (DisplayObject)args;
 
@@ -105,7 +108,17 @@ namespace alpha
             FinishedOrders.Add(dobj);
 
             //todo; sql
-            
+            Order updOrder = new Order() { ID = dobj.OrderID , TimeCreated = dobj.TimeStamp,  Orderstatus = dobj.OrderStatus};
+            await General.ordersRepo.UpdateAsync(updOrder);
+
+            // webAPI try sending update to the OrderTerminalen return after more than five
+            int i = 0;
+            while (await WebApiClient.DoneOrderAsync(49, TypeOrder.doneorder) == false)
+            {
+                await Task.Delay(500);
+                if (i++ > 5) return;
+            }
+            Trace.WriteLine("ok");
         }
     }
 }

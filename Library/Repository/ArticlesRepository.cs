@@ -18,17 +18,20 @@ namespace Library.Repository
         }
         public async Task UpdateAsync(Article article)
         {
+            await base.UpdateAsync(new Article { ID = article.ID, Name = article.Name, BasePrice = article.BasePrice, IsActive = article.IsActive, Type = article.Type });
             using (var connection = CreateConnection())
             {
                 using (var transaction = connection.BeginTransaction())
                 {
                     string sql = $"Delete from ArticleIngredients WHERE ArticleID = {article.ID }";
                     await connection.ExecuteAsync(sql, transaction: transaction);
-                    
-                    foreach (var ingredient in article.Ingredients)
+                    if (article.Ingredients != null)
                     {
-                        var sqlQuery = $"INSERT INTO ArticleIngredients (ArticleID, IngredientID) VALUES (@ArticleID, @IngredientID)";
-                        await connection.ExecuteAsync(sqlQuery, new { ArticleID = article.ID, IngredientID = ingredient.ID }, transaction: transaction);
+                        foreach (var ingredient in article.Ingredients)
+                        {
+                            var sqlQuery = $"INSERT INTO ArticleIngredients (ArticleID, IngredientID) VALUES (@ArticleID, @IngredientID)";
+                            await connection.ExecuteAsync(sqlQuery, new { ArticleID = article.ID, IngredientID = ingredient.ID }, transaction: transaction);
+                        }
                     }
                     transaction.Commit();
                 }
@@ -44,10 +47,13 @@ namespace Library.Repository
                     string sql = @"INSERT INTO Articles (Name, BasePrice, Type) VALUES (@Name, @BasePrice, @Type) SELECT CAST(SCOPE_IDENTITY() as int)";
                     var id = (await connection.QueryAsync<int>(sql, new { Name = article.Name, BasePrice = article.BasePrice, Type = article.Type }, transaction: transaction)).Single();
                     article.ID = id;
-                    foreach (var ingredient in article.Ingredients)
+                    if (article.Ingredients != null)
                     {
-                        var sqlQuery = $"INSERT INTO ArticleIngredients (ArticleID, IngredientID) VALUES (@ArticleID, @IngredientID)";
-                        await connection.ExecuteAsync(sqlQuery, new { ArticleID = article.ID, IngredientID = ingredient.ID }, transaction: transaction);
+                        foreach (var ingredient in article.Ingredients)
+                        {
+                            var sqlQuery = $"INSERT INTO ArticleIngredients (ArticleID, IngredientID) VALUES (@ArticleID, @IngredientID)";
+                            await connection.ExecuteAsync(sqlQuery, new { ArticleID = article.ID, IngredientID = ingredient.ID }, transaction: transaction);
+                        }
                     }
                     transaction.Commit();
                 }

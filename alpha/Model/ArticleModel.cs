@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace alpha.Model
 {
     [AddINotifyPropertyChangedInterface]
-    public class ArticleModel : Article, INotifyPropertyChanged
+    public class ArticleModel : INotifyPropertyChanged
     {
         public int? ID { get; set; }
         public string? Name { get; set; }
@@ -29,19 +29,23 @@ namespace alpha.Model
         public Ingredient SelectedAddIngredient { get; set; }
 
 
-        private void RemoveIngredientAction(object args)
+        private async void RemoveIngredientAction(object args)
         {
             if (SelectedRemoveIngredient == null) return;
 
             Ingredients.Remove(Ingredients.Find(X => X.Name == SelectedRemoveIngredient.Name));
 
+            await Global.ArticleRepo.UpdateAsync(new Article() { ID = this.ID, BasePrice = this.BasePrice, Name = this.Name, IsActive = this.IsActive, Type = this.Type, Ingredients = this.Ingredients });
+
             Trace.WriteLine(SelectedRemoveIngredient.Name);
+
         }
-        private void AddIngredientAction(object args)
+        private async void AddIngredientAction(object args)
         {
             if (SelectedAddIngredient == null) return;
             if (Ingredients.Any(x => x.Name == SelectedAddIngredient.Name)) return;
             Ingredients.Add(SelectedAddIngredient);
+            await Global.ArticleRepo.UpdateAsync(new Article() { ID = this.ID, BasePrice = this.BasePrice, Name = this.Name, IsActive = this.IsActive, Type = this.Type, Ingredients = this.Ingredients });
             Trace.WriteLine(SelectedAddIngredient.Name);
         }
 

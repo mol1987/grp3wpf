@@ -47,7 +47,7 @@ namespace alpha
         /// <summary>
         /// 
         /// </summary>
-        public dynamic SelectedItem { 
+        public dynamic DynSelectedItem { 
             get 
             { 
                 return _selectedItem; 
@@ -111,6 +111,7 @@ namespace alpha
 
             Articles.CollectionChanged += items_CollectionChanged;
             
+
             // Load SQL data
             RunAsyncActions();
 
@@ -161,26 +162,48 @@ namespace alpha
 
         }
 
-        private void items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private async void items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            Trace.WriteLine("sugfwfw");
             if (e.OldItems != null)
             {
                 Trace.WriteLine("s1");
+                await Global.ArticleRepo.DeleteRowAsync(DynSelectedItem.ID);
                 foreach (INotifyPropertyChanged item in e.OldItems)
                     item.PropertyChanged -= item_PropertyChanged;
             }
             if (e.NewItems != null)
             {
                 Trace.WriteLine("s2");
+             
+                // if new row, fill with garbage
+                var selectedArticle = (ArticleModel)e.NewItems[0];
+                Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "Pizza" };
+
+                if (selectedArticle.Name == null) { 
+                    await Global.ArticleRepo.InsertAsync(getArticle);
+                    Articles.Last().ID = getArticle.ID;
+                    Articles.Last().Ingredients = new List<Ingredient>();
+                }
                 foreach (INotifyPropertyChanged item in e.NewItems)
                     item.PropertyChanged += item_PropertyChanged;
             }
         }
 
-        private void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private async void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Trace.WriteLine("sug");
+            if (DynSelectedItem == null) return;
+            if (DynSelectedItem is ArticleModel)
+            {
+                if (e.PropertyName == "AddIngredient" ||
+                    e.PropertyName == "SelectedAddIngredient" ||
+                    e.PropertyName == "RemoveIngredient" ||
+                    e.PropertyName == "SelectedRemoveIngredient")
+                    return;
+                var selectedArticle = (ArticleModel)DynSelectedItem;
+                await Global.ArticleRepo.UpdateAsync(new Article() { ID = selectedArticle.ID, BasePrice = selectedArticle.BasePrice, Name = selectedArticle.Name, IsActive = selectedArticle.IsActive, Type = selectedArticle.Type, Ingredients = selectedArticle.Ingredients });
+
+            }
+            Trace.WriteLine("prop " + e.PropertyName);
         }
 
         /// <summary>
@@ -226,10 +249,6 @@ namespace alpha
             //var articleDifferences = this._articles.Except(Articles).ToList();
             //var employeeDifferences = this._employees.Except(Employees).ToList();
             //var ingredientDifferences = this._ingredients.Except(Ingredients).ToList();
-            foreach (var item in Articles)
-            {
-                Trace.WriteLine(item.Ingredients.Count());
-            }
             
             RunAsyncUpdate();
 
