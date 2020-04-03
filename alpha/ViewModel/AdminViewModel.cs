@@ -177,7 +177,7 @@ namespace alpha
              
                 // if new row, fill with garbage
                 var selectedArticle = (ArticleModel)e.NewItems[0];
-                Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "Pizza" };
+                Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "blank" };
 
                 if (selectedArticle.Name == null) { 
                     await Global.ArticleRepo.InsertAsync(getArticle);

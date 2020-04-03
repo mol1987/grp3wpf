@@ -113,7 +113,7 @@ namespace alpha
 
             // webAPI try sending update to the OrderTerminalen return after more than five
             int i = 0;
-            while (await WebApiClient.DoneOrderAsync(49, TypeOrder.doneorder) == false)
+            while (await WebApiClient.DoneOrderAsync(dobj.OrderID, TypeOrder.doneorder) == false)
             {
                 await Task.Delay(500);
                 if (i++ > 5) return;

@@ -7,6 +7,8 @@ using System.Text;
 using System.Linq;
 using System.Windows.Input;
 using System.Diagnostics;
+using Library.WebApiFunctionality;
+using System.Threading.Tasks;
 
 namespace alpha
 {
@@ -37,17 +39,29 @@ namespace alpha
         async void LoadOrders()
         {
             List<Order> tempOrders = (await General.ordersRepo.GetAllAsync()).ToList();
-            foreach (var item in tempOrders)
+            Orders.Clear();
+            foreach (var item in tempOrders.Where(x => x.Orderstatus == 2))
             {
                 Orders.Add(item);
             }
         }
 
-        public void fooAction(object arg)
+        public async void fooAction(object arg)
         {
-            var data = (ArticleItemDataModel)arg;
             //todo; make typechec
-            Trace.WriteLine("pressed");
+            var workingOrder = Orders.Single(x => x.ID == (int)arg);
+            workingOrder.Orderstatus = 3;
+            await Global.OrderRepo.UpdateAsync(workingOrder);
+            LoadOrders();
+
+            // webAPI try sending update to the OrderTerminalen return after more than five
+            int i = 0;
+            while (await WebApiClient.DoneOrderAsync((int)arg, TypeOrder.removeorder) == false)
+            {
+                await Task.Delay(500);
+                if (i++ > 5) return;
+            }
+            Trace.WriteLine("ok");
         }
     }
 }

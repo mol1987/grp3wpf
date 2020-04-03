@@ -31,7 +31,7 @@
 
         <!--Left-->
         <!--Active Orders-->
-        <StackPanel Grid.Column="1" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1">   
             <ItemsControl x:Name="active_orders" Style="{StaticResource Orders}" ItemsSource="{Binding Orders, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -40,6 +40,7 @@
                             <Button Name="xxxx" 
                                     Command="{Binding ElementName=active_orders, Path=DataContext.foo}" 
                                     Content="{Binding ID}"
+                                    CommandParameter="{Binding Path=ID}"
                                     />
                         </StackPanel>
                     </DataTemplate>
