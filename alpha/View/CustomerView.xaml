@@ -15,6 +15,7 @@
 
     <Page.Resources>
         <local:PathToImageConverter x:Key="ImageConverter"/>
+        <local:ListToStringConverter x:Key="ListConverter"/>
     </Page.Resources>
 
     <!--#endregion-->
@@ -93,9 +94,14 @@
                                 <!--Name of Article-->
                                 <TextBlock Text="{Binding Article.Name}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
 
+                                <!--List of ingeredients-->
+                                <TextBlock Text="{Binding Article.Ingredients, Converter={StaticResource ListConverter}}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontFamily="Segoe UI" FontStyle="Italic"/>
+                                
                                 <!--Price of Article-->
                                 <TextBlock Text="{Binding Article.BasePrice}" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
 
+                                
+                                
                                 <!--Buy button-->
                                 <Button Grid.Column="2" Grid.Row="0"
                                     Style="{StaticResource AddToCheckoutButton}" 

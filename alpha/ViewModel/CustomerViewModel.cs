@@ -319,7 +319,7 @@ namespace alpha
             // Can use a progress bar or similar for UI-clarity
             System.TimeSpan time = Utilities.Time(async () =>
             {
-                await order.insertOrder();
+                await repo.InsertAsync(order);
             });
 
             // Some info output

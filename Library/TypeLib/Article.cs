@@ -18,7 +18,7 @@ namespace Library.TypeLib
         /// </summary>
         public string? ImageSource { get; set; }
         public ArticleOrder? ArticleOrder { get; set; }
-        public List<Ingredient> Ingredients { get; set; }
+        public List<Ingredient>? Ingredients { get; set; }
 
         public override string ToString()
         {

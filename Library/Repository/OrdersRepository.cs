@@ -24,6 +24,12 @@ namespace Library.Repository
         /// <returns></returns>
         public async Task InsertAsync(Order order)
         {
+            // null check
+            if(order.Articles == null)
+            {
+                order.Articles = new List<Article>();
+            }
+
             var orderTemp = new Order { CustomerID = order.CustomerID, Price = order.Price };
             string insertQuery = base.GenerateInsertQuery(orderTemp);
             insertQuery += " SELECT CAST(SCOPE_IDENTITY() as int)";

@@ -6,6 +6,7 @@ using System.Text;
 using Library.TypeLib;
 using Library.WebApiFunctionality;
 using System.Linq;
+using Library.Extensions.ObservableCollection;
 
 namespace alpha
 {
@@ -28,11 +29,6 @@ namespace alpha
         {
             //
             SeverInit();
-
-            Orders.Add(new Order { ID = 41, CustomerID = 99, Orderstatus = 0, Price = 99, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 40, CustomerID = 99, Orderstatus = 1, Price = 199, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 39, CustomerID = 100, Orderstatus = 2, Price = 299, TimeCreated = GetRandomTime() });
-            Orders.Add(new Order { ID = 49, CustomerID = 101, Orderstatus = 1, Price = 399, TimeCreated = GetRandomTime() });
         }
 
 
@@ -41,6 +37,8 @@ namespace alpha
         /// </summary>
         private void SeverInit()
         {
+            LoadOrders();
+
             if (Global.IsServerStarted)
                 return;
 
@@ -49,6 +47,20 @@ namespace alpha
             WebApiServer.returnOrderEvent += ManageOrders;
             WebApiServer.StartServer();
             Global.IsServerStarted = true;
+
+        }
+
+        /// <summary>
+        /// Initial Load Orders from SQL
+        /// </summary>
+        async void LoadOrders()
+        {
+            // Boot up sql
+            var repo = new Library.Repository.OrdersRepository("orders");
+            var res = await repo.GetAllAsync();
+
+            // using the Enum.Foreach extension
+            res.ForEach(item => Orders.Add(item));
 
         }
 
