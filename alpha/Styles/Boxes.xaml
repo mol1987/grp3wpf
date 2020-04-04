@@ -11,6 +11,7 @@
     <Style TargetType="{x:Type Grid}" x:Key="SplashRoot">
         <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
     </Style>
+    
     <!--#endregion-->
 
     <!--#region CustomerView -->

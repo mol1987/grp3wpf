@@ -42,43 +42,5 @@ namespace alpha
         public static EmployeesRepository EmployeeRepo = new EmployeesRepository("Employees"); 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<List<Article>> getArticles()
-        {
-            return (await ArticleRepo.GetAllAsync()).ToList();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static async Task<Article> getArticle(this Article a, int id)
-        {
-            return (await ArticleRepo.GetAsync(id));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static async Task insertOrder(this Order o)
-        {
-            await OrderRepo.InsertAsync(o);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static async Task<List<Ingredient>> getIngredients()
-        {
-            return (await IngredientRepo.GetAllAsync()).ToList();
-        }
     }
 }
