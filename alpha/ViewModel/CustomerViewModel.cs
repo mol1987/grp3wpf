@@ -296,11 +296,35 @@ namespace alpha
         /// <param name="args"></param>
         public void PurchaseCheckoutItemsAction(object args)
         {
+            var repo = new Library.Repository.OrdersRepository("Orders");
+            string result = "Something went wrong";
 
-            //todo;
-            // Gör datauppkoppling och spara data i Checkout
-            var dataToSave = Checkout;
-            MessageBox.Show("Purchased");
+            // Datauppkoppling och spara data som finns i Checkout
+            Order order = new Order {
+                CustomerID = 1337,
+                Orderstatus = 1,
+                Price = CheckOutSum,
+                Articles = new List<Article>(),
+                //System.DateTime.Now.ToString("yy-MM-dd hh:mm:ss")
+                TimeCreated = System.DateTime.Now,
+            };
+
+            foreach (var articleDataModel in Checkout)
+            {
+                // Deconstruct into Article
+                Article newArticle = articleDataModel.Article;
+                order.Articles.Add(newArticle);
+            }
+
+            // Can use a progress bar or similar for UI-clarity
+            System.TimeSpan time = Utilities.Time(async () =>
+            {
+                await order.insertOrder();
+            });
+
+            // Some info output
+            result = string.Format("Purchased, for a total of {0}. Transfer took {1} milliseconds", CheckOutSum, time.TotalMilliseconds);
+            MessageBox.Show(result);
 
             // Cleara ut
             Checkout.Clear();
