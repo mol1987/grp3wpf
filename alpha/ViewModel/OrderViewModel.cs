@@ -7,6 +7,8 @@ using Library.TypeLib;
 using Library.WebApiFunctionality;
 using System.Linq;
 using Library.Extensions.ObservableCollection;
+using System.ComponentModel;
+using System.Windows;
 
 namespace alpha
 {
@@ -25,8 +27,27 @@ namespace alpha
         public ObservableCollection<Order> Orders { get; set; } = new AsyncObservableCollection<Order>();
         public ObservableCollection<Order> OrdersDone { get; set; } = new AsyncObservableCollection<Order>();
 
+        #region ? in designmode
+
+        /// <summary>
+        /// Fixes the UI/Data-load bug
+        /// </summary>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor
+                    .FromProperty(prop, typeof(FrameworkElement))
+                    .Metadata.DefaultValue;
+            }
+        }
+
+        #endregion
+
         public OrderViewModel()
         {
+            if (IsInDesignMode) { return; }
             //
             SeverInit();
         }

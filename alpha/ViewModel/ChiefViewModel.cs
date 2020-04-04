@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Library.Repository;
 using Library.TypeLib;
@@ -26,12 +28,32 @@ namespace alpha
         private ICommand _setOrderDone;
         public ICommand SetOrderDone { get { return new RelayCommand(param => this.SetOrderDoneAction(param), null); } }
 
+        #region ? in designmode
+
+        /// <summary>
+        /// Fixes the UI/Data-load bug
+        /// </summary>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor
+                    .FromProperty(prop, typeof(FrameworkElement))
+                    .Metadata.DefaultValue;
+            }
+        }
+
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Initieated on pageswap
         /// </summary>
         public ChiefViewModel()
         {
+            if (IsInDesignMode) { return; }
+
             LoadOrders();
         }
         #endregion

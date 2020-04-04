@@ -84,8 +84,10 @@ namespace alpha
         /// </summary>
         private Dictionary<string, int> ToBeUpdated = new Dictionary<string, int>();
 
+        #region ? in designmode
+
         /// <summary>
-        /// 
+        /// Fixes the UI/Data-load bug
         /// </summary>
         public bool IsInDesignMode
         {
@@ -98,6 +100,7 @@ namespace alpha
             }
         }
 
+        #endregion
 
         #region Constructor
         // Constructor is called each time currentpage is loaded

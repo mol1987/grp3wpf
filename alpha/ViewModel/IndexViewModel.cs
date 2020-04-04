@@ -38,7 +38,8 @@ namespace alpha
         /// <summary>
         /// Testning, todo; remove
         /// </summary>
-        public string TestItemVisibility { get; set; } = "Visible";
+        public string DebugPanelVisibility { get; set; } = "Visible";
+        public int DebugPanelHeight { get; set; } = 20;
 
         /// <summary>
         /// The actual xaml-window
@@ -180,7 +181,9 @@ namespace alpha
         private void ToggleItemVisibility()
         {
             // ? if visible hide it, else if hidden; show it
-            TestItemVisibility = TestItemVisibility == "Visible" ? "Hidden" : "Visible";
+            DebugPanelVisibility = DebugPanelVisibility == "Visible" ? "Hidden" : "Visible";
+            // Shrink to hide the background
+            DebugPanelHeight = DebugPanelVisibility == "Visible" ? 20 : 0;
         }
 
         /// <summary>

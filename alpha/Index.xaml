@@ -15,13 +15,14 @@
 
     <!--#region inputbinding -->
     <Window.InputBindings>
-        <KeyBinding Key="Esc" Command="{Binding QuitApplication}"/>
         <KeyBinding Key="F1" Command="{Binding SwapView}"/>
-        <KeyBinding Key="F2" Command="{Binding OnKeyDown}"/>
+        <KeyBinding Key="F2" Command="{Binding ToggleVisibility}"/>
         <KeyBinding Key="F3" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
+        <!--<KeyBinding Key="F4" Command="{Binding QuitApplication}"/>-->
+        <KeyBinding Key="Esc" Command="{Binding QuitApplication}"/>
     </Window.InputBindings>
     <!--#endregion-->
-    
+
     <!--Margin set to avoid screen overlap-->
     <Grid Margin="6">
 
@@ -31,20 +32,25 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="{Binding DebugPanelHeight}"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
 
         <!--All views are here-->
         <Frame Grid.Column="0" Grid.Row="0" x:Name="MainFrame" Content="{Binding CurrentPage, Converter={local:ApplicationPageValueConverter}}" NavigationUIVisibility="Hidden"/>
 
-        <!-- Debug menu to be removed in production -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">
-            <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton}" Command="{Binding SwapView}"/>
-            <Button x:Name="ttttt" Content="Hide/Show" Background="Aquamarine"  Visibility="{Binding TestItemVisibility}" />
-            <Button x:Name="toggleButton" Content="Toggle" Command="{Binding ToggleVisibility}"/>
-            <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
-            <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText}" Command="{Binding QuitApplication}"/>
-        </StackPanel>
+        <!-- Debug/Admin panel -->
+        <Border Grid.Row="1">
+            <StackPanel Grid.Row="1" Visibility="{Binding DebugPanelVisibility}" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#afafaf">
+                <!--F1-->
+                <Button x:Name="btnUpdate" Width="100" Height="20" HorizontalAlignment="Center" Content="{Binding SwapViewButton, FallbackValue='Swap View(F1)'}" Command="{Binding SwapView}"/>
+                <!--F2-->
+                <Button x:Name="toggleButton" Content="Toggle Panel(F2)" Command="{Binding ToggleVisibility}"/>
+                <!--F3-->
+                <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
+                <!--Esc-->
+                <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText}" Command="{Binding QuitApplication}"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

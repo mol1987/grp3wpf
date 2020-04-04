@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Diagnostics;
 using Library.WebApiFunctionality;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Windows;
 
 namespace alpha
 {
@@ -29,9 +31,29 @@ namespace alpha
         /// </summary>
         public ICommand foo { get { return _foo ?? new RelayCommand(param => this.fooAction(param), null); } }
 
+
+        #region ? in designmode
+
+        /// <summary>
+        /// Fixes the UI/Data-load bug
+        /// </summary>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor
+                    .FromProperty(prop, typeof(FrameworkElement))
+                    .Metadata.DefaultValue;
+            }
+        }
+
+        #endregion
+
         #region Constructor
         public CashierViewModel()
         {
+            if (IsInDesignMode) { return; }
             LoadOrders();
         } 
         #endregion

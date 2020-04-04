@@ -7,6 +7,7 @@ using Library.TypeLib;
 using Library.Repository;
 using System.Windows;
 using System.Threading.Tasks;
+using System.ComponentModel;
 //using Library.Extensions.ObservableCollection;
 
 namespace alpha
@@ -55,6 +56,8 @@ namespace alpha
         /// Toggles modal off and on
         /// </summary>
         public bool IsModal { get; set; } = false;
+
+        //public string TerminalLockStatus { get{ return Global.Isterminallockedstatus ? "locked" : "unlocked"}}
 
         // Private
         private float _checkoutSum = 0;
@@ -157,11 +160,35 @@ namespace alpha
         /// </summary>
         public ICommand CreateNewCustomArticle { get { return new RelayCommand(param => this.CreateNewCustomArticleAction(param), null); } }
 
+        public ICommand LockTerminal { get { return new RelayCommand(param => {
+            Global.IsTerminalLocked = Global.IsTerminalLocked ? false : true;
+        }, null); } }
+
+        #region ? in designmode
+
+        /// <summary>
+        /// Fixes the UI/Data-load bug
+        /// </summary>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                var prop = DesignerProperties.IsInDesignModeProperty;
+                return (bool)DependencyPropertyDescriptor
+                    .FromProperty(prop, typeof(FrameworkElement))
+                    .Metadata.DefaultValue;
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Constructor, activates on page/frame load
         /// </summary>
         public CustomerViewModel()
         {
+            if (IsInDesignMode) { return; }
+
             // Loaded Data from WebApi
             var items = Global.Articles;
 

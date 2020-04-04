@@ -35,12 +35,17 @@ namespace alpha
         /// </summary>
         public static bool IsServerStarted = false;
 
+        /// <summary>
+        /// Disable abilty to switch between pages and
+        /// pretend like its a release build
+        /// </summary>
+        public static bool IsTerminalLocked { get; set; } = false; 
+
         #region Repositories & Connections
         public static ArticlesRepository ArticleRepo = new ArticlesRepository("Articles");
         public static OrdersRepository OrderRepo = new OrdersRepository("Orders");
         public static IngredientsRepository IngredientRepo = new IngredientsRepository("Ingredients");
         public static EmployeesRepository EmployeeRepo = new EmployeesRepository("Employees"); 
         #endregion
-
     }
 }
