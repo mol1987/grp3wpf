@@ -77,7 +77,8 @@ namespace OrderTerminal
             // Boot up sql
             var repo = new Library.Repository.OrdersRepository("orders");
             var res = await repo.GetAllAsync();
-
+            // filter orders to only show placed orders
+            res = res.Where(x => x.Orderstatus == 1);
             // using the Enum.Foreach extension
             res.ForEach(item => Orders.Add(item));
 
