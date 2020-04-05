@@ -12,15 +12,128 @@
     <Page.DataContext>
         <local:CustomerViewModel/>
     </Page.DataContext>
-
+    <!--#endregion-->
+    
     <Page.Resources>
+
+        <!--#region Converters -->
+
         <local:PathToImageConverter x:Key="ImageConverter"/>
         <local:ListToStringConverter x:Key="ListConverter"/>
+        <local:PathToIconConverter x:Key="IconConverter"/>
+
+        <!--#endregion-->
+
+        <!--#region Nav Menu -->
+
+        <Style TargetType="{x:Type Image}" x:Key="base_image">
+            <Setter Property="Width" Value="126"/>
+            <Setter Property="Height" Value="126"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="textblock_filter">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <!--<Setter Property="FontStretch" Value="UltraExpanded"/>-->
+            <Setter Property="FontStyle" Value="Normal"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <!--Filter Button-->
+        <Style TargetType="{x:Type Button}" x:Key="filter_button">
+            <Setter Property="CommandParameter" Value="{Binding Type}"/>
+            <Setter Property="Command" Value="{Binding ElementName=filterbutton_list, Path=DataContext.FilterArticles}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource GrayLighterBrush}"/>
+            <!--Controltemplate-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <!--Content-->
+                        <Border Name="_border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="#FF5397D1"
+                                Padding="40 6"
+                                >
+                            <StackPanel  Orientation="Vertical" >
+                                <!--Image might not be great-->
+                                <Image Style="{StaticResource base_image}" Source="{Binding Path=Type, Converter={StaticResource IconConverter}}" />
+
+                                <!--Text swaps foreground color-->
+                                <TextBlock  MaxHeight="90" Style="{StaticResource textblock_filter}" Text="{Binding Type}"/>
+                                <!--Trigger this rectangle Onclick and OnFocus-->
+                                <Rectangle Name="delbtn" Height="10" Width="126" Fill="{StaticResource BlueBrush}" Opacity="0.0" StrokeThickness="0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!--Action triggers-->
+                        <ControlTemplate.Triggers>
+                            <!--Activates on button click-->
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="_border" Property="BorderBrush" Value="Transparent" />
+                                <Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>
+                            </Trigger>
+                            <!--When mouse is passed over-->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{StaticResource WhiteSelectedBrush}"/>
+                                <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+                            </Trigger>
+                            <!--Remains even after mouse left-->
+                            <Trigger Property="Button.IsFocused" Value="True">
+                                <Trigger.Setters>
+                                    <Setter Property="Background" Value="{StaticResource WhiteSelectedBrush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+                                    <Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>
+                                </Trigger.Setters>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--#endregion-->
+
     </Page.Resources>
 
-    <!--#endregion-->
-    <Grid Background="#f9f9f9">
+    <Page.Triggers>
+        
+        <!--#region Unused -->
+        <!--#endregion-->
+        
+    </Page.Triggers>
 
+    <Grid Name="Root" Background="#f9f9f9">
+
+        <!--#region Slide in Animation -->
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="MoveMeBaby" X="800" />
+        </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.45" Storyboard.TargetName="MoveMeBaby" Storyboard.TargetProperty="X" From="800" To="0">
+                            <DoubleAnimation.EasingFunction>
+                                <ExponentialEase Exponent="2" EasingMode="EaseInOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoveMeBaby" Storyboard.TargetProperty="X" AccelerationRatio=".1">
+                            <SplineDoubleKeyFrame KeyTime="0:0:.45" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>-->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="Opacity" AccelerationRatio=".1">
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.1" Value="1" />
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <!--#endregion-->
+        
+        <!--#region Grid/RowDefinitions -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
@@ -30,18 +143,22 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <!--#endregion-->
 
+        <!--#region TopPanel -->
         <!--TopPanel-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
 
             <!--FilterButtons-->
+
             <ItemsControl ItemsSource="{Binding FilterButtons, Mode=TwoWay}" x:Name="filterbutton_list" HorizontalAlignment="Left">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Style="{StaticResource filter_button}"  
+                        <Button Style="{StaticResource filter_button}"/>
+                        <!--<Button Style="{StaticResource filter_button}"  
                                 Command="{Binding ElementName=filterbutton_list, Path=DataContext.FilterArticles}" 
                                 CommandParameter="{Binding Type}"
-                                Content="{Binding Type}"/>
+                                Content="{Binding Type}"/>-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
@@ -59,7 +176,9 @@
             </StackPanel>
 
         </StackPanel>
+        <!--#endregion-->
 
+        <!--#region BigPanel -->
         <!--BigPanel-->
         <Border Grid.Column="0" Grid.Row="1" >
 
@@ -74,44 +193,37 @@
                     <DataTemplate>
 
                         <!--#region Template for Article Objets (grid) -->
-                        <Border Style="{StaticResource ResetBorder}" Padding="12,8,12,8">
-                            <Grid Width="256" Height="256">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                </Grid.RowDefinitions>
+                        <!--<Border Style="{StaticResource ResetBorder}" Padding="12,8,12,8">-->
+                        <Grid Width="256" Height="256">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
 
-                                <!--Article Image-->
-                                <Image Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" Stretch="Fill" 
+                            <!--Article Image-->
+                            <Image Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" Stretch="Fill" 
                                    Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
 
-                                <!--Name of Article-->
-                                <TextBlock Text="{Binding Article.Name}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
+                            <!--Name of Article-->
+                            <TextBlock Text="{Binding Article.Name}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
 
-                                <!--List of ingeredients-->
-                                <TextBlock Text="{Binding Article.Ingredients, Converter={StaticResource ListConverter}}" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="12" FontFamily="Segoe UI" FontStyle="Italic"/>
-                                
-                                <!--Price of Article-->
-                                <TextBlock Text="{Binding Article.BasePrice}" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
+                            <!--Price of Article-->
+                            <TextBlock Text="{Binding Article.BasePrice}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
 
-                                
-                                
-                                <!--Buy button-->
-                                <Button Grid.Column="2" Grid.Row="0"
-                                    Style="{StaticResource AddToCheckoutButton}" 
-                                    Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" 
-                                    Padding="6,12" HorizontalContentAlignment="Center" 
-                                    VerticalContentAlignment="Center" 
-                                    Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
+                            <!--List of ingeredients-->
+                            <TextBlock Text="{Binding Article.Ingredients, Converter={StaticResource ListConverter}}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontFamily="Segoe UI" FontStyle="Italic"/>
 
-                            </Grid>
-                        </Border>
+                            <!--Buy button-->
+                            <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource AddToCheckoutButton}" Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
+
+                        </Grid>
+                        <!--</Border>-->
                         <!--#endregion-->
 
                     </DataTemplate>
@@ -119,7 +231,9 @@
             </ListView>
 
         </Border>
+        <!--#endregion-->
 
+        <!--#region SidePanel -->
         <!--SidePanel-->
         <Border Grid.Column="1" Grid.RowSpan="2" BorderThickness="0" MinWidth="160" Padding="15,0,15,0" Background="#afafaf">
             <!--Checkout-->
@@ -139,11 +253,11 @@
                 <ItemsControl x:Name="checkout_list" ItemsSource="{Binding Checkout, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Article.Name}"/>
 
                                 <Button Command="{Binding ElementName=checkout_list, Path=DataContext.RemoveFromCheckout}" 
-                                        CommandParameter="{Binding}" Content="-" Background="Red"/>
+                                        CommandParameter="{Binding}" Margin="5 0 0 0" Content=" - " Padding="4 0" Background="Red"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -154,7 +268,9 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <!--#endregion-->
 
+        <!--#region Overlay -->
         <!-- 
             Overlay
             Covers everything, invisible by default
@@ -162,7 +278,7 @@
         <Grid x:Name="modal" Style="{StaticResource modal}" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
         
               >
-            
+
             <!--#region Grid-/Row Definitions -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -208,7 +324,7 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    
+
                     <!--<ListBox Name="custom_articles_listbox" ItemsSource="{Binding Ingredients, Mode=TwoWay}" HorizontalContentAlignment="Stretch">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -235,6 +351,7 @@
 
             </StackPanel>
         </Grid>
+        <!--#endregion-->
 
     </Grid>
 </Page>

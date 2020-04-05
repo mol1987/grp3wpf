@@ -129,6 +129,10 @@ namespace alpha
             }
         }
 
+        /// <summary>
+        /// Used for developing phase
+        /// </summary>
+        /// <returns></returns>
         private DateTime GetRandomTime()
         {
             DateTime a = DateTime.Now;

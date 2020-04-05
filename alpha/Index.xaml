@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:alpha"
         mc:Ignorable="d"
-        WindowState="Maximized"
+        WindowState="{Binding WindowSettings.WindowState,Mode=TwoWay}"
         AllowsTransparency="True"
         WindowStyle="None"
         Title="" 
-        Width="{Binding WindowWidth}" 
-        Height="{Binding WindowHeight}"
+        Height="{Binding WindowSettings.Height,Mode=TwoWay}"
+        Width="{Binding WindowSettings.Width, Mode=TwoWay}"
+        Left="{Binding WindowSettings.Left,Mode=TwoWay}"
+        Top="{Binding WindowSettings.Top,Mode=TwoWay}"
         >
 
     <!--#region inputbinding -->
@@ -49,7 +51,9 @@
                 <!--F3-->
                 <Button x:Name="specific_page_button" Content="Go to Admin Page(F3)" Command="{Binding SwapToSpecificPage}" CommandParameter="Admin"/>
                 <!--Esc-->
-                <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText}" Command="{Binding QuitApplication}"/>
+                <Button x:Name="quit_program" Content="{Binding QuitProgramButtonText, FallbackValue='Quit Program(Esc)'}" Command="{Binding QuitApplication}"/>
+                <!--etc-->
+                <!--<Button  Content="xxxxxxxxx" Command="{Binding ChangeWindowWidth}"/>-->
             </StackPanel>
         </Border>
     </Grid>

@@ -9,14 +9,45 @@
     <!--Teal-->
     <Color x:Key="Primary">#46b6ac</Color>
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"></SolidColorBrush>
+    
     <!-- Dark greenbluish -->
     <Color x:Key="Secondary">#162d35</Color>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"></SolidColorBrush>
+    
     <!--White-->
     <Color x:Key="White">#f9f9f9</Color>
     <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"></SolidColorBrush>
+    
+    <!--White ter-->
+    <Color x:Key="WhiteTer">#e5e5e5</Color>
+    <SolidColorBrush x:Key="WhiteTerBrush" Color="{StaticResource WhiteTer}"></SolidColorBrush>
+    
+    <!--White Selected-->
+    <Color x:Key="WhiteSelected">#dbdbdb</Color>
+    <SolidColorBrush x:Key="WhiteSelectedBrush" Color="{StaticResource WhiteSelected}"></SolidColorBrush>
+    
+    <!--Gray Lighter-->
+    <Color x:Key="GrayLighter">#b5b5b5</Color>
+    <SolidColorBrush x:Key="GrayLighterBrush" Color="{StaticResource GrayLighter}"></SolidColorBrush>
+    
+    <!--GrayLight-->
+    <Color x:Key="GrayLight">#7a7a7a</Color>
+    <SolidColorBrush x:Key="GrayLightBrush" Color="{StaticResource GrayLight}"></SolidColorBrush>
+    
     <!--Blue-->
     <Color x:Key="Blue">#0074D9</Color>
     <SolidColorBrush x:Key="BlueBrush" Color="{StaticResource Blue}"></SolidColorBrush>
+
+    <!--Green Success-->
+    <Color x:Key="GreenSuccess">#23D160</Color>
+    <SolidColorBrush x:Key="GreenSuccessBrush" Color="{StaticResource GreenSuccess}"></SolidColorBrush>
+
+    <!--Yellow Warning-->
+    <Color x:Key="YellowWarning">#FFDD57</Color>
+    <SolidColorBrush x:Key="GYellowWarningBrush" Color="{StaticResource YellowWarning}"></SolidColorBrush>
+
+    <!--Red Danger-->
+    <Color x:Key="RedDanger">#FF3860</Color>
+    <SolidColorBrush x:Key="RedDangerBrush" Color="{StaticResource RedDanger}"></SolidColorBrush>
 
 </ResourceDictionary>

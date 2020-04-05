@@ -25,7 +25,7 @@
         <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel">
             <Setter Property="Background" Value="#7F040404"/>
             <Setter Property="Grid.Column" Value="6"/>
-            <Setter Property="Grid.RowSpan" Value="6"/>
+            <Setter Property="Grid.RowSpan" Value="7"/>
             <Setter Property="Grid.ColumnSpan" Value="2"/>
         </Style>
         <Style TargetType="{x:Type StackPanel}" x:Key="adminview_sidepanel_inner">
@@ -39,9 +39,34 @@
     </Page.Resources>
     <!--#endregion-->
 
-    <Grid Background="{StaticResource BlueBrush}">
-        
+    <Grid Name="AdminRoot" Background="{StaticResource BlueBrush}">
 
+        <!--#region Slide in Animation -->
+
+        <Grid.RenderTransform>
+            <TranslateTransform x:Name="MoveMeBaby" X="800" />
+        </Grid.RenderTransform>
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Duration="0:0:0.45" Storyboard.TargetName="MoveMeBaby" Storyboard.TargetProperty="X" From="800" To="0">
+                            <DoubleAnimation.EasingFunction>
+                                <ExponentialEase Exponent="2" EasingMode="EaseInOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <!--<DoubleAnimationUsingKeyFrames Storyboard.TargetName="MoveMeBaby" Storyboard.TargetProperty="X" AccelerationRatio=".1">
+                            <SplineDoubleKeyFrame KeyTime="0:0:.45" Value="0"/>
+                        </DoubleAnimationUsingKeyFrames>-->
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AdminRoot" Storyboard.TargetProperty="Opacity" AccelerationRatio=".1">
+                            <SplineDoubleKeyFrame KeyTime="0:0:1.1" Value="1" />
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
+        <!--#endregion-->
 
         <!--#region Grid-/Row Definitionss -->
 
