@@ -1,0 +1,22 @@
+﻿<!--
+    XAML styling,
+    commonly used colors
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:OrderTerminal">
+    
+    <!--Teal-->
+    <Color x:Key="Primary">#46b6ac</Color>
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"></SolidColorBrush>
+    <!-- Dark greenbluish -->
+    <Color x:Key="Secondary">#162d35</Color>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"></SolidColorBrush>
+    <!--White-->
+    <Color x:Key="White">#f9f9f9</Color>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"></SolidColorBrush>
+    <!--Blue-->
+    <Color x:Key="Blue">#0074D9</Color>
+    <SolidColorBrush x:Key="BlueBrush" Color="{StaticResource Blue}"></SolidColorBrush>
+
+</ResourceDictionary>
