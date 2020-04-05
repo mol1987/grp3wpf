@@ -321,7 +321,7 @@ namespace alpha
         /// Run all <see cref="ArticleItemDataModel"/> in <see cref="Checkout"/> as purchase and add to database
         /// </summary>
         /// <param name="args"></param>
-        public void PurchaseCheckoutItemsAction(object args)
+        private async void PurchaseCheckoutItemsAction(object args)
         {
             var repo = new Library.Repository.OrdersRepository("Orders");
             string result = "Something went wrong";
@@ -343,14 +343,11 @@ namespace alpha
                 order.Articles.Add(newArticle);
             }
 
-            // Can use a progress bar or similar for UI-clarity
-            System.TimeSpan time = Utilities.Time(async () =>
-            {
-                await repo.InsertAsync(order);
-            });
+
+            await repo.InsertAsync(order);
 
             // Some info output
-            result = string.Format("Purchased, for a total of {0}. Transfer took {1} milliseconds", CheckOutSum, time.TotalMilliseconds);
+            result = string.Format("Purchased. Your order-ID is <{0}>. Total price is {1}.", order.ID, CheckOutSum);
             MessageBox.Show(result);
 
             // Cleara ut
@@ -363,6 +360,10 @@ namespace alpha
             CheckOutSum = CheckOutSum * 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         private void CreateNewCustomArticleAction(object args)
         {
             // Filter out unchecked ingredients

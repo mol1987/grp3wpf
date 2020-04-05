@@ -12,7 +12,8 @@
     <Page.DataContext>
         <local:CustomerViewModel/>
     </Page.DataContext>
-
+    <!--#endregion-->
+    
     <Page.Resources>
 
         <!--#region Converters -->
@@ -98,33 +99,16 @@
 
     </Page.Resources>
 
-
     <Page.Triggers>
         
-        <!--#region Slide Animation On Page load -->
-
-        <!--<EventTrigger RoutedEvent="Page.Loaded">
-            <BeginStoryboard>
-                <Storyboard >
-                    <DoubleAnimation Duration="0:0:.8" Storyboard.TargetName="Root" Storyboard.TargetProperty="(Grid.Width)" From="0" To="1920" AccelerationRatio=".1"/>
-                    <ThicknessAnimationUsingKeyFrames  Storyboard.TargetName="Root" Storyboard.TargetProperty="(Grid.Margin)" BeginTime="00:00:00">
-                        <SplineThicknessKeyFrame KeyTime="00:00:00" Value="500,0,0,0" />
-                        <SplineThicknessKeyFrame KeyTime="00:00:.5" Value="0,0,0,0" />
-                    </ThicknessAnimationUsingKeyFrames>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>-->
-
+        <!--#region Unused -->
         <!--#endregion-->
         
     </Page.Triggers>
 
-
-    <!--#endregion-->
     <Grid Name="Root" Background="#f9f9f9">
 
         <!--#region Slide in Animation -->
-        
         <Grid.RenderTransform>
             <TranslateTransform x:Name="MoveMeBaby" X="800" />
         </Grid.RenderTransform>
@@ -147,9 +131,9 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Grid.Triggers>
-        
         <!--#endregion-->
-
+        
+        <!--#region Grid/RowDefinitions -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
@@ -159,7 +143,9 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        <!--#endregion-->
 
+        <!--#region TopPanel -->
         <!--TopPanel-->
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
 
@@ -190,7 +176,9 @@
             </StackPanel>
 
         </StackPanel>
+        <!--#endregion-->
 
+        <!--#region BigPanel -->
         <!--BigPanel-->
         <Border Grid.Column="0" Grid.Row="1" >
 
@@ -243,7 +231,9 @@
             </ListView>
 
         </Border>
+        <!--#endregion-->
 
+        <!--#region SidePanel -->
         <!--SidePanel-->
         <Border Grid.Column="1" Grid.RowSpan="2" BorderThickness="0" MinWidth="160" Padding="15,0,15,0" Background="#afafaf">
             <!--Checkout-->
@@ -263,11 +253,11 @@
                 <ItemsControl x:Name="checkout_list" ItemsSource="{Binding Checkout, Mode=TwoWay}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Article.Name}"/>
 
                                 <Button Command="{Binding ElementName=checkout_list, Path=DataContext.RemoveFromCheckout}" 
-                                        CommandParameter="{Binding}" Content="-" Background="Red"/>
+                                        CommandParameter="{Binding}" Margin="5 0 0 0" Content=" - " Padding="4 0" Background="Red"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -278,7 +268,9 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+        <!--#endregion-->
 
+        <!--#region Overlay -->
         <!-- 
             Overlay
             Covers everything, invisible by default
@@ -359,6 +351,7 @@
 
             </StackPanel>
         </Grid>
+        <!--#endregion-->
 
     </Grid>
 </Page>
