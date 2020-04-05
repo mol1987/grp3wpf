@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Library.WebApiFunctionality;
 
 namespace OrderTerminal
 {
@@ -25,6 +28,13 @@ namespace OrderTerminal
             InitializeComponent();
             var vm = new OrderViewModel();
             DataContext = vm;
+            Closing += DataWindow_Closing;
+        }
+
+        void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            Trace.WriteLine("hejdå");
+            WebApiServer.StopServer();
         }
     }
 }

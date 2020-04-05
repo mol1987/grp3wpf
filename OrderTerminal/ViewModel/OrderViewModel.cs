@@ -58,7 +58,8 @@ namespace OrderTerminal
         /// </summary>
         private void SeverInit()
         {
-            //LoadOrders(); // cant load sql repo
+            bool res = Library.Helper.Environment.LoadEnvFile() ? true : false;
+            LoadOrders(); // cant load sql repo
 
 
             // start up the webAPI server
