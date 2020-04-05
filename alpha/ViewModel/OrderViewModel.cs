@@ -49,7 +49,7 @@ namespace alpha
         {
             if (IsInDesignMode) { return; }
             //
-            SeverInit();
+            //SeverInit();
         }
 
 

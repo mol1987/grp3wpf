@@ -58,7 +58,7 @@ namespace OrderTerminal
         /// </summary>
         private void SeverInit()
         {
-            //LoadOrders();
+            //LoadOrders(); // cant load sql repo
 
 
             // start up the webAPI server

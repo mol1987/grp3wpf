@@ -8,6 +8,7 @@ using Library.Repository;
 using System.Windows;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using Library.WebApiFunctionality;
 //using Library.Extensions.ObservableCollection;
 
 namespace alpha
@@ -345,6 +346,14 @@ namespace alpha
 
 
             await repo.InsertAsync(order);
+
+            // webAPI client code
+            int i = 0;
+            while (await WebApiClient.DoneOrderAsync((int)order.ID, TypeOrder.placeorder) == false)
+            {
+                await Task.Delay(500);
+                if (i++ > 5) return;
+            }
 
             // Some info output
             result = string.Format("Purchased. Your order-ID is <{0}>. Total price is {1}.", order.ID, CheckOutSum);
