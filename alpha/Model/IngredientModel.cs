@@ -10,22 +10,33 @@ using PropertyChanged;
 namespace alpha
 {
     [AddINotifyPropertyChangedInterface]
-    public class IngredientModel : Ingredient, INotifyPropertyChanged
+    public class IngredientModel : INotifyPropertyChanged
     {
+        public int? ID { get; set; }
+        public string? Name { get; set; }
+        public float? Price { get; set; }
+
         public bool IsChecked { get; set; } = false;
-        public ICommand SetToChecked { get { return new RelayCommand(param => this.SetToCheckedAction(param), null); } }
+            public ICommand SetToChecked { get { return new RelayCommand(param => this.SetToCheckedAction(param), null); } }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
-        private void SetToCheckedAction(object args) {
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="args"></param>
+            private void SetToCheckedAction(object args) {
 
-            Trace.WriteLine("hello");
-            this.IsChecked = this.IsChecked ? false : true; 
+                Trace.WriteLine("hello");
+                this.IsChecked = this.IsChecked ? false : true; 
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void OnPropertyChanged(string name)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(name));
+                }
+            }
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
 }

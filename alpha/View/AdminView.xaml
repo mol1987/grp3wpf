@@ -164,14 +164,15 @@
 
                     <DataGrid   Name="employee_grid" 
                         AutoGenerateColumns="False"
-                        ItemsSource="{Binding Employees, Mode=TwoWay}" 
+                        ItemsSource="{Binding Employees, Mode=TwoWay, NotifyOnTargetUpdated=True,  UpdateSourceTrigger=PropertyChanged}" 
                         SelectedItem="{Binding DynSelectedItem}"
                         >
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
-                            <DataGridTextColumn Header="Password" Binding="{Binding Password}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="LastName" Binding="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Email" Binding="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DataGridTextColumn Header="Password" Binding="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
                         </DataGrid.Columns>
                     </DataGrid>
 

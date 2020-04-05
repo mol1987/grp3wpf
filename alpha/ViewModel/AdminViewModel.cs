@@ -27,8 +27,8 @@ namespace alpha
 
         private ObservableCollection<ArticleModel> _pArticles = new ObservableCollection<ArticleModel>() {};
         public ObservableCollection<ArticleModel> Articles { get { return _pArticles;} set { _pArticles = value;  } }
-        public ObservableCollection<Employee> Employees { get; set; } = new ObservableCollection<Employee>();
-        public ObservableCollection<Ingredient> Ingredients { get; set; } = new ObservableCollection<Ingredient>();
+        public ObservableCollection<EmployeeModel> Employees { get; set; } = new ObservableCollection<EmployeeModel>();
+        public ObservableCollection<IngredientModel> Ingredients { get; set; } = new ObservableCollection<IngredientModel>();
         public Ingredient SelectedRemoveIngredient { get; set; }
         public Ingredient SelectedAddIngredient { get; set; }
 
@@ -113,7 +113,9 @@ namespace alpha
             //  ScrollViewerHeight = (height - 20.0).ToString();
 
             Articles.CollectionChanged += items_CollectionChanged;
-            
+            Employees.CollectionChanged += items_CollectionChanged;
+            Ingredients.CollectionChanged += items_CollectionChanged;
+
 
             // Load SQL data
             RunAsyncActions();
@@ -169,23 +171,69 @@ namespace alpha
         {
             if (e.OldItems != null)
             {
-                Trace.WriteLine("s1");
-                await Global.ArticleRepo.DeleteRowAsync(DynSelectedItem.ID);
+                var workingItem = e.OldItems[0];
+                // Article
+                if (workingItem is ArticleModel)
+                {
+                    var workingArticle = (ArticleModel)e.OldItems[0];
+                    await Global.ArticleRepo.DeleteRowAsync((int)workingArticle.ID);
+                }
+                // Employee
+                if (workingItem is EmployeeModel)
+                {
+                    var workingEmployee = (EmployeeModel)e.OldItems[0];
+                    await Global.EmployeeRepo.DeleteRowAsync((int)workingEmployee.ID);
+                }
+                // Ingredient
+                if (workingItem is IngredientModel)
+                {
+                    var workingIngredient = (IngredientModel)e.OldItems[0];
+                    await Global.IngredientRepo.DeleteRowAsync((int)workingIngredient.ID);
+                }
                 foreach (INotifyPropertyChanged item in e.OldItems)
                     item.PropertyChanged -= item_PropertyChanged;
             }
             if (e.NewItems != null)
             {
-                Trace.WriteLine("s2");
-             
+                
                 // if new row, fill with garbage
-                var selectedArticle = (ArticleModel)e.NewItems[0];
-                Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "blank" };
+                var workingItem = e.NewItems[0];
+                // Articles
+                if (workingItem is ArticleModel)
+                {
+                    var workingArticle = (ArticleModel)e.NewItems[0];
+                    Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "blank" };
 
-                if (selectedArticle.Name == null) { 
-                    await Global.ArticleRepo.InsertAsync(getArticle);
-                    Articles.Last().ID = getArticle.ID;
-                    Articles.Last().Ingredients = new List<Ingredient>();
+                    if (workingArticle.Name == null)
+                    {
+                        await Global.ArticleRepo.InsertAsync(getArticle);
+                        Articles.Last().ID = getArticle.ID;
+                        Articles.Last().Ingredients = new List<Ingredient>();
+                    }
+                }
+                // Employees
+                if (workingItem is EmployeeModel)
+                {
+                    var workingEmployee = (EmployeeModel)e.NewItems[0];
+                    Employee getEmployee = new Employee() { Name = "blank", LastName = "blanksson", Email = "blank@blank.se", Password = "123" };
+
+                    if (workingEmployee.Name == null)
+                    {
+                        await Global.EmployeeRepo.InsertAsync(getEmployee);
+                        Employees.Last().ID = getEmployee.ID;
+                    }
+                }
+                // Ingredients
+                if (workingItem is IngredientModel)
+                {
+                    var workingEmployee = (IngredientModel)e.NewItems[0];
+                    Ingredient getIngredient = new Ingredient() {  Name = "blank", Price = 10 };
+
+                    if (workingEmployee.Name == null)
+                    {
+                        await Global.IngredientRepo.InsertAsync(getIngredient);
+                        Ingredients.Last().ID = getIngredient.ID;
+                    }
                 }
                 foreach (INotifyPropertyChanged item in e.NewItems)
                     item.PropertyChanged += item_PropertyChanged;
@@ -194,7 +242,10 @@ namespace alpha
 
         private async void item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            Trace.WriteLine("prop changed");
             if (DynSelectedItem == null) return;
+
+            // Article updated
             if (DynSelectedItem is ArticleModel)
             {
                 if (e.PropertyName == "AddIngredient" ||
@@ -204,7 +255,19 @@ namespace alpha
                     return;
                 var selectedArticle = (ArticleModel)DynSelectedItem;
                 await Global.ArticleRepo.UpdateAsync(new Article() { ID = selectedArticle.ID, BasePrice = selectedArticle.BasePrice, Name = selectedArticle.Name, IsActive = selectedArticle.IsActive, Type = selectedArticle.Type, Ingredients = selectedArticle.Ingredients });
-
+            }
+            // Employee updated
+            if (DynSelectedItem is EmployeeModel)
+            {
+                Trace.WriteLine("hello");
+                var selectedArticle = (EmployeeModel)DynSelectedItem;
+                await Global.EmployeeRepo.UpdateAsync(new Employee() { ID = selectedArticle.ID, Email = selectedArticle.Email, Name = selectedArticle.Name, LastName = selectedArticle.LastName, Password = selectedArticle.Password });
+            }
+            // Ingredient updated
+            if (DynSelectedItem is IngredientModel)
+            {
+                var selectedArticle = (IngredientModel)DynSelectedItem;
+                await Global.IngredientRepo.UpdateAsync(new Ingredient() { ID = selectedArticle.ID,  Name = selectedArticle.Name, Price = selectedArticle.Price});
             }
             Trace.WriteLine("prop " + e.PropertyName);
         }
@@ -222,7 +285,6 @@ namespace alpha
             // The private lists are clones
             foreach (var item in await articleRepo.GetAllAsync())
             {
-                Trace.WriteLine(item.Ingredients.Count());
                 var tempArticle = new ArticleModel { ID = item.ID, Name = item.Name, BasePrice = item.BasePrice, Type = item.Type, IsActive = item.IsActive};
                 tempArticle.Ingredients = new List<Ingredient>();
                 foreach (var itemIngredients in item.Ingredients.ToList())
@@ -234,12 +296,12 @@ namespace alpha
 
             foreach (var item in await employeeRepo.GetAllAsync())
             {
-                Employees.Add(item);
+                Employees.Add(new EmployeeModel { ID = item.ID, Name = item.Name, LastName = item.LastName, Email = item.Email, Password = item.Password });
             }
 
             foreach (var item in await ingredientRepo.GetAllAsync())
             {
-                Ingredients.Add(item);
+                Ingredients.Add(new IngredientModel { ID = item.ID, Name = item.Name, Price = item.Price });
             }
         }
 
