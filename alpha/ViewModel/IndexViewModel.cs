@@ -11,9 +11,12 @@ namespace alpha
     /// </summary>
     public class IndexViewModel : BaseViewModel
     {
-
-        public static double WindowWidth { get; set; } = 800;
-        public static double WindowHeight { get; set; } = 600;
+        // Private holder
+        private WindowSettings windowSettings { get; set; } = new WindowSettings();
+        /// <summary>
+        /// Sizes for window    
+        /// </summary>
+        public WindowSettings WindowSettings { get { return windowSettings; } }
 
         /// <summary>
         /// The current view displayed
@@ -56,9 +59,14 @@ namespace alpha
         {
             _window = window;
 
+            // Users primary screen X and Y
+            int x = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
+            int y = Convert.ToInt32(System.Windows.SystemParameters.PrimaryScreenWidth);
+
             // Set window to fit users screen
-            WindowWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
-            WindowHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            WindowSettings.Width = x;
+            WindowSettings.Height = y;
+            windowSettings.WindowState = "Maximized";
 
             // Loads remote data
             LoadArticles();
@@ -98,6 +106,15 @@ namespace alpha
         private ICommand _swapToSpecificPage;
 
         public ICommand SwapToSpecificPage { get { return _swapToSpecificPage ?? new RelayCommand(param => this.SwapToSpecificPageAction(param), null); } }
+
+        private ICommand changeWindowWidth;
+        public ICommand ChangeWindowWidth
+        {
+            get
+            {
+                return changeWindowWidth ?? new RelayCommand(param =>this.TestFunc(param), null);
+            }
+        }
 
         /// <summary>
         /// Swaps the current view/page in main_frame 
@@ -167,7 +184,7 @@ namespace alpha
             if (pagecallback.ContainsKey(key))
             {
                 //todo; finish this
-                if(key == "Admin")
+                if (key == "Admin")
                 {
                     CurrentPage = pagecallback[key];
                     CurrentPageIndex = 5;
@@ -187,7 +204,7 @@ namespace alpha
         }
 
         /// <summary>
-        /// Loads from the set up WebApi
+        /// Loads from the set up WebApi/database
         /// </summary>
         private async void LoadArticles()
         {
@@ -219,6 +236,16 @@ namespace alpha
             {
                 Global.ActualWindow.Close();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        private void TestFunc(object args)
+        {
+            windowSettings.WindowState = "Normal";
+            windowSettings.Width = 500;
         }
     }
 }
