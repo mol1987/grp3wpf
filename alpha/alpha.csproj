@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\Default.png" />
+    <None Remove="Assets\Icons\Dryck.png" />
+    <None Remove="Assets\Icons\Hamburgare.png" />
+    <None Remove="Assets\Icons\Pizza.png" />
+    <None Remove="Assets\Icons\Sallad.png" />
     <None Remove="Assets\Images\Bussola.png" />
     <None Remove="Assets\Images\default.png" />
     <None Remove="Assets\Images\fogel.png" />
@@ -19,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Assets\Fonts\" />
-    <Folder Include="Assets\Icons\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,6 +36,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icons\Default.png" />
+    <Resource Include="Assets\Icons\Dryck.png" />
+    <Resource Include="Assets\Icons\Hamburgare.png" />
+    <Resource Include="Assets\Icons\Pizza.png" />
+    <Resource Include="Assets\Icons\Sallad.png" />
     <Resource Include="Assets\Images\Hawaii.png" />
     <Resource Include="Assets\Images\Bussola.png" />
     <Resource Include="Assets\Images\default.png" />

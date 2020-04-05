@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Data;
 
 namespace alpha
-{ 
+{
     public class ListToStringConverter : IValueConverter
     {
         /// <summary>
@@ -41,10 +41,17 @@ namespace alpha
                 #endregion
 
                 var ingredientList = (List<Library.TypeLib.Ingredient>)value;
+                // temp holder
+                var names = new List<string>();
                 string res = "";
 
                 // Join string
-                ingredientList.ForEach(a => res += String.Format(", {0}", a.Name));
+                ingredientList.ForEach(a => names.Add(a.Name)); //String.Format(", {0}", a.Name)
+
+                // This variable dancing is to get a proper string.join()
+                var nameArray = names.ToArray();
+
+                res = string.Join(", ", nameArray);
 
                 return res;
             }
