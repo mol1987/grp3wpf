@@ -1,11 +1,7 @@
 ﻿using Library.TypeLib;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using Library.Repository;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace alpha
 {
@@ -34,6 +30,18 @@ namespace alpha
         /// nevermind, just using bool instead
         /// </summary>
         public static bool IsServerStarted = false;
+
+        /// <summary>
+        /// Roles for authentication
+        /// </summary>
+        public static List<string> Roles = new List<string>() { "All" };
+
+        /// <summary>
+        /// ? check role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        public static bool HasAuthenticationRoles (string role) => Roles.Contains(role);
 
         /// <summary>
         /// Disable abilty to switch between pages and

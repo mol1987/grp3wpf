@@ -108,6 +108,10 @@ namespace alpha
         {
             if (IsInDesignMode) { return; }
 
+            // Kick out if unauthorized
+            if (!Global.HasAuthenticationRoles("admin"))
+                System.Windows.MessageBox.Show("Current role is unauthorized");
+
             //  // Not being able to scroll is very annoying, todo; do something
             //  double height = Global.ActualWindow.Height;
             //  ScrollViewerHeight = (height - 20.0).ToString();

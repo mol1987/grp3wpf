@@ -26,7 +26,7 @@ usr=[..]
 pwd=[..]
 port=[..]
 backend=[..]
-auth=[..]
+role=[..]
 ```
 
 ## Usage

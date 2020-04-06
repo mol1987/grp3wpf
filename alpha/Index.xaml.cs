@@ -22,6 +22,12 @@ namespace alpha
                 this.Close();
             }
 
+            // Auth check, if nothing is set, default to poweruser
+            if (!Library.Helper.Globals.Exists("role"))
+                Global.Roles.AddRange(new string[] { "admin", "customer" });
+            else
+                Global.Roles.Add(Library.Helper.Globals.Get("role"));
+
             // Load up MVVM
             this.DataContext = new IndexViewModel(this);
         }
