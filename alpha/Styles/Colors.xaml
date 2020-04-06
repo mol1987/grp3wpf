@@ -33,7 +33,11 @@
     <!--GrayLight-->
     <Color x:Key="GrayLight">#7a7a7a</Color>
     <SolidColorBrush x:Key="GrayLightBrush" Color="{StaticResource GrayLight}"></SolidColorBrush>
-    
+
+    <!--Black text-->
+    <Color x:Key="BlackText">#101010</Color>
+    <SolidColorBrush x:Key="BlackTextBrush" Color="{StaticResource BlackText}"></SolidColorBrush>
+
     <!--Blue-->
     <Color x:Key="Blue">#0074D9</Color>
     <SolidColorBrush x:Key="BlueBrush" Color="{StaticResource Blue}"></SolidColorBrush>

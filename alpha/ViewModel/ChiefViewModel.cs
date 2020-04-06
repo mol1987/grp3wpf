@@ -83,7 +83,7 @@ namespace alpha
                 bool isMatch = false;
                 // ...
                 filteredList
-                    .Where(b => b.OrderID == a.OrderID)
+                    .Where(b => b.ArticleOrderID == a.ArticleOrderID)
                     .ToList()
                     .ForEach(c =>
                     {

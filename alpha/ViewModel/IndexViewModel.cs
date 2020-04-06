@@ -144,6 +144,12 @@ namespace alpha
                     i++;
                     continue;
                 }
+                // OrderTerminal has been move to stand alone project, so skip this
+                if (page.Equals(ApplicationPage.Order))
+                {
+                    i++;
+                    continue;
+                }
 
                 // Page switch and quit the loop, since we have what we came for
                 CurrentPageIndex = i;

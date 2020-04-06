@@ -25,7 +25,7 @@ namespace Library.Repository
         public async Task InsertAsync(Order order)
         {
             // null check
-            if(order.Articles == null)
+            if (order.Articles == null)
             {
                 order.Articles = new List<Article>();
             }
@@ -85,7 +85,29 @@ namespace Library.Repository
             var res = new List<DisplayObject>();
             using (var connection = base.CreateConnection())
             {
-                string longquery = $"SELECT ao.OrdersID as OrderID, ao.ArticlesID as ArticleType, o.TimeCreated as TimeStamp, a.Name as ArticleName, i.Name as IngredientsName, o.Orderstatus as OrderStatus FROM Orders o INNER JOIN ArticleOrders ao ON ao.OrdersID = o.ID INNER JOIN Articles a ON ao.ArticlesID = a.ID INNER JOIN ArticleOrdersIngredients aoi ON aoi.ArticleOrdersID = ao.ID INNER JOIN Ingredients i ON aoi.IngredientsID = i.ID WHERE o.Orderstatus = 1";
+                //
+                string longquery = String.Join(" ",
+                    "SELECT",
+                        "ao.OrdersID as OrderID,",
+                        "aoi.ArticleOrdersID as ArticleOrderID,",
+                        "ao.ArticlesID as ArticleType,",
+                        "o.TimeCreated as TimeStamp,",
+                        "a.Name as ArticleName,",
+                        "i.Name as IngredientsName,",
+                        " o.Orderstatus as OrderStatus",
+                    "FROM ",
+                        "Orders o",
+                    "INNER JOIN",
+                        "ArticleOrders ao ON ao.OrdersID = o.ID",
+                    "INNER JOIN",
+                        "Articles a ON ao.ArticlesID = a.ID",
+                    "INNER JOIN",
+                        "ArticleOrdersIngredients aoi ON aoi.ArticleOrdersID = ao.ID",
+                    "INNER JOIN",
+                        "Ingredients i ON aoi.IngredientsID = i.ID",
+                    "WHERE",
+                        "o.Orderstatus = 1");
+
                 var articleOrders = (await connection.QueryAsync<DisplayObject>(longquery, new { OrderStatus = n })).ToList();
                 return articleOrders;
             }

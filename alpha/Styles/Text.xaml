@@ -6,9 +6,34 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:alpha">
+
+    <!--Root style-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="root">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontStyle" Value="Normal"/>
+        <Setter Property="FontWeight" Value="Light"/>
+        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+    </Style>
+
+    <!--DisplayBlock-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="DisplayBlock" BasedOn="{StaticResource root}">
+        <Setter Property="FontStretch" Value="UltraExpanded"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="0 0 12 0"/>
+    </Style>
+
+    <!--DisplayBlockSmall-->
+    <Style TargetType="{x:Type TextBlock}" x:Key="DisplayBlockSmall" BasedOn="{StaticResource DisplayBlock}">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="Margin" Value="0 0 10 0"/>
+    </Style>
+
+    <!--Terminal titles-->
     <Style x:Key="OrderHeader" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="22"/>
         <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
+    
 </ResourceDictionary>
