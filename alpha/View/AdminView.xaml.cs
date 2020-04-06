@@ -22,10 +22,5 @@ namespace alpha
         {
             InitializeComponent();
         }
-
-        private void article_grid_AddingNewItem(object sender, AddingNewItemEventArgs e)
-        {
-
-        }
     }
 }
