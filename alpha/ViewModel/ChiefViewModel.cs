@@ -121,14 +121,20 @@ namespace alpha
             var dobj = (DisplayObject)args;
 
             // Remove from left side
-            Orders.Remove(dobj);
-
-            // Done after
-            dobj.OrderStatus = 2;
-
-            // Add to right
-            FinishedOrders.Add(dobj);
-
+            // Removes all with the same OrderID at the moment
+            foreach(var item in Orders.ToList())
+            {
+                if(item.OrderID == dobj.OrderID)
+                {
+                    //
+                    Orders.Remove(item);
+                    // Done after
+                    item.OrderStatus = 2;
+                    // Add to right
+                    FinishedOrders.Add(item);
+                }
+            }
+            
             //todo; sql
             Order updOrder = new Order() { ID = dobj.OrderID , TimeCreated = dobj.TimeStamp,  Orderstatus = dobj.OrderStatus};
             await General.ordersRepo.UpdateAsync(updOrder);

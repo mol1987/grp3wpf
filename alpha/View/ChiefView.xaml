@@ -78,7 +78,9 @@
                                         <!--ArticleName-->
                                         <TextBlock  Text="{Binding ArticleName, FallbackValue='ArticleName'}" Style="{StaticResource DisplayBlock}"/>
                                         <!--ArticleType-->
-                                        <TextBlock  Text="{Binding ArticleType, FallbackValue='[#]'}" Style="{StaticResource DisplayBlock}"/>
+                                        <TextBlock  Text="{Binding OrderID, FallbackValue='[#]'}" Style="{StaticResource DisplayBlock}"/>
+                                        <!--Aoi-->
+                                        <TextBlock  Text="{Binding ArticleOrderID, FallbackValue='[#]'}" Style="{StaticResource DisplayBlockSmall}"/>
                                     </StackPanel>
                                     <!--Lower-->
                                     <StackPanel Orientation="Horizontal">
@@ -91,6 +93,10 @@
                                     <StackPanel Orientation="Horizontal">
                                         <!--Ordered at-->
                                         <TextBlock  Text="{Binding FormattedTimeStamp, FallbackValue='TimeStamp'}" Style="{StaticResource DisplayBlockSmall}"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <!--Ordered at-->
+                                        <Button Content="set_done()" Command="{Binding ElementName=active_displayobjects, Path=DataContext.SetOrderDone}" CommandParameter="{Binding}"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -113,6 +119,13 @@
                         </StackPanel>-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="11" Columns="3">
+                            
+                        </UniformGrid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             </ItemsControl>
         </StackPanel>
 

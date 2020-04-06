@@ -22,14 +22,15 @@ namespace alpha
         public string Title { get; set; } = "Cashier View";
 
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
+        public ObservableCollection<Order> FinishedOrders { get; set; } = new ObservableCollection<Order>();
 
 
         // Private holder
-        private ICommand _foo;
+        private ICommand setOrderToFinished;
         /// <summary>
         /// Command for swapping view
         /// </summary>
-        public ICommand foo { get { return _foo ?? new RelayCommand(param => this.fooAction(param), null); } }
+        public ICommand SetOrderToFinished { get { return setOrderToFinished ?? new RelayCommand(param => this.SetOrderToFinishedAction(param), null); } }
 
 
         #region ? in designmode
@@ -68,13 +69,15 @@ namespace alpha
             }
         }
 
-        public async void fooAction(object arg)
+        public async void SetOrderToFinishedAction(object arg)
         {
             //todo; make typechec
             var workingOrder = Orders.Single(x => x.ID == (int)arg);
             workingOrder.Orderstatus = 3;
             await Global.OrderRepo.UpdateAsync(workingOrder);
             LoadOrders();
+
+            FinishedOrders.Add(workingOrder);
 
             // webAPI try sending update to the OrderTerminalen return after more than five
             int i = 0;

@@ -65,7 +65,7 @@
                         <StackPanel Style="{StaticResource OrderItem}">
                             <!--Set Order to finished-->
                             <Button Name="xxxx" 
-                                    Command="{Binding ElementName=active_orders, Path=DataContext.foo}" 
+                                    Command="{Binding ElementName=active_orders, Path=DataContext.SetOrderToFinished}" 
                                     Content="{Binding ID}"
                                     CommandParameter="{Binding Path=ID}"
                                     />
@@ -76,6 +76,23 @@
         </StackPanel>
 
         <!--Right-->
+        <StackPanel Grid.Column="2" Grid.Row="1">
+            <ItemsControl x:Name="finished_orders" Style="{StaticResource Orders}" ItemsSource="{Binding FinishedOrders, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Style="{StaticResource OrderItem}">
+                            <!--Set Order to finished-->
+                            <Button Name="xxxx" 
+                                    Command="{Binding ElementName=active_orders, Path=DataContext.SetOrderToFinished}" 
+                                    Content="{Binding ID}"
+                                    CommandParameter="{Binding Path=ID}"
+                                    />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        
         <!--Finished Orders-->
         <StackPanel Grid.Column="2" Grid.Row="1">
             
