@@ -349,11 +349,8 @@ namespace alpha
 
             // webAPI client code
             int i = 0;
-            while (await WebApiClient.DoneOrderAsync((int)order.ID, TypeOrder.placeorder) == false)
-            {
-                await Task.Delay(500);
-                if (i++ > 5) return;
-            }
+            await WebApiClient.DoneOrderAsync((int)order.ID, TypeOrder.placeorder);
+            
 
             // Some info output
             result = string.Format("Purchased. Your order-ID is <{0}>. Total price is {1}.", order.ID, CheckOutSum);
