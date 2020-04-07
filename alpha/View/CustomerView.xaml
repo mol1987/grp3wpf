@@ -13,7 +13,7 @@
         <local:CustomerViewModel/>
     </Page.DataContext>
     <!--#endregion-->
-    
+
     <Page.Resources>
 
         <!--#region Converters -->
@@ -24,20 +24,44 @@
 
         <!--#endregion-->
 
-        <!--#region Nav Menu -->
+        <!--#region Styles -->
 
         <Style TargetType="{x:Type Image}" x:Key="base_image">
             <Setter Property="Width" Value="126"/>
             <Setter Property="Height" Value="126"/>
         </Style>
 
+        <Style TargetType="{x:Type Image}" x:Key="article_image">
+            <Setter Property="MaxWidth" Value="126"/>
+            <Setter Property="MaxHeight" Value="126"/>
+        </Style>
+
+        <Style TargetType="{x:Type Image}" x:Key="icon_image">
+            <Setter Property="MaxWidth" Value="126"/>
+            <Setter Property="MaxHeight" Value="126"/>
+        </Style>
+
         <Style TargetType="{x:Type TextBlock}" x:Key="textblock_filter">
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <!--<Setter Property="FontStretch" Value="UltraExpanded"/>-->
+            <!--<Setter Property="Foreground" Value="{StaticResource BlackTextBrush}"/>-->
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="FontWeight" Value="Light"/>
             <Setter Property="FontSize" Value="36"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type Rectangle}" x:Key="selection_highlight">
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="MaxWidth" Value="96"/>
+            <Setter Property="Fill" Value="{StaticResource BlueBrush}"/>
+            <Setter Property="Opacity" Value="0.0"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter  Property="Opacity" Value="1.0"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <!--Filter Button-->
@@ -45,27 +69,45 @@
             <Setter Property="CommandParameter" Value="{Binding Type}"/>
             <Setter Property="Command" Value="{Binding ElementName=filterbutton_list, Path=DataContext.FilterArticles}"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource GrayLighterBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource BlackTextBrush}"/>
             <!--Controltemplate-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
 
                         <!--Content-->
+
                         <Border Name="_border" 
                                 Background="{TemplateBinding Background}" 
                                 BorderBrush="#FF5397D1"
-                                Padding="40 6"
+                                Padding="32 6"
                                 >
-                            <StackPanel  Orientation="Vertical" >
+
+                            <Grid>
+
+                                <!--#region grid/row -definitions -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="10"/>
+                                </Grid.RowDefinitions>
+                                <!--#endregion-->
                                 <!--Image might not be great-->
-                                <Image Style="{StaticResource base_image}" Source="{Binding Path=Type, Converter={StaticResource IconConverter}}" />
+                                <Image Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Style="{StaticResource icon_image}" Source="{Binding Path=Type, Converter={StaticResource IconConverter}}" />
 
                                 <!--Text swaps foreground color-->
-                                <TextBlock  MaxHeight="90" Style="{StaticResource textblock_filter}" Text="{Binding Type}"/>
+                                <TextBlock Name="cbSample" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" MaxHeight="90" Style="{StaticResource textblock_filter}" Text="{Binding Type}"/>
+
                                 <!--Trigger this rectangle Onclick and OnFocus-->
-                                <Rectangle Name="delbtn" Height="10" Width="126" Fill="{StaticResource BlueBrush}" Opacity="0.0" StrokeThickness="0"/>
-                            </StackPanel>
+                                <Rectangle Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"  Name="delbtn"  Style="{StaticResource selection_highlight}"/>
+                            </Grid>
                         </Border>
 
                         <!--Action triggers-->
@@ -73,7 +115,7 @@
                             <!--Activates on button click-->
                             <Trigger Property="Button.IsPressed" Value="True">
                                 <Setter TargetName="_border" Property="BorderBrush" Value="Transparent" />
-                                <Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>
+                                <!--<Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>-->
                             </Trigger>
                             <!--When mouse is passed over-->
                             <Trigger Property="IsMouseOver" Value="True">
@@ -85,7 +127,7 @@
                                 <Trigger.Setters>
                                     <Setter Property="Background" Value="{StaticResource WhiteSelectedBrush}"/>
                                     <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
-                                    <Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>
+                                    <!--<Setter TargetName="delbtn" Property="Opacity" Value="1.0"/>-->
                                 </Trigger.Setters>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -95,15 +137,33 @@
             </Setter>
         </Style>
 
+
+        <Style TargetType="{x:Type Button}" x:Key="article_container">
+            <Setter Property="Background" Value="{StaticResource WhiteBrush}"/>
+            <Setter Property="Padding" Value="10 10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="Button.IsPressed" Value="True">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource WhiteTerBrush}"/>
+                </Trigger>
+                <Trigger Property="Button.IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource WhiteSelectedBrush}"/>
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <!--#endregion-->
 
     </Page.Resources>
 
     <Page.Triggers>
-        
+
         <!--#region Unused -->
         <!--#endregion-->
-        
+
     </Page.Triggers>
 
     <Grid Name="Root" Background="#f9f9f9">
@@ -132,7 +192,7 @@
             </EventTrigger>
         </Grid.Triggers>
         <!--#endregion-->
-        
+
         <!--#region Grid/RowDefinitions -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -180,21 +240,17 @@
 
         <!--#region BigPanel -->
         <!--BigPanel-->
-        <Border Grid.Column="0" Grid.Row="1" >
 
-            <!--ArticleGrid-->
-            <ListView ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="4" Rows="3"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
+
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-
-                        <!--#region Template for Article Objets (grid) -->
-                        <!--<Border Style="{StaticResource ResetBorder}" Padding="12,8,12,8">-->
-                        <Grid Width="256" Height="256">
+                        <Button  Width="256" Height="256" Style="{StaticResource article_container}"
+                                 Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}"
+                                 CommandParameter="{Binding}"
+                                 >
+                            <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
@@ -205,32 +261,32 @@
                                 <RowDefinition Height="1*"/>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
+                            <!--<Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"  Grid.RowSpan="3" Style="{StaticResource article_container}">
 
-                            <!--Article Image-->
-                            <Image Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Grid.RowSpan="3" Stretch="Fill" 
-                                   Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}"/>
-
+                                --><!--Article Image--><!--
+                               
+                            </Button>-->
                             <!--Name of Article-->
-                            <TextBlock Text="{Binding Article.Name}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
-
-                            <!--Price of Article-->
-                            <TextBlock Text="{Binding Article.BasePrice}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
-
+                                <Image Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"  Grid.RowSpan="3" Source="{Binding Path=Article.ImageSource, Converter={StaticResource ImageConverter}}" Stretch="Fill"/>
+                            <TextBlock Text="{Binding Article.Name}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"  HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI"/>
                             <!--List of ingeredients-->
-                            <TextBlock Text="{Binding Article.Ingredients, Converter={StaticResource ListConverter}}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontFamily="Segoe UI" FontStyle="Italic"/>
-
-                            <!--Buy button-->
-                            <Button Grid.Column="2" Grid.Row="0" Style="{StaticResource AddToCheckoutButton}" Command="{Binding ElementName=article_listview, Path=DataContext.AddToCheckout}" CommandParameter="{Binding}"/>
-
-                        </Grid>
-                        <!--</Border>-->
-                        <!--#endregion-->
-
+                            <TextBlock Text="{Binding Article.Ingredients, Converter={StaticResource ListConverter}}"  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="12" FontFamily="Segoe UI" FontStyle="Italic"/>
+                            <!--Price of Article-->
+                            <TextBlock Text="{Binding Article.BasePrice}" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="30" FontWeight="Light" FontFamily="Segoe UI"/>
+                            </Grid>
+                        </Button>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+            </ItemsControl>
+        </StackPanel>
 
-        </Border>
+
         <!--#endregion-->
 
         <!--#region SidePanel -->

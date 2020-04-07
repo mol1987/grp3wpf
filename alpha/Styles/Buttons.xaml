@@ -8,6 +8,13 @@
                     xmlns:local="clr-namespace:alpha"
                     >
 
+    <Style TargetType="{x:Type Button}" x:Key="base_button">
+
+    </Style>
+
+
+
+
     <!--Default Button Style-->
     <Style TargetType="{x:Type Button}" x:Key="default_button">
         <Setter Property="Background" Value="LightGray"/>

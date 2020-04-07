@@ -10,7 +10,18 @@
 
     <Grid Background="#f9f9f9">
 
-        <Grid Background="Gray" MaxWidth="256" MaxHeight="256">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="Gray" Width="256" Height="256">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -28,12 +39,10 @@
         </Grid>
         
         
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+
+
+
+        <Rectangle Grid.Column="1" Fill="{StaticResource BlueBrush}" Width="50" Height="50" />
         <!--
         <StackPanel Grid.ColumnSpan="4" Grid.Row="1">
             <ListView >

@@ -14,6 +14,7 @@
     <None Remove="Assets\Icons\Sallad.png" />
     <None Remove="Assets\Images\Bussola.png" />
     <None Remove="Assets\Images\default.png" />
+    <None Remove="Assets\Images\default_old.png" />
     <None Remove="Assets\Images\fogel.png" />
     <None Remove="Assets\Images\Hawaii.png" />
     <None Remove="Assets\Images\logo.png" />
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.UI.Xaml" Version="2.3.200213001" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.2.6" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>
@@ -41,9 +43,10 @@
     <Resource Include="Assets\Icons\Hamburgare.png" />
     <Resource Include="Assets\Icons\Pizza.png" />
     <Resource Include="Assets\Icons\Sallad.png" />
+    <Resource Include="Assets\Images\default.png" />
     <Resource Include="Assets\Images\Hawaii.png" />
     <Resource Include="Assets\Images\Bussola.png" />
-    <Resource Include="Assets\Images\default.png" />
+    <Resource Include="Assets\Images\default_old.png" />
     <Resource Include="Assets\Images\fogel.png" />
     <Resource Include="Assets\Images\logo.png" />
     <Resource Include="Assets\Images\logo_text.png" />

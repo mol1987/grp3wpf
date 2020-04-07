@@ -6,6 +6,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:alpha">
 
+
+    <Style x:Key="NullSelectionStyle" TargetType="ItemsControl">
+        <Style.Resources>
+            <!-- SelectedItem with focus -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+            <!-- SelectedItem without focus -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+            <!-- SelectedItem text foreground -->
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}" />
+        </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
+
+
     <!--#region All Views -->
 
     <Style TargetType="{x:Type Grid}" x:Key="SplashRoot">

@@ -245,6 +245,15 @@ namespace alpha
             // From the buttons' commandArgument
             string selectedType = (string)arg;
 
+            // Set hightlight display for navmenubutton
+            foreach(var item in FilterButtons)
+            {
+                if (item.Type == selectedType)
+                    item.IsActive = true;
+                else
+                    item.IsActive = false;
+            }
+
             // When 'home' is hit. Reset displayed articles to show all
             if (selectedType == "All" || selectedType == "Hem")
             {
