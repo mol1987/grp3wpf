@@ -280,6 +280,10 @@ namespace alpha
             // The private lists are clones
             foreach (var item in await articleRepo.GetAllAsync())
             {
+                // IsActive check
+                if (!(bool)item.IsActive)
+                    continue;
+
                 var tempArticle = new ArticleModel { ID = item.ID, Name = item.Name, BasePrice = item.BasePrice, Type = item.Type, IsActive = item.IsActive };
                 tempArticle.Ingredients = new List<Ingredient>();
                 foreach (var itemIngredients in item.Ingredients.ToList())
