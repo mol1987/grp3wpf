@@ -431,6 +431,7 @@ namespace alpha
         /// <returns></returns>
         private async Task LoadData()
         {
+            await Global.ReloadArticlesAsync();
             var ingredientRepo = new Library.Repository.IngredientsRepository("Ingredients");
             foreach (var item in await ingredientRepo.GetAllAsync())
             {

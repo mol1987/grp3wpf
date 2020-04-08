@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using Library.Repository;
+using System.Windows.Input;
+using System.Linq;
 
 namespace alpha
 {
@@ -18,6 +20,14 @@ namespace alpha
         /// Global usage as a quick fix for access in terminals
         /// </summary>
         public static List<Article> Articles { get; set; } = new List<Article>();
+
+        /// <summary>
+        /// Refresh articles
+        /// </summary>
+        public static async System.Threading.Tasks.Task ReloadArticlesAsync()
+        {
+            Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
+        }
 
         /// <summary>
         /// wpf-window. Probably not needed like this at the moment

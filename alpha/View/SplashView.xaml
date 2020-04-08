@@ -187,6 +187,12 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2">
             <TextBlock Style="{StaticResource intro_text}" Text="{Binding Intro, FallbackValue='Tonys Pizzeria'}" />
+            <TextBlock Style="{StaticResource TextSmall}" Text="Laddar data..."/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Style="{StaticResource TextSmall}" Text="Laddade Artiklar: "/>
+                <TextBlock Style="{StaticResource TextSmall}" Text="{Binding LoadedArticles,FallbackValue='0'}"/>
+            </StackPanel>
+            
         </StackPanel>
     </Grid>
 </Page>

@@ -81,11 +81,8 @@ namespace alpha
 
             // webAPI try sending update to the OrderTerminalen return after more than five
             int i = 0;
-            while (await WebApiClient.DoneOrderAsync((int)arg, TypeOrder.removeorder) == false)
-            {
-                await Task.Delay(500);
-                if (i++ > 5) return;
-            }
+            await WebApiClient.DoneOrderAsync((int)arg, TypeOrder.removeorder);
+            
             Trace.WriteLine("ok");
         }
     }
