@@ -72,6 +72,11 @@ namespace alpha
         /// </summary>
         async void LoadOrders()
         {
+
+            // To avoid having the slide-in aniamtion freezing
+            // takes 450ms for animation to complete
+            await Task.Delay(450);
+
             ////Sql connection
             //List<DisplayObject> filteredList = new List<DisplayObject>();
             //List<DisplayObject> res = (await new Library.Repository.OrdersRepository("Orders").GetAllAsync(1)).ToList();
