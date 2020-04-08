@@ -70,6 +70,8 @@ namespace alpha
 
             // Loads remote data
             LoadArticles();
+
+            Global.StartUpdateDataThread();
         }
         #endregion
 
@@ -229,6 +231,7 @@ namespace alpha
         {
             // Stop the running server
             Library.WebApiFunctionality.WebApiServer.StopServer();
+            Global.StopUpdateDataThread();
 
             // Loop and shut down
             foreach (System.Windows.Window window in System.Windows.Application.Current.Windows)

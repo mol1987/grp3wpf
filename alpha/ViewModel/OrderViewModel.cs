@@ -68,8 +68,11 @@ namespace alpha
             WebApiServer.returnOrderEvent += ManageOrders;
             WebApiServer.StartServer();
             Global.IsServerStarted = true;
+            
 
         }
+
+
 
         /// <summary>
         /// Initial Load Orders from SQL

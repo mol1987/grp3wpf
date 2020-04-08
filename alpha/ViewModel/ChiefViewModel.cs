@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -18,6 +19,8 @@ namespace alpha
     /// </summary>
     public class ChiefViewModel : BaseViewModel
     {
+        static readonly object _object = new object();
+        private SynchronizationContext uiContext;
         public string Title { get; set; } = "ChiefTerminal";
 
 
@@ -56,8 +59,40 @@ namespace alpha
             if (IsInDesignMode) { return; }
 
             LoadOrders();
+            Global.dataUpdateEvent += UpdateOrder;
+            uiContext = SynchronizationContext.Current;
         }
         #endregion
+
+        private void UpdateOrder(object data, string TypeOfUpdate)
+        {
+            Monitor.Enter(_object);
+            try
+            {
+                if (TypeOfUpdate == "ObsOrdersPlaced")
+                {
+                    List<Order> tempOrders = (List<Order>)data;
+                    Trace.WriteLine(((List<Order>)data).Count());
+                    
+                    foreach (var x in tempOrders)
+                    {
+                        List<ArticleModel> tempArticles = new List<ArticleModel>();
+                        x.Articles.ForEach(y => tempArticles.Add(new ArticleModel { ID = y.ID, BasePrice = y.BasePrice, Name = y.Name, IsActive = y.IsActive, Ingredients = y.Ingredients }));
+                        uiContext.Send(ran => // <--- HERE
+                        {
+                            if (Orders.Any(y => y.ID == x.ID) == false)
+                                Orders.Add(new OrderModel { ID = x.ID, CustomerID = x.CustomerID, Orderstatus = x.Orderstatus, Price = x.Price, TimeCreated = x.TimeCreated, Articles = tempArticles });
+                        }, null);
+                       
+                    }
+
+                }
+            }
+            finally
+            {
+                Monitor.Exit(_object);
+            }
+        }
 
         /// <summary>
         /// ...
