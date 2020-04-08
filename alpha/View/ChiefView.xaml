@@ -93,26 +93,7 @@
                                     
                                      <TextBlock TextWrapping="Wrap" Text="{Binding SelectedIngredients, Converter={StaticResource ListConverter }, FallbackValue='...', Mode=TwoWay}" Style="{StaticResource DisplayBlockSmall}" />
                                     
-                                        <!--<StackPanel Orientation="Horizontal">
-                                        ArticleName
-                                        <TextBlock  Text="{Binding Articles, Converter={StaticResource ListConverter}, FallbackValue='ArticleName'}" Style="{StaticResource DisplayBlock}"/>
-                                        ArticleType
-                                        <TextBlock  Text="{Binding ID, FallbackValue='[#]'}" Style="{StaticResource DisplayBlock}"/>
-                                        Aoi
-                                        <TextBlock  Text="{Binding ArticleOrderID, FallbackValue='[#]'}" Style="{StaticResource DisplayBlockSmall}"/>
-                                    </StackPanel>
-                                    Lower
-                                    <StackPanel Orientation="Horizontal">
-                                        Ingredients
-                                        <TextBlock  Text="{Binding Ingredients, Converter={StaticResource ListConverter}, FallbackValue='...'}" Style="{StaticResource DisplayBlockSmall}"/>
-                                        OrderStatus
-                                        <TextBlock  Text="{Binding OrderStatus, FallbackValue='?'}" Style="{StaticResource DisplayBlockSmall}"/>
-                                    </StackPanel>
-
-                                    <StackPanel Orientation="Horizontal">
-                                        Ordered at
-                                        <TextBlock  Text="{Binding FormattedTimeStamp, FallbackValue='TimeStamp'}" Style="{StaticResource DisplayBlockSmall}"/>
-                                    </StackPanel>-->
+                                    
                                     <StackPanel>
                                         <!--Ordered at-->
                                         <Button Content="set_done()" Command="{Binding ElementName=active_displayobjects, Path=DataContext.SetOrderDone}" CommandParameter="{Binding}"/>

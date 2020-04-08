@@ -138,7 +138,7 @@
                             <DataGridTextColumn Header="BasePrice" Binding="{Binding BasePrice, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"/>
                             <DataGridTextColumn Header="IsActive" Binding="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}"/>
-                            <DataGridComboBoxColumn Header="Ingredients" SelectedItemBinding="{Binding SelectedRemoveIngredient, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGridComboBoxColumn Header="Ingredients" SelectedItemBinding="{Binding SelectedRemoveIngredient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                                 <DataGridComboBoxColumn.ElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
                                         <Setter Property="ItemsSource" Value="{Binding Ingredients, UpdateSourceTrigger=PropertyChanged}" />
@@ -160,15 +160,15 @@
                             </DataGridTemplateColumn>
 
                             <!--Add ingredients-->
-                            <DataGridComboBoxColumn Header="Add Ingredients" SelectedItemBinding="{Binding SelectedAddIngredient, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGridComboBoxColumn Header="Add Ingredients" SelectedItemBinding="{Binding SelectedAddIngredient, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <DataGridComboBoxColumn.ElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
                                     </Style>
                                 </DataGridComboBoxColumn.ElementStyle>
                                 <DataGridComboBoxColumn.EditingElementStyle>
                                     <Style TargetType="{x:Type ComboBox}">
-                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
+                                        <Setter Property="ItemsSource" Value="{Binding DataContext.Ingredients, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"  />
                                     </Style>
                                 </DataGridComboBoxColumn.EditingElementStyle>
                             </DataGridComboBoxColumn>

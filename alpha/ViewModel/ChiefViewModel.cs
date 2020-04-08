@@ -156,8 +156,8 @@ namespace alpha
             await General.ordersRepo.UpdateAsync(updOrder);
 
             // webAPI try sending update to the OrderTerminalen return after more than five
-            //await WebApiClient.DoneOrderAsync((int)dobj.ID, TypeOrder.doneorder);
-            
+            await WebApiClient.DoneOrderAsync((int)dobj.ID, TypeOrder.doneorder);
+
             Trace.WriteLine("ok");
         }
     }

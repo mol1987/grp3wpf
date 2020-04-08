@@ -30,7 +30,7 @@ namespace alpha
 
         public Ingredient SelectedIngredient { get; set; }
         public Ingredient SelectedRemoveIngredient { get; set; }
-        public Ingredient SelectedAddIngredient { get; set; }
+        public IngredientModel SelectedAddIngredient { get; set; }
 
         private void SelectIngredientsAction(object param)
         {
@@ -51,7 +51,9 @@ namespace alpha
         {
             if (SelectedAddIngredient == null) return;
             if (Ingredients.Any(x => x.Name == SelectedAddIngredient.Name)) return;
-            Ingredients.Add(SelectedAddIngredient);
+            Ingredient ingredientToAdd = new Ingredient { ID = SelectedAddIngredient.ID, Name = SelectedAddIngredient.Name, Price = SelectedAddIngredient.Price };
+            SelectedRemoveIngredient = ingredientToAdd;
+            Ingredients.Add(ingredientToAdd);
             await Global.ArticleRepo.UpdateAsync(new Article() { ID = this.ID, BasePrice = this.BasePrice, Name = this.Name, IsActive = this.IsActive, Type = this.Type, Ingredients = this.Ingredients });
             Trace.WriteLine(SelectedAddIngredient.Name);
         }

@@ -164,7 +164,7 @@ namespace alpha
                 // Article
                 if (workingItem is ArticleModel)
                 {
-                    var workingArticle = (ArticleModel)e.OldItems[0];
+                    var workingArticle = (ArticleModel)e.OldItems[0]; 
                     await Global.ArticleRepo.DeleteRowAsync((int)workingArticle.ID);
                 }
                 // Employee
