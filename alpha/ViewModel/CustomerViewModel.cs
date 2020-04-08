@@ -191,7 +191,7 @@ namespace alpha
             if (IsInDesignMode) { return; }
 
             // Loaded Data from WebApi
-            var items = Global.Articles;
+            var items = Global.Articles.FindAll(ArticleIsActive);
 
             // One nav Button for The "Hem"-knapp
             FilterButtons.Add(new FilterButton { Type = "Hem" });
@@ -438,5 +438,12 @@ namespace alpha
                 Ingredients.Add(new IngredientModel { Name = item.Name, ID = item.ID, Price = item.Price });
             }
         }
+
+        /// <summary>
+        /// Filter by active property
+        /// </summary>
+        /// <param name="_"></param>
+        /// <returns></returns>
+        private static bool ArticleIsActive(Article _)=> _.IsActive == true ? true : false;
     }
 }
