@@ -379,12 +379,12 @@ namespace alpha
         /// 
         /// </summary>
         /// <param name="args"></param>
-        private void CreateNewCustomArticleAction(object args)
+        private async void CreateNewCustomArticleAction(object args)
         {
             // Filter out unchecked ingredients
             var selectedIngredients = Ingredients.Where(a => a.IsChecked);
             // Initiate new Article model
-            var newArticle = new Article() { Name = "Custom Pizza", ID = 9999, BasePrice = 40, IsActive = true, Type = "Pizza", Ingredients = new List<Ingredient>() };
+            var newArticle = await Global.ArticleRepo.GetAsync(80);
 
             foreach (var item in Ingredients)
             {
