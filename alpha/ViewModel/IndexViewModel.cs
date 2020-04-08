@@ -219,6 +219,7 @@ namespace alpha
 
             //Sql Connection
             Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
+            Global.Articles = Global.Articles.Where(x => x.IsActive == true).ToList();
         }
 
         /// <summary>
