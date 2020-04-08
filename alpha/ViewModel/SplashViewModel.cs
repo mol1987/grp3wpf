@@ -12,5 +12,7 @@ namespace alpha
     public class SplashViewModel : BaseViewModel
     {
         public string Intro { get; set; } = "PizzeriaPalatset";
+
+        public int LoadedArticles { get { return Global.Articles.Count; } }
     }
 }
