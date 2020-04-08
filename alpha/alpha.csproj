@@ -13,14 +13,32 @@
     <None Remove="Assets\Icons\Pizza.png" />
     <None Remove="Assets\Icons\Sallad.png" />
     <None Remove="Assets\Images\Bussola.png" />
+    <None Remove="Assets\Images\Ceasar-sallad.png" />
+    <None Remove="Assets\Images\Cheeseburger.png" />
+    <None Remove="Assets\Images\Chicken-salad.png" />
+    <None Remove="Assets\Images\coffee.png" />
+    <None Remove="Assets\Images\cola.jpg" />
+    <None Remove="Assets\Images\cola.png" />
+    <None Remove="Assets\Images\Corona.png" />
+    <None Remove="Assets\Images\coronapng.png" />
     <None Remove="Assets\Images\default.png" />
     <None Remove="Assets\Images\default_old.png" />
     <None Remove="Assets\Images\fogel.png" />
+    <None Remove="Assets\Images\Greek-sallad.png" />
+    <None Remove="Assets\Images\Green-sallad.png" />
     <None Remove="Assets\Images\Hawaii.png" />
     <None Remove="Assets\Images\logo.png" />
     <None Remove="Assets\Images\logo_text.png" />
+    <None Remove="Assets\Images\Margherita-2.png" />
     <None Remove="Assets\Images\Margherita.png" />
     <None Remove="Assets\Images\Napoli.png" />
+    <None Remove="Assets\Images\pizza-sallad.png" />
+    <None Remove="Assets\Images\red-wine-glass.png" />
+    <None Remove="Assets\Images\Seafood-cocktail.png" />
+    <None Remove="Assets\Images\sprite.png" />
+    <None Remove="Assets\Images\tea.png" />
+    <None Remove="Assets\Images\Tuna-sallad.png" />
+    <None Remove="Assets\Images\white-wine-glass.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,15 +61,32 @@
     <Resource Include="Assets\Icons\Hamburgare.png" />
     <Resource Include="Assets\Icons\Pizza.png" />
     <Resource Include="Assets\Icons\Sallad.png" />
+    <Resource Include="Assets\Images\Ceasar-sallad.png" />
+    <Resource Include="Assets\Images\Cheeseburger.png" />
+    <Resource Include="Assets\Images\Chicken-salad.png" />
+    <Resource Include="Assets\Images\coffee.png" />
+    <Resource Include="Assets\Images\cola.jpg" />
+    <Resource Include="Assets\Images\cola.png" />
+    <Resource Include="Assets\Images\Corona.png" />
     <Resource Include="Assets\Images\default.png" />
+    <Resource Include="Assets\Images\Greek-sallad.png" />
+    <Resource Include="Assets\Images\Green-sallad.png" />
     <Resource Include="Assets\Images\Hawaii.png" />
     <Resource Include="Assets\Images\Bussola.png" />
     <Resource Include="Assets\Images\default_old.png" />
     <Resource Include="Assets\Images\fogel.png" />
     <Resource Include="Assets\Images\logo.png" />
     <Resource Include="Assets\Images\logo_text.png" />
+    <Resource Include="Assets\Images\Margherita-2.png" />
     <Resource Include="Assets\Images\Margherita.png" />
     <Resource Include="Assets\Images\Napoli.png" />
+    <Resource Include="Assets\Images\pizza-sallad.png" />
+    <Resource Include="Assets\Images\red-wine-glass.png" />
+    <Resource Include="Assets\Images\Seafood-cocktail.png" />
+    <Resource Include="Assets\Images\sprite.png" />
+    <Resource Include="Assets\Images\tea.png" />
+    <Resource Include="Assets\Images\Tuna-sallad.png" />
+    <Resource Include="Assets\Images\white-wine-glass.png" />
   </ItemGroup>
 
 </Project>
