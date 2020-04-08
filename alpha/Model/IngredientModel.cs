@@ -29,6 +29,8 @@ namespace alpha
             this.IsChecked = this.IsChecked ? false : true; 
         }
 
+
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string name)
         {

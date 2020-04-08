@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 
-namespace alpha.Model
+namespace alpha
 {
     [AddINotifyPropertyChangedInterface]
     public class ArticleModel : INotifyPropertyChanged
@@ -19,16 +19,23 @@ namespace alpha.Model
         public string? Type { get; set; }
         public bool? IsActive { get; set; }
         public List<Ingredient> Ingredients { get; set; }
+        public List<Ingredient> SelectedIngredients { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand RemoveIngredient { get { return new RelayCommand(param => this.RemoveIngredientAction(param), null); } }
         public ICommand AddIngredient { get { return new RelayCommand(param => this.AddIngredientAction(param), null); } }
+        public ICommand SelectIngredients { get { return new RelayCommand(param => this.SelectIngredientsAction(param), null); } }
+
+       
 
         public Ingredient SelectedIngredient { get; set; }
         public Ingredient SelectedRemoveIngredient { get; set; }
         public Ingredient SelectedAddIngredient { get; set; }
 
-
+        private void SelectIngredientsAction(object param)
+        {
+            SelectedIngredients = ((ArticleModel)param).Ingredients;
+        }
         private async void RemoveIngredientAction(object args)
         {
             if (SelectedRemoveIngredient == null) return;

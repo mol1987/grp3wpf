@@ -41,6 +41,7 @@ namespace alpha
                 #endregion
 
                 var ingredientList = (List<Library.TypeLib.Ingredient>)value;
+                if (ingredientList == null) return "....";
                 // temp holder
                 var names = new List<string>();
                 string res = "";

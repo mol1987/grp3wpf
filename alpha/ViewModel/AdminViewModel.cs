@@ -10,7 +10,6 @@ using System.Collections.Specialized;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Data;
-using alpha.Model;
 using System.Diagnostics;
 using System.Windows.Media;
 

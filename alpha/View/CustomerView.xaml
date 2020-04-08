@@ -80,7 +80,7 @@
                         <Border Name="_border" 
                                 Background="{TemplateBinding Background}" 
                                 BorderBrush="#FF5397D1"
-                                Padding="32 6"
+                                Padding="31 6"
                                 >
 
                             <Grid>
@@ -232,7 +232,9 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource custom_pizza_button}" x:Name="custom_pizza_button" Content="Skapa egen pizza"
                         Command="{Binding ToggleModal}" CommandParameter="x"
-                        />
+                        >
+                </Button>
+
             </StackPanel>
 
         </StackPanel>
@@ -279,7 +281,7 @@
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid/>
+                        <UniformGrid Columns="4" Rows="3"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 

@@ -67,7 +67,7 @@ namespace Library.Repository
                 Article article;
                 foreach (ArticleOrder articleOrdersItem in articleOrders)
                 {
-                    article = await connection.QuerySingleOrDefaultAsync<Article>($"SELECT * FROM {tableName} WHERE Id=@Id", new { Id = articleOrdersItem.ArticlesID });
+                    article = await connection.QuerySingleOrDefaultAsync<Article>($"SELECT * FROM Articles WHERE Id=@Id", new { Id = articleOrdersItem.ArticlesID });
                     article.Ingredients = new List<Ingredient>();
                     article.Ingredients = (await connection.QueryAsync<Ingredient>(sql, new { OrdersID = order.ID, ArticleOrdersID = articleOrdersItem.ID })).ToList();
                     articles.Add(article);
