@@ -75,13 +75,13 @@ namespace alpha
                             Trace.WriteLine("add");
                             //if (ObsOrdersPlaced.Any(y => y.ID == x.ID) == false)
                             //    ObsOrdersPlaced.Add(new OrderModel { ID = x.ID, CustomerID = x.CustomerID, Orderstatus = x.Orderstatus, Price = x.Price, TimeCreated = x.TimeCreated, Articles = tempArticles });
-                        } else if (x.Orderstatus == 1)
+                        } else if (x.Orderstatus == 2)
                         {
                             doneOrders.Add(x);
                         }
                     });
                     Trace.WriteLine("invoke: " + tempOrder.Count);
-                    Trace.WriteLine("invoke: " + placedOrders.Count);
+                    Trace.WriteLine("done: " + doneOrders.Count);
 
                     dataUpdateEvent?.Invoke(new List<Order>(placedOrders), "ObsOrdersPlaced");
                     dataUpdateEvent?.Invoke(new List<Order>(doneOrders), "ObsOrdersDone");

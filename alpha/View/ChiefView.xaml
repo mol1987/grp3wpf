@@ -17,6 +17,7 @@
 
         <!--#endregion-->
     </Page.Resources>
+    
     <Grid Name="ChiefRoot" Background="{StaticResource SecondaryBrush}">
 
         <!--#region Slide in Animation -->
@@ -83,15 +84,35 @@
                                     <!--<ListBox Name="mylist" ItemsSource="{Binding Articles}" Height="50"  Width="100" Background="{StaticResource BlueBrush}">
                                     </ListBox>-->
 
-                                    <ItemsControl ItemsSource="{Binding Articles}" Height="80" Width="120" HorizontalAlignment="Left">
+
+                                    <ItemsControl ItemsSource="{Binding Articles}" Height="80" Width="120" HorizontalAlignment="Left" 
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl.Template>
+                                            <ControlTemplate>
+                                                    <Border
+                                                    BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                    Padding="{TemplateBinding Control.Padding}"
+                                                    BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                                    Background="{TemplateBinding Panel.Background}"
+                                                    SnapsToDevicePixels="True">
+                                                                                <ScrollViewer
+                                                        Padding="{TemplateBinding Control.Padding}"
+                                                        Focusable="False" VerticalScrollBarVisibility="Hidden">      
+                                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding 
+                                               UIElement.SnapsToDevicePixels}"/>
+                                                    </ScrollViewer>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ItemsControl.Template>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Button x:Name="ArticleBtn" Content="{Binding Name}" Width="100" Height="20"  Background="{StaticResource BlueBrush}" BorderThickness="0" HorizontalContentAlignment="Left" Command="{Binding DataContext.SelectIngredients, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" CommandParameter="{Binding}"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    
-                                     <TextBlock TextWrapping="Wrap" Text="{Binding SelectedIngredients, Converter={StaticResource ListConverter }, FallbackValue='...', Mode=TwoWay}" Style="{StaticResource DisplayBlockSmall}" />
+
+                                    <TextBlock TextWrapping="Wrap" Text="{Binding SelectedIngredients, Converter={StaticResource ListConverter }, FallbackValue='...', Mode=TwoWay}" Style="{StaticResource DisplayBlockSmall}" />
                                     
                                     
                                     <StackPanel>

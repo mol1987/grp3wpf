@@ -220,8 +220,8 @@ namespace alpha
             //Global.Articles = await (new Library.ArticleProcessor().LoadArticle());
 
             //Sql Connection
-            Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
-            Global.Articles = Global.Articles.Where(x => x.IsActive == true).ToList();
+                Global.Articles = (await Global.ArticleRepo.GetAllAsync()).ToList();
+                Global.Articles = Global.Articles.Where(x => x.IsActive == true).ToList();
         }
 
         /// <summary>

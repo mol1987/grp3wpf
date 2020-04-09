@@ -185,45 +185,7 @@ namespace alpha
             if (e.NewItems != null)
             {
 
-                // if new row, fill with garbage
-                var workingItem = e.NewItems[0];
-                // Articles
-                if (workingItem is ArticleModel)
-                {
-                    var workingArticle = (ArticleModel)e.NewItems[0];
-                    Article getArticle = new Article() { BasePrice = 80, Name = "blank", IsActive = true, Type = "blank" };
-
-                    if (workingArticle.Name == null)
-                    {
-                        await Global.ArticleRepo.InsertAsync(getArticle);
-                        Articles.Last().ID = getArticle.ID;
-                        Articles.Last().Ingredients = new List<Ingredient>();
-                    }
-                }
-                // Employees
-                if (workingItem is EmployeeModel)
-                {
-                    var workingEmployee = (EmployeeModel)e.NewItems[0];
-                    Employee getEmployee = new Employee() { Name = "blank", LastName = "blanksson", Email = "blank@blank.se", Password = "123" };
-
-                    if (workingEmployee.Name == null)
-                    {
-                        await Global.EmployeeRepo.InsertAsync(getEmployee);
-                        Employees.Last().ID = getEmployee.ID;
-                    }
-                }
-                // Ingredients
-                if (workingItem is IngredientModel)
-                {
-                    var workingEmployee = (IngredientModel)e.NewItems[0];
-                    Ingredient getIngredient = new Ingredient() { Name = "blank", Price = 10 };
-
-                    if (workingEmployee.Name == null)
-                    {
-                        await Global.IngredientRepo.InsertAsync(getIngredient);
-                        Ingredients.Last().ID = getIngredient.ID;
-                    }
-                }
+               
                 foreach (INotifyPropertyChanged item in e.NewItems)
                     item.PropertyChanged += item_PropertyChanged;
             }

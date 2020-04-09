@@ -78,7 +78,7 @@ namespace alpha
                     {
                         List<ArticleModel> tempArticles = new List<ArticleModel>();
                         x.Articles.ForEach(y => tempArticles.Add(new ArticleModel { ID = y.ID, BasePrice = y.BasePrice, Name = y.Name, IsActive = y.IsActive, Ingredients = y.Ingredients }));
-                        uiContext.Send(ran => // <--- HERE
+                        uiContext.Send(ran => // sends the changes to the UI
                         {
                             if (Orders.Any(y => y.ID == x.ID) == false)
                                 Orders.Add(new OrderModel { ID = x.ID, CustomerID = x.CustomerID, Orderstatus = x.Orderstatus, Price = x.Price, TimeCreated = x.TimeCreated, Articles = tempArticles });
@@ -150,7 +150,8 @@ namespace alpha
                     await Global.OrderRepo.GetAllAsync(x);
                     List<ArticleModel> tempArticles = new List<ArticleModel>();
                     x.Articles.ForEach(y => tempArticles.Add(new ArticleModel { ID = y.ID, BasePrice = y.BasePrice, Name = y.Name, IsActive = y.IsActive, Ingredients = y.Ingredients }));
-                    Orders.Add(new OrderModel { ID = x.ID, CustomerID = x.CustomerID, Orderstatus = x.Orderstatus, Price = x.Price, TimeCreated = x.TimeCreated, Articles = tempArticles });
+                    if (Orders.Any(y => y.ID == x.ID) == false)
+                        Orders.Add(new OrderModel { ID = x.ID, CustomerID = x.CustomerID, Orderstatus = x.Orderstatus, Price = x.Price, TimeCreated = x.TimeCreated, Articles = tempArticles });
                 }
             });
 

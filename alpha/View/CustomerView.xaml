@@ -246,6 +246,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Articles, Mode=TwoWay}" x:Name="article_listview">
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button  Width="256" Height="256" Style="{StaticResource article_container}"

@@ -11,6 +11,7 @@ using Library.WebApiFunctionality;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows;
+using System.Threading;
 
 namespace alpha
 {
@@ -19,6 +20,8 @@ namespace alpha
     /// </summary>
     public class CashierViewModel : BaseViewModel
     {
+        static readonly object _object = new object();
+        private SynchronizationContext uiContext;
         public string Title { get; set; } = "Cashier View";
 
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
@@ -55,10 +58,39 @@ namespace alpha
         public CashierViewModel()
         {
             if (IsInDesignMode) { return; }
+            Global.dataUpdateEvent += UpdateOrder;
+            uiContext = SynchronizationContext.Current;
             LoadOrders();
-        } 
+        }
         #endregion
+        private void UpdateOrder(object data, string TypeOfUpdate)
+        {
+            Monitor.Enter(_object);
+            try
+            {
+                if (TypeOfUpdate == "ObsOrdersDone")
+                {
+                    List<Order> tempOrders = (List<Order>)data;
+                    Trace.WriteLine(((List<Order>)data).Count());
 
+                    foreach (var x in tempOrders)
+                    {
+                        
+                        uiContext.Send(ran => // sends the changes to the UI
+                        {
+                            if (Orders.Any(y => y.ID == x.ID) == false)
+                                Orders.Add(x);
+                        }, null);
+
+                    }
+
+                }
+            }
+            finally
+            {
+                Monitor.Exit(_object);
+            }
+        }
         async void LoadOrders()
         {
             List<Order> tempOrders = (await General.ordersRepo.GetAllAsync()).ToList();
